@@ -1,0 +1,100 @@
+name: admin
+description: "A new Flutter project."
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+environment:
+  sdk: '>=3.3.1 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+
+  #common
+  cupertino_icons: ^1.0.8
+  get: 4.6.6
+  flutter_screenutil: ^5.9.3
+  fluttertoast: ^8.2.8
+  flutter_svg: ^2.0.10+1
+  nb_utils: ^7.0.4
+  easy_search_bar: ^2.5.0
+  uuid: ^4.5.0
+  intl: ^0.19.0
+  image_picker: ^1.1.2
+  shared_preferences: ^2.3.2
+  cached_network_image: ^3.4.1
+  html_editor_enhanced: ^2.6.0
+  html: ^0.15.4
+  provider: ^6.1.2
+  aligned_dialog: ^0.0.7
+  geoflutterfire2: ^2.3.15
+  flex_color_picker: ^3.5.1
+  url_strategy: ^0.3.0
+  syncfusion_flutter_datagrid: ^27.1.48
+  syncfusion_flutter_charts: ^27.1.48
+  flutter_easyloading: ^3.0.5
+  file_picker: ^8.1.2
+  path_provider: ^2.1.4
+  url_launcher: ^6.3.0
+  flutter_custom_text_input_formatter: ^0.0.4
+  location: ^7.0.0
+  map_launcher: ^3.5.0
+  timelines_plus: ^1.0.3
+  syncfusion_flutter_datepicker:
+
+  #Firebase
+  firebase_auth: ^5.3.0
+  firebase_core: ^3.5.0
+  firebase_messaging: ^15.1.2
+  firebase_storage: ^12.3.1
+  flutter_local_notifications: ^17.2.2
+
+dependency_overrides:
+  intl: ^0.19.0
+  web: ^1.0.0
+  cloud_firestore: ^5.4.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+
+  uses-material-design: true
+  assets:
+    - assets/
+    - assets/fonts/
+    - assets/image/
+    - assets/icons/
+    - assets/animation/
+
+  fonts:
+    - family: Inter-Regular
+      fonts:
+        - asset: assets/fonts/Inter-Regular.ttf
+
+    - family: Inter-Medium
+      fonts:
+        - asset: assets/fonts/Inter-Medium.ttf
+
+    - family: Inter-Bold
+      fonts:
+        - asset: assets/fonts/Inter-Bold.ttf
+
+    - family: Inter-Light
+      fonts:
+        - asset: assets/fonts/Inter-Light.ttf
+
+    - family: Inter-Thin
+      fonts:
+        - asset: assets/fonts/Inter-Thin.ttf
+
+    - family: Inter-ExtraBold
+      fonts:
+        - asset: assets/fonts/Inter-ExtraBold.ttf
+
+    - family: Recoleta-SemiBold
+      fonts:
+        - asset: assets/fonts/Recoleta-SemiBold.ttf
