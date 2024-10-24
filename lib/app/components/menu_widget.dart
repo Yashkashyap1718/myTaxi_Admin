@@ -1,6 +1,5 @@
 // ignore_for_file: depend_on_referenced_packages
 
-import 'package:admin/app/modules/driver_screen/controllers/driver_screen_controller.dart';
 import 'package:admin/app/routes/app_pages.dart';
 import 'package:admin/app/services/shared_preferences/app_preference.dart';
 import 'package:admin/app/utils/app_colors.dart';
@@ -24,7 +23,9 @@ class MenuWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
     return Container(
-      color: themeChange.isDarkTheme() ? AppThemData.primaryBlack : AppThemData.primaryWhite,
+      color: themeChange.isDarkTheme()
+          ? AppThemData.primaryBlack
+          : AppThemData.primaryWhite,
       width: 270,
       height: 1.sh,
       child: Column(
@@ -65,7 +66,10 @@ class MenuWidget extends StatelessWidget {
               ),
             ),
             14.height,
-            Divider(color: themeChange.isDarkTheme() ? AppThemData.greyShade900 : AppThemData.greyShade100),
+            Divider(
+                color: themeChange.isDarkTheme()
+                    ? AppThemData.greyShade900
+                    : AppThemData.greyShade100),
           },
           Expanded(
             child: SingleChildScrollView(
@@ -103,7 +107,8 @@ class MenuWidget extends StatelessWidget {
                         }
                         Get.toNamed(Routes.BOOKING_HISTORY_SCREEN);
                       },
-                      isSelected: Get.currentRoute == Routes.BOOKING_HISTORY_SCREEN,
+                      isSelected:
+                          Get.currentRoute == Routes.BOOKING_HISTORY_SCREEN,
                       themeChange: themeChange,
                     ),
                     ListTile(
@@ -116,7 +121,8 @@ class MenuWidget extends StatelessWidget {
                       buttonTitle: "Passengers".tr,
                       icon: "assets/icons/ic_user.svg",
                       onPress: () {
-                        if (Get.currentRoute == Routes.PASSENGERS_DETAIL_SCREEN) {
+                        if (Get.currentRoute ==
+                            Routes.PASSENGERS_DETAIL_SCREEN) {
                           Get.back();
                         }
                         if (Get.currentRoute == Routes.BOOKING_DETAIL) {
@@ -135,7 +141,8 @@ class MenuWidget extends StatelessWidget {
                     )),
                     ListItem(
                       onPress: () async {
-                        if (Get.currentRoute == Routes.PASSENGERS_DETAIL_SCREEN) {
+                        if (Get.currentRoute ==
+                            Routes.PASSENGERS_DETAIL_SCREEN) {
                           Get.back();
                         }
                         if (Get.currentRoute == Routes.BOOKING_DETAIL) {
@@ -154,7 +161,8 @@ class MenuWidget extends StatelessWidget {
                       onPress: () {
                         Get.toNamed(Routes.VERIFY_DOCUMENT_SCREEN);
                       },
-                      isSelected: Get.currentRoute == Routes.VERIFY_DOCUMENT_SCREEN,
+                      isSelected:
+                          Get.currentRoute == Routes.VERIFY_DOCUMENT_SCREEN,
                       themeChange: themeChange,
                     ),
                     ListTile(
@@ -169,7 +177,8 @@ class MenuWidget extends StatelessWidget {
                       },
                       buttonTitle: 'Vehicle Brand'.tr,
                       icon: "assets/icons/ic_car_2.svg",
-                      isSelected: Get.currentRoute == Routes.VEHICLE_BRAND_SCREEN,
+                      isSelected:
+                          Get.currentRoute == Routes.VEHICLE_BRAND_SCREEN,
                       themeChange: themeChange,
                     ),
                     ListItem(
@@ -178,7 +187,8 @@ class MenuWidget extends StatelessWidget {
                       },
                       buttonTitle: 'Vehicle Model'.tr,
                       icon: "assets/icons/ic_car_2.svg",
-                      isSelected: Get.currentRoute == Routes.VEHICLE_MODEL_SCREEN,
+                      isSelected:
+                          Get.currentRoute == Routes.VEHICLE_MODEL_SCREEN,
                       themeChange: themeChange,
                     ),
                     ListItem(
@@ -187,7 +197,8 @@ class MenuWidget extends StatelessWidget {
                       },
                       buttonTitle: 'Vehicle Type'.tr,
                       icon: "assets/icons/ic_car_2.svg",
-                      isSelected: Get.currentRoute == Routes.VEHICLE_TYPE_SCREEN,
+                      isSelected:
+                          Get.currentRoute == Routes.VEHICLE_TYPE_SCREEN,
                       themeChange: themeChange,
                     ),
                     ListTile(
@@ -232,7 +243,7 @@ class MenuWidget extends StatelessWidget {
                       isSelected: Get.currentRoute == Routes.COUPON_SCREEN,
                       themeChange: themeChange,
                     ),
-                     ListTile(
+                    ListTile(
                         title: TextCustom(
                       title: "SUPPORT".tr,
                       fontSize: 12,
@@ -244,7 +255,8 @@ class MenuWidget extends StatelessWidget {
                       onPress: () {
                         Get.toNamed(Routes.SUPPORT_TICKET_SCREEN);
                       },
-                      isSelected: Get.currentRoute == Routes.SUPPORT_TICKET_SCREEN,
+                      isSelected:
+                          Get.currentRoute == Routes.SUPPORT_TICKET_SCREEN,
                       themeChange: themeChange,
                     ),
                     ListTile(
@@ -277,12 +289,18 @@ class MenuWidget extends StatelessWidget {
                   title: Text(
                     'Logout?'.tr,
                     style: const TextStyle(
-                        fontFamily: AppThemeData.medium, fontSize: 18, color: AppThemData.greyShade950, fontWeight: FontWeight.w600),
+                        fontFamily: AppThemeData.medium,
+                        fontSize: 18,
+                        color: AppThemData.greyShade950,
+                        fontWeight: FontWeight.w600),
                   ),
                   content: Text(
                     'Are you sure you want to logout?'.tr,
                     style: const TextStyle(
-                        fontFamily: AppThemeData.medium, fontSize: 16, color: AppThemData.textGrey, fontWeight: FontWeight.w400),
+                        fontFamily: AppThemeData.medium,
+                        fontSize: 16,
+                        color: AppThemData.textGrey,
+                        fontWeight: FontWeight.w400),
                   ),
                   actions: [
                     TextButton(
@@ -290,18 +308,25 @@ class MenuWidget extends StatelessWidget {
                       child: Text(
                         'Cancel'.tr,
                         style: const TextStyle(
-                            fontFamily: AppThemeData.medium, fontSize: 14, color: AppThemData.textBlack, fontWeight: FontWeight.w600),
+                            fontFamily: AppThemeData.medium,
+                            fontSize: 14,
+                            color: AppThemData.textBlack,
+                            fontWeight: FontWeight.w600),
                       ),
                     ),
                     TextButton(
                       onPressed: () async {
-                        await AppSharedPreference.appSharedPreference.removeIsUserLoggedIn();
+                        await AppSharedPreference.appSharedPreference
+                            .removeIsUserLoggedIn();
                         Get.offAllNamed(Routes.LOGIN_PAGE);
                       },
                       child: Text(
                         'Log out'.tr,
                         style: const TextStyle(
-                            fontFamily: AppThemeData.medium, fontSize: 14, color: AppThemData.red800, fontWeight: FontWeight.w600),
+                            fontFamily: AppThemeData.medium,
+                            fontSize: 14,
+                            color: AppThemData.red800,
+                            fontWeight: FontWeight.w600),
                       ),
                     ),
                   ],
@@ -310,7 +335,9 @@ class MenuWidget extends StatelessWidget {
             },
             textColor: AppThemData.red600,
             iconColor: AppThemData.red600,
-            buttonColor: themeChange.isDarkTheme() ? AppThemData.primaryBlack : AppThemData.primaryWhite,
+            buttonColor: themeChange.isDarkTheme()
+                ? AppThemData.primaryBlack
+                : AppThemData.primaryWhite,
           ),
         ],
       ),
@@ -344,7 +371,11 @@ class LogoutListItem extends StatelessWidget {
         // borderRadius: BorderRadius.only(topLeft: Radius.circular(20),bottomLeft: Radius.circular(20)),
         color: buttonColor,
         boxShadow: [
-          BoxShadow(color: AppThemData.black07, offset: textColor == AppThemData.black07 ? const Offset(4, 0) : const Offset(0, 0)),
+          BoxShadow(
+              color: AppThemData.black07,
+              offset: textColor == AppThemData.black07
+                  ? const Offset(4, 0)
+                  : const Offset(0, 0)),
         ],
       ),
       child: ListTile(
@@ -381,7 +412,13 @@ class ListItem extends StatelessWidget {
   final bool? isSelected;
   final DarkThemeProvider themeChange;
 
-  const ListItem({super.key, this.buttonTitle, this.icon, this.onPress, this.isSelected, required this.themeChange});
+  const ListItem(
+      {super.key,
+      this.buttonTitle,
+      this.icon,
+      this.onPress,
+      this.isSelected,
+      required this.themeChange});
 
   @override
   Widget build(BuildContext context) {
@@ -390,14 +427,18 @@ class ListItem extends StatelessWidget {
       decoration: isSelected == true
           ? BoxDecoration(
               // borderRadius: BorderRadius.only(topLeft: Radius.circular(20),bottomLeft: Radius.circular(20)),
-              color: themeChange.isDarkTheme() ? AppThemData.primaryBlack : AppThemData.primaryWhite,
+              color: themeChange.isDarkTheme()
+                  ? AppThemData.primaryBlack
+                  : AppThemData.primaryWhite,
               boxShadow: const [
                 BoxShadow(color: AppThemData.primary500, offset: Offset(4, 0)),
               ],
             )
           : BoxDecoration(
               // borderRadius: BorderRadius.only(topLeft: Radius.circular(20),bottomLeft: Radius.circular(20)),
-              color: themeChange.isDarkTheme() ? AppThemData.primaryBlack : AppThemData.primaryWhite,
+              color: themeChange.isDarkTheme()
+                  ? AppThemData.primaryBlack
+                  : AppThemData.primaryWhite,
             ),
       child: ListTile(
         minLeadingWidth: 20,
@@ -443,7 +484,13 @@ class ExpansionTileItem extends StatelessWidget {
   final bool? isSelected;
   final DarkThemeProvider themeChange;
 
-  const ExpansionTileItem({super.key, this.title, this.icon, this.children, this.isSelected, required this.themeChange});
+  const ExpansionTileItem(
+      {super.key,
+      this.title,
+      this.icon,
+      this.children,
+      this.isSelected,
+      required this.themeChange});
 
   @override
   Widget build(BuildContext context) {
@@ -451,14 +498,18 @@ class ExpansionTileItem extends StatelessWidget {
       decoration: isSelected == true
           ? BoxDecoration(
               // borderRadius: BorderRadius.only(topLeft: Radius.circular(20),bottomLeft: Radius.circular(20)),
-              color: themeChange.isDarkTheme() ? AppThemData.primaryBlack : AppThemData.primaryWhite,
+              color: themeChange.isDarkTheme()
+                  ? AppThemData.primaryBlack
+                  : AppThemData.primaryWhite,
               boxShadow: const [
                 BoxShadow(color: AppThemData.primary500, offset: Offset(4, 0)),
               ],
             )
           : BoxDecoration(
               // borderRadius: BorderRadius.only(topLeft: Radius.circular(20),bottomLeft: Radius.circular(20)),
-              color: themeChange.isDarkTheme() ? AppThemData.primaryBlack : AppThemData.primaryWhite,
+              color: themeChange.isDarkTheme()
+                  ? AppThemData.primaryBlack
+                  : AppThemData.primaryWhite,
             ),
       child: ListTileTheme(
         minLeadingWidth: 20,
@@ -478,7 +529,8 @@ class ExpansionTileItem extends StatelessWidget {
             ),
           ),
           initiallyExpanded: false,
-          childrenPadding: const EdgeInsets.only(left: 70, top: 0, bottom: 0, right: 0),
+          childrenPadding:
+              const EdgeInsets.only(left: 70, top: 0, bottom: 0, right: 0),
           backgroundColor: Colors.transparent,
           // collapsedIconColor: AppColors.darkGrey04,
           iconColor: AppThemData.greyShade400,

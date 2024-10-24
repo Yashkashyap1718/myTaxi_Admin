@@ -1,6 +1,6 @@
 // ignore_for_file: invalid_return_type_for_catch_error
 
-import 'dart:developer';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:admin/app/constant/constants.dart';
@@ -11,6 +11,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 class AdminProfileController extends GetxController {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -19,12 +20,14 @@ class AdminProfileController extends GetxController {
   final GlobalKey<FormState> changePasswordFromKey = GlobalKey<FormState>();
 
   Rx<TextEditingController> nameController = TextEditingController().obs;
-  Rx<TextEditingController> contactNumberController = TextEditingController().obs;
+  Rx<TextEditingController> contactNumberController =
+      TextEditingController().obs;
   Rx<TextEditingController> emailController = TextEditingController().obs;
   Rx<TextEditingController> imageController = TextEditingController().obs;
   Rx<TextEditingController> oldPasswordController = TextEditingController().obs;
   Rx<TextEditingController> newPasswordController = TextEditingController().obs;
-  Rx<TextEditingController> confirmPasswordController = TextEditingController().obs;
+  Rx<TextEditingController> confirmPasswordController =
+      TextEditingController().obs;
   RxInt selectedTabIndex = 0.obs;
 
   HomeController homeController = Get.put(HomeController());
@@ -58,8 +61,16 @@ class AdminProfileController extends GetxController {
 
   pickPhoto() async {
     uploading.value = true;
+
+    getProfileDataFromLocalStorage().then((profileData) {
+      if (profileData != null) {
+        nameController.value = profileData['name'] ?? '';
+        contactNumberController.value = profileData['phone'] ?? '';
+      }
+    });
     ImagePicker picker = ImagePicker();
-    final img = await picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
+    final img =
+        await picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
 
     File imageFile = File(img!.path);
 
@@ -70,10 +81,21 @@ class AdminProfileController extends GetxController {
     uploading.value = false;
   }
 
+  Future<Map<String, dynamic>?> getProfileDataFromLocalStorage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? profileJson = prefs.getString('profile_data');
+
+    if (profileJson != null) {
+      return jsonDecode(profileJson);
+    }
+    return null; // Return null if no data is found
+  }
+
   setAdminData() async {
     Constant.waitingLoader();
     if (imagePath.value.path.isNotEmpty) {
-      String? downloadUrl = await FireStoreUtils.uploadPic(PickedFile(imagePath.value.path), "admin", "admin", mimeType.value);
+      String? downloadUrl = await FireStoreUtils.uploadPic(
+          PickedFile(imagePath.value.path), "admin", "admin", mimeType.value);
       Constant.adminModel!.image = downloadUrl;
       log(downloadUrl.toString());
     }
@@ -93,7 +115,8 @@ class AdminProfileController extends GetxController {
     if (oldPasswordController.value.text != Constant.adminModel!.password) {
       ShowToast.errorToast("Old password is not correct".tr);
     } else {
-      if (newPasswordController.value.text != confirmPasswordController.value.text) {
+      if (newPasswordController.value.text !=
+          confirmPasswordController.value.text) {
         ShowToast.errorToast("Confirmation password does not match".tr);
       } else {
         Constant.waitingLoader();

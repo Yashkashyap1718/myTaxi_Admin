@@ -35,7 +35,9 @@ class HomeView extends GetView<HomeController> {
           return Scaffold(
               backgroundColor: AppThemData.lightGrey06,
               key: homeController.scaffoldKey,
-              drawer: CommonUI.drawerCustom(scaffoldKey: controller.scaffoldKey, themeChange: themeChange),
+              drawer: CommonUI.drawerCustom(
+                  scaffoldKey: controller.scaffoldKey,
+                  themeChange: themeChange),
               body: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: SizedBox(
@@ -54,7 +56,7 @@ class HomeView extends GetView<HomeController> {
                       : Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            MenuWidget(),
+                            const MenuWidget(),
                             Obx(
                               () => Flexible(
                                 child: changeWidget(homeController),

@@ -1158,7 +1158,7 @@ class FireStoreUtils {
     if (status == 'All') {
       final Query<Map<String, dynamic>> bookingList = FirebaseFirestore.instance
           .collection(CollectionName.bookings)
-          .where('createAt', isGreaterThanOrEqualTo: dateTimeRange!.start, isLessThan: dateTimeRange!.end);
+          .where('createAt', isGreaterThanOrEqualTo: dateTimeRange!.start, isLessThan: dateTimeRange.end);
       AggregateQuerySnapshot query = await bookingList.count().get();
       log('The number of StatusWise Booking: ${query.count}');
       Constant.bookingLength = query.count ?? 0;
@@ -1167,7 +1167,7 @@ class FireStoreUtils {
       final Query<Map<String, dynamic>> bookingList = FirebaseFirestore.instance
           .collection(CollectionName.bookings)
           .where('bookingStatus', isEqualTo: status)
-          .where('createAt', isGreaterThanOrEqualTo: dateTimeRange!.start, isLessThan: dateTimeRange!.end);
+          .where('createAt', isGreaterThanOrEqualTo: dateTimeRange!.start, isLessThan: dateTimeRange.end);
       AggregateQuerySnapshot query = await bookingList.count().get();
       log('The number of StatusWise Booking: ${query.count}');
       Constant.bookingLength = query.count ?? 0;
@@ -1183,7 +1183,7 @@ class FireStoreUtils {
         if (pageNumber > 1) {
           var documents = await fireStore
               .collection(CollectionName.bookings)
-              .where('createAt', isGreaterThanOrEqualTo: dateTimeRange!.start, isLessThanOrEqualTo: dateTimeRange!.end)
+              .where('createAt', isGreaterThanOrEqualTo: dateTimeRange!.start, isLessThanOrEqualTo: dateTimeRange.end)
               .orderBy('createAt', descending: true)
               .limit(pageSize * (pageNumber - 1))
               .get();
@@ -1194,7 +1194,7 @@ class FireStoreUtils {
         if (lastDocument != null) {
           await fireStore
               .collection(CollectionName.bookings)
-              .where('createAt', isGreaterThanOrEqualTo: dateTimeRange!.start, isLessThanOrEqualTo: dateTimeRange!.end)
+              .where('createAt', isGreaterThanOrEqualTo: dateTimeRange!.start, isLessThanOrEqualTo: dateTimeRange.end)
               .orderBy('createAt', descending: true)
               .startAfterDocument(lastDocument)
               .limit(pageSize)
@@ -1210,7 +1210,7 @@ class FireStoreUtils {
         } else {
           await fireStore
               .collection(CollectionName.bookings)
-              .where('createAt', isGreaterThanOrEqualTo: dateTimeRange!.start, isLessThanOrEqualTo: dateTimeRange!.end)
+              .where('createAt', isGreaterThanOrEqualTo: dateTimeRange!.start, isLessThanOrEqualTo: dateTimeRange.end)
               .orderBy('createAt', descending: true)
               .limit(pageSize)
               .get()
@@ -1229,7 +1229,7 @@ class FireStoreUtils {
           var documents = await fireStore
               .collection(CollectionName.bookings)
               .where('bookingStatus', isEqualTo: status)
-              .where('createAt', isGreaterThanOrEqualTo: dateTimeRange!.start, isLessThanOrEqualTo: dateTimeRange!.end)
+              .where('createAt', isGreaterThanOrEqualTo: dateTimeRange!.start, isLessThanOrEqualTo: dateTimeRange.end)
               .orderBy('createAt', descending: true)
               .limit(pageSize * (pageNumber - 1))
               .get();
@@ -1241,7 +1241,7 @@ class FireStoreUtils {
           await fireStore
               .collection(CollectionName.bookings)
               .where('bookingStatus', isEqualTo: status)
-              .where('createAt', isGreaterThanOrEqualTo: dateTimeRange!.start, isLessThanOrEqualTo: dateTimeRange!.end)
+              .where('createAt', isGreaterThanOrEqualTo: dateTimeRange!.start, isLessThanOrEqualTo: dateTimeRange.end)
               .orderBy('createAt', descending: true)
               .startAfterDocument(lastDocument)
               .limit(pageSize)
@@ -1258,7 +1258,7 @@ class FireStoreUtils {
           await fireStore
               .collection(CollectionName.bookings)
               .where('bookingStatus', isEqualTo: status)
-              .where('createAt', isGreaterThanOrEqualTo: dateTimeRange!.start, isLessThanOrEqualTo: dateTimeRange!.end)
+              .where('createAt', isGreaterThanOrEqualTo: dateTimeRange!.start, isLessThanOrEqualTo: dateTimeRange.end)
               .orderBy('createAt', descending: true)
               .limit(pageSize)
               .get()

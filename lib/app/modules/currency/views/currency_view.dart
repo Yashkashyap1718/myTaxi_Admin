@@ -87,7 +87,7 @@ class CurrencyView extends GetView<CurrencyController> {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               headingRowColor:
-                                  MaterialStateColor.resolveWith((states) => themeChange.isDarkTheme() ? AppThemData.greyShade900 : AppThemData.greyShade100),
+                                  WidgetStateColor.resolveWith((states) => themeChange.isDarkTheme() ? AppThemData.greyShade900 : AppThemData.greyShade100),
                               columns: [
                                 CommonUI.dataColumnWidget(context,
                                     columnTitle: "Id".tr, width: ResponsiveWidget.isMobile(context) ? 15 : MediaQuery.of(context).size.width * 0.05),

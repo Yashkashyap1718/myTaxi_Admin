@@ -17,6 +17,7 @@ import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+
 import '../../../../widget/container_custom.dart';
 import '../../../../widget/global_widgets.dart';
 import '../../../components/menu_widget.dart';
@@ -36,13 +37,17 @@ class DashboardScreenView extends GetView<DashboardScreenController> {
         return ResponsiveWidget(
           mobile: Scaffold(
             key: controller.scaffoldKeyDrawer,
-            backgroundColor: themeChange.isDarkTheme() ? AppThemData.greyShade950 : AppThemData.greyShade50,
+            backgroundColor: themeChange.isDarkTheme()
+                ? AppThemData.greyShade950
+                : AppThemData.greyShade50,
             // appBar: CommonUI.appBarCustom(themeChange: themeChange, scaffoldKey: controller.scaffoldKey),
             appBar: AppBar(
               elevation: 0.0,
               toolbarHeight: 70,
               automaticallyImplyLeading: false,
-              backgroundColor: themeChange.isDarkTheme() ? AppThemData.primaryBlack : AppThemData.primaryWhite,
+              backgroundColor: themeChange.isDarkTheme()
+                  ? AppThemData.primaryBlack
+                  : AppThemData.primaryWhite,
               leadingWidth: 200,
               // title: title,
               leading: GestureDetector(
@@ -59,7 +64,9 @@ class DashboardScreenView extends GetView<DashboardScreenController> {
                               Icon(
                                 Icons.menu,
                                 size: 30,
-                                color: themeChange.isDarkTheme() ? AppThemData.primary500 : AppThemData.primary500,
+                                color: themeChange.isDarkTheme()
+                                    ? AppThemData.primary500
+                                    : AppThemData.primary500,
                               )
                             ],
                           ),
@@ -103,7 +110,9 @@ class DashboardScreenView extends GetView<DashboardScreenController> {
             drawer: Drawer(
               // key: scaffoldKey,
               width: 270,
-              backgroundColor: themeChange.isDarkTheme() ? AppThemData.primaryBlack : AppThemData.primaryWhite,
+              backgroundColor: themeChange.isDarkTheme()
+                  ? AppThemData.primaryBlack
+                  : AppThemData.primaryWhite,
               child: const MenuWidget(),
             ),
             body: SingleChildScrollView(
@@ -133,7 +142,9 @@ class DashboardScreenView extends GetView<DashboardScreenController> {
                           commonView(
                             context: context,
                             title: "Today's Earning".tr,
-                            value: Constant.amountShow(amount: controller.todayTotalEarnings.toString()),
+                            value: Constant.amountShow(
+                                amount:
+                                    controller.todayTotalEarnings.toString()),
                             imageAssets: "assets/icons/ic_coin_2.svg",
                             bgColor: const Color(0xfffbd4f5),
                             textColor: const Color(0xff853987),
@@ -142,7 +153,8 @@ class DashboardScreenView extends GetView<DashboardScreenController> {
                             context: context,
                             title: "Total Revenue".tr,
                             // value: controller.totalEarnings.toString(),
-                            value: Constant.amountShow(amount: controller.totalEarnings.toString()),
+                            value: Constant.amountShow(
+                                amount: controller.totalEarnings.toString()),
                             imageAssets: "assets/icons/ic_currency_dollar.svg",
                             bgColor: const Color(0xffeaeac3),
                             textColor: const Color(0xff7e723a),
@@ -154,8 +166,12 @@ class DashboardScreenView extends GetView<DashboardScreenController> {
                     // Row(children: [Expanded(child: LineChartCard()), Expanded(child: LineChartCard())]),
                     Column(
                       children: [
-                        Padding(padding: const EdgeInsets.all(10), child: bookingChartStatistic(context)),
-                        Padding(padding: const EdgeInsets.all(10), child: usersChartStatistic(context)),
+                        Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: bookingChartStatistic(context)),
+                        Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: usersChartStatistic(context)),
                         // usersChartStatistic(context),
                       ],
                     ),
@@ -169,11 +185,13 @@ class DashboardScreenView extends GetView<DashboardScreenController> {
                               Padding(
                                   padding: const EdgeInsets.all(10),
                                   child: Visibility(
-                                    visible: controller.recentBookingList.isNotEmpty,
+                                    visible:
+                                        controller.recentBookingList.isNotEmpty,
                                     child: ContainerCustom(
                                       child: Column(children: [
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             TextCustom(
                                               title: 'Recent Bookings'.tr,
@@ -183,7 +201,8 @@ class DashboardScreenView extends GetView<DashboardScreenController> {
                                             InkWell(
                                               onTap: () {
                                                 // homeController.currentPageIndex.value = 1;
-                                                Get.toNamed(Routes.BOOKING_HISTORY_SCREEN);
+                                                Get.toNamed(Routes
+                                                    .BOOKING_HISTORY_SCREEN);
                                               },
                                               child: TextCustom(
                                                 title: 'View all'.tr,
@@ -197,126 +216,211 @@ class DashboardScreenView extends GetView<DashboardScreenController> {
                                         SingleChildScrollView(
                                           scrollDirection: Axis.horizontal,
                                           child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(12),
+                                            borderRadius:
+                                                BorderRadius.circular(12),
                                             child: controller.isLoading.value
                                                 ? Padding(
-                                                    padding: paddingEdgeInsets(),
+                                                    padding:
+                                                        paddingEdgeInsets(),
                                                     child: Constant.loader(),
                                                   )
-                                                : controller.recentBookingList.isEmpty
-                                                    ? TextCustom(title: "No Data available".tr)
+                                                : controller.recentBookingList
+                                                        .isEmpty
+                                                    ? TextCustom(
+                                                        title:
+                                                            "No Data available"
+                                                                .tr)
                                                     : DataTable(
                                                         horizontalMargin: 20,
                                                         columnSpacing: 30,
                                                         dataRowMaxHeight: 65,
                                                         headingRowHeight: 65,
                                                         border: TableBorder.all(
-                                                          color: themeChange.isDarkTheme() ? AppThemData.greyShade800 : AppThemData.greyShade100,
-                                                          borderRadius: BorderRadius.circular(12),
+                                                          color: themeChange
+                                                                  .isDarkTheme()
+                                                              ? AppThemData
+                                                                  .greyShade800
+                                                              : AppThemData
+                                                                  .greyShade100,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(12),
                                                         ),
-                                                        headingRowColor: MaterialStateColor.resolveWith(
-                                                            (states) => themeChange.isDarkTheme() ? AppThemData.greyShade800 : AppThemData.greyShade100),
+                                                        headingRowColor: WidgetStateColor.resolveWith(
+                                                            (states) => themeChange
+                                                                    .isDarkTheme()
+                                                                ? AppThemData
+                                                                    .greyShade800
+                                                                : AppThemData
+                                                                    .greyShade100),
                                                         columns: [
-                                                          CommonUI.dataColumnWidget(context, columnTitle: "Order Id".tr, width: 150),
-                                                          CommonUI.dataColumnWidget(context,
-                                                              columnTitle: "Customer Name".tr,
-                                                              width: ResponsiveWidget.isMobile(context) ? 130 : MediaQuery.of(context).size.width * 0.08),
-                                                          CommonUI.dataColumnWidget(context,
-                                                              columnTitle: "Booking Date".tr,
-                                                              width: ResponsiveWidget.isMobile(context) ? 150 : MediaQuery.of(context).size.width * 0.05),
-                                                          CommonUI.dataColumnWidget(context,
-                                                              columnTitle: "Payment Status".tr,
-                                                              width: ResponsiveWidget.isMobile(context) ? 130 : MediaQuery.of(context).size.width * 0.07),
-                                                          CommonUI.dataColumnWidget(context,
-                                                              columnTitle: "Booking Status".tr,
-                                                              width: ResponsiveWidget.isMobile(context) ? 130 : MediaQuery.of(context).size.width * 0.07),
+                                                          CommonUI
+                                                              .dataColumnWidget(
+                                                                  context,
+                                                                  columnTitle:
+                                                                      "Order Id"
+                                                                          .tr,
+                                                                  width: 150),
+                                                          CommonUI.dataColumnWidget(
+                                                              context,
+                                                              columnTitle:
+                                                                  "Customer Name"
+                                                                      .tr,
+                                                              width: ResponsiveWidget
+                                                                      .isMobile(
+                                                                          context)
+                                                                  ? 130
+                                                                  : MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      0.08),
+                                                          CommonUI.dataColumnWidget(
+                                                              context,
+                                                              columnTitle:
+                                                                  "Booking Date"
+                                                                      .tr,
+                                                              width: ResponsiveWidget
+                                                                      .isMobile(
+                                                                          context)
+                                                                  ? 150
+                                                                  : MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      0.05),
+                                                          CommonUI.dataColumnWidget(
+                                                              context,
+                                                              columnTitle:
+                                                                  "Payment Status"
+                                                                      .tr,
+                                                              width: ResponsiveWidget
+                                                                      .isMobile(
+                                                                          context)
+                                                                  ? 130
+                                                                  : MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      0.07),
+                                                          CommonUI.dataColumnWidget(
+                                                              context,
+                                                              columnTitle:
+                                                                  "Booking Status"
+                                                                      .tr,
+                                                              width: ResponsiveWidget
+                                                                      .isMobile(
+                                                                          context)
+                                                                  ? 130
+                                                                  : MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      0.07),
 
-                                                          CommonUI.dataColumnWidget(context, columnTitle: "Total".tr, width: 130),
+                                                          CommonUI
+                                                              .dataColumnWidget(
+                                                                  context,
+                                                                  columnTitle:
+                                                                      "Total"
+                                                                          .tr,
+                                                                  width: 130),
                                                           // CommonUI.dataColumnWidget(context,
                                                           //     columnTitle: "Status", width: ResponsiveWidget.isMobile(context) ? 100 : MediaQuery.of(context).size.width * 0.10),
-                                                          CommonUI.dataColumnWidget(
+                                                          CommonUI
+                                                              .dataColumnWidget(
                                                             context,
-                                                            columnTitle: "Action".tr,
+                                                            columnTitle:
+                                                                "Action".tr,
                                                             width: 100,
                                                           ),
                                                         ],
-                                                        rows: controller.recentBookingList
-                                                            .map((bookingModel) => DataRow(cells: [
-                                                                  DataCell(
-                                                                    TextCustom(
-                                                                      title: bookingModel.id!.isEmpty ? "N/A".tr : "#${bookingModel.id!.substring(0, 8)}",
-                                                                    ),
-                                                                  ),
-                                                                  DataCell(
-                                                                    FutureBuilder<UserModel?>(
-                                                                        future: FireStoreUtils.getUserByUserID(bookingModel.customerId.toString()), // async work
-                                                                        builder: (BuildContext context, AsyncSnapshot<UserModel?> snapshot) {
-                                                                          switch (snapshot.connectionState) {
-                                                                            case ConnectionState.waiting:
-                                                                              // return Center(child: Constant.loader());
-                                                                              return const SizedBox();
-                                                                            default:
-                                                                              if (snapshot.hasError) {
-                                                                                return TextCustom(
-                                                                                  title: 'Error: ${snapshot.error}',
-                                                                                );
-                                                                              } else {
-                                                                                UserModel userModel = snapshot.data!;
-                                                                                return Container(
-                                                                                  alignment: Alignment.centerLeft,
-                                                                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                                                                                  child: TextButton(
-                                                                                    onPressed: () {},
-                                                                                    child: TextCustom(
-                                                                                      title: userModel.fullName!.isEmpty
-                                                                                          ? "N/A".tr
-                                                                                          : userModel.fullName.toString() == "Unknown User"
-                                                                                              ? "User Deleted".tr
-                                                                                              : userModel.fullName.toString(),
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              }
-                                                                          }
-                                                                        }),
-                                                                  ),
-                                                                  DataCell(TextCustom(
-                                                                      title: bookingModel.createAt == null ? '' : Constant.timestampToDateTime(bookingModel.createAt!))),
-                                                                  DataCell(TextCustom(title: bool.parse(bookingModel.paymentStatus!.toString()) ? "Paid" : "Unpaid")),
-                                                                  DataCell(
-                                                                    // e.bookingStatus.toString()
-                                                                    Constant.bookingStatusText(context, bookingModel.bookingStatus.toString()),
-                                                                  ),
-                                                                  DataCell(TextCustom(title: Constant.amountShow(amount: bookingModel.subTotal))),
-                                                                  DataCell(
-                                                                    Container(
-                                                                      alignment: Alignment.center,
-                                                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                                                                      child: Row(
-                                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                        children: [
-                                                                          InkWell(
-                                                                            onTap: () async {
-                                                                              Get.toNamed(Routes.BOOKING_DETAIL, arguments: {'bookingModel': bookingModel});
-
-                                                                              // BookingHistoryDetailController bookingHistoryDetailController = Get.put(BookingHistoryDetailController());
-                                                                              // await bookingHistoryDetailController.getArgument(bookingModel);
-                                                                              //
-                                                                              // HomeController homeController = Get.put(HomeController());
-                                                                              // homeController.currentPageIndex.value = 3;
-                                                                            },
-                                                                            child: SvgPicture.asset(
-                                                                              "assets/icons/ic_eye.svg",
-                                                                              color: AppThemData.greyShade400,
-                                                                              height: 16,
-                                                                              width: 16,
+                                                        rows: controller
+                                                            .recentBookingList
+                                                            .map(
+                                                                (bookingModel) =>
+                                                                    DataRow(
+                                                                        cells: [
+                                                                          DataCell(
+                                                                            TextCustom(
+                                                                              title: bookingModel.id!.isEmpty ? "N/A".tr : "#${bookingModel.id!.substring(0, 8)}",
                                                                             ),
                                                                           ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ]))
+                                                                          DataCell(
+                                                                            FutureBuilder<UserModel?>(
+                                                                                future: FireStoreUtils.getUserByUserID(bookingModel.customerId.toString()), // async work
+                                                                                builder: (BuildContext context, AsyncSnapshot<UserModel?> snapshot) {
+                                                                                  switch (snapshot.connectionState) {
+                                                                                    case ConnectionState.waiting:
+                                                                                      // return Center(child: Constant.loader());
+                                                                                      return const SizedBox();
+                                                                                    default:
+                                                                                      if (snapshot.hasError) {
+                                                                                        return TextCustom(
+                                                                                          title: 'Error: ${snapshot.error}',
+                                                                                        );
+                                                                                      } else {
+                                                                                        UserModel userModel = snapshot.data!;
+                                                                                        return Container(
+                                                                                          alignment: Alignment.centerLeft,
+                                                                                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                                                                          child: TextButton(
+                                                                                            onPressed: () {},
+                                                                                            child: TextCustom(
+                                                                                              title: userModel.fullName!.isEmpty
+                                                                                                  ? "N/A".tr
+                                                                                                  : userModel.fullName.toString() == "Unknown User"
+                                                                                                      ? "User Deleted".tr
+                                                                                                      : userModel.fullName.toString(),
+                                                                                            ),
+                                                                                          ),
+                                                                                        );
+                                                                                      }
+                                                                                  }
+                                                                                }),
+                                                                          ),
+                                                                          DataCell(
+                                                                              TextCustom(title: bookingModel.createAt == null ? '' : Constant.timestampToDateTime(bookingModel.createAt!))),
+                                                                          DataCell(
+                                                                              TextCustom(title: bool.parse(bookingModel.paymentStatus!.toString()) ? "Paid" : "Unpaid")),
+                                                                          DataCell(
+                                                                            // e.bookingStatus.toString()
+                                                                            Constant.bookingStatusText(context,
+                                                                                bookingModel.bookingStatus.toString()),
+                                                                          ),
+                                                                          DataCell(
+                                                                              TextCustom(title: Constant.amountShow(amount: bookingModel.subTotal))),
+                                                                          DataCell(
+                                                                            Container(
+                                                                              alignment: Alignment.center,
+                                                                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                                                              child: Row(
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                children: [
+                                                                                  InkWell(
+                                                                                    onTap: () async {
+                                                                                      Get.toNamed(Routes.BOOKING_DETAIL, arguments: {
+                                                                                        'bookingModel': bookingModel
+                                                                                      });
+
+                                                                                      // BookingHistoryDetailController bookingHistoryDetailController = Get.put(BookingHistoryDetailController());
+                                                                                      // await bookingHistoryDetailController.getArgument(bookingModel);
+                                                                                      //
+                                                                                      // HomeController homeController = Get.put(HomeController());
+                                                                                      // homeController.currentPageIndex.value = 3;
+                                                                                    },
+                                                                                    child: SvgPicture.asset(
+                                                                                      "assets/icons/ic_eye.svg",
+                                                                                      color: AppThemData.greyShade400,
+                                                                                      height: 16,
+                                                                                      width: 16,
+                                                                                    ),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ]))
                                                             .toList()),
                                           ),
                                         ),
@@ -333,39 +437,50 @@ class DashboardScreenView extends GetView<DashboardScreenController> {
                                     child: Column(
                                       children: [
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             TextCustom(
                                               title: 'Recent Users'.tr,
                                               fontSize: 24,
                                               fontFamily: AppThemeData.bold,
-
                                             ),
                                             InkWell(
                                               onTap: () {
                                                 // homeController.currentPageIndex.value = 2;
-                                                Get.toNamed(Routes.PASSENGERS_SCREEN);
+                                                Get.toNamed(
+                                                    Routes.PASSENGERS_SCREEN);
                                               },
                                               child: TextCustom(
                                                 title: 'View all'.tr,
                                                 fontSize: 16,
                                                 fontFamily: AppThemeData.bold,
-                                              
                                               ),
                                             ),
                                           ],
                                         ),
                                         Container(
                                           padding: const EdgeInsets.all(16),
-                                          height: ScreenSize.height(50, context),
+                                          height:
+                                              ScreenSize.height(50, context),
                                           child: ListView.separated(
                                             shrinkWrap: true,
                                             scrollDirection: Axis.vertical,
-                                            itemCount: controller.userList.length >= 5 ? 5 : controller.userList.length,
+                                            itemCount:
+                                                controller.userList.length >= 5
+                                                    ? 5
+                                                    : controller
+                                                        .userList.length,
                                             itemBuilder: (context, index) {
-                                              return userView(context: context, userModel: controller.userList[index], themeChange: themeChange);
+                                              return userView(
+                                                  context: context,
+                                                  userModel: controller
+                                                      .userList[index],
+                                                  themeChange: themeChange);
                                             },
-                                            separatorBuilder: (BuildContext context, int index) {
+                                            separatorBuilder:
+                                                (BuildContext context,
+                                                    int index) {
                                               return 12.height;
                                             },
                                           ),
@@ -385,8 +500,12 @@ class DashboardScreenView extends GetView<DashboardScreenController> {
           desktop: SizedBox(
             width: MediaQuery.of(context).size.width,
             child: Scaffold(
-              backgroundColor: themeChange.isDarkTheme() ? AppThemData.greyShade950 : AppThemData.greyShade50,
-              appBar: CommonUI.appBarCustom(themeChange: themeChange, scaffoldKey: controller.scaffoldKeyDrawer),
+              backgroundColor: themeChange.isDarkTheme()
+                  ? AppThemData.greyShade950
+                  : AppThemData.greyShade50,
+              appBar: CommonUI.appBarCustom(
+                  themeChange: themeChange,
+                  scaffoldKey: controller.scaffoldKeyDrawer),
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -422,7 +541,9 @@ class DashboardScreenView extends GetView<DashboardScreenController> {
                                   commonView(
                                     context: context,
                                     title: "Today's Earning".tr,
-                                    value: Constant.amountShow(amount: controller.todayTotalEarnings.toString()),
+                                    value: Constant.amountShow(
+                                        amount: controller.todayTotalEarnings
+                                            .toString()),
                                     imageAssets: "assets/icons/ic_coin_2.svg",
                                     bgColor: const Color(0xfffbd4f5),
                                     textColor: const Color(0xff853987),
@@ -431,8 +552,11 @@ class DashboardScreenView extends GetView<DashboardScreenController> {
                                     context: context,
                                     title: "Total Earning".tr,
                                     // value: controller.totalEarnings.toString(),
-                                    value: Constant.amountShow(amount: controller.totalEarnings.toString()),
-                                    imageAssets: "assets/icons/ic_currency_dollar.svg",
+                                    value: Constant.amountShow(
+                                        amount: controller.totalEarnings
+                                            .toString()),
+                                    imageAssets:
+                                        "assets/icons/ic_currency_dollar.svg",
                                     bgColor: const Color(0xffeaeac3),
                                     textColor: const Color(0xff7e723a),
                                   ),
@@ -441,7 +565,8 @@ class DashboardScreenView extends GetView<DashboardScreenController> {
                             ),
                             24.height,
                             Padding(
-                              padding: paddingEdgeInsets(horizontal: 24, vertical: 0),
+                              padding: paddingEdgeInsets(
+                                  horizontal: 24, vertical: 0),
                               child: SingleChildScrollView(
                                 child: Row(children: [
                                   Expanded(
@@ -463,166 +588,247 @@ class DashboardScreenView extends GetView<DashboardScreenController> {
                                     child: Constant.loader(),
                                   )
                                 : Container(
-                                    padding: paddingEdgeInsets(horizontal: 24, vertical: 0),
+                                    padding: paddingEdgeInsets(
+                                        horizontal: 24, vertical: 0),
                                     child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Expanded(
                                           flex: 7,
                                           child: Visibility(
-                                            visible: controller.recentBookingList.isNotEmpty,
+                                            visible: controller
+                                                .recentBookingList.isNotEmpty,
                                             child: ContainerCustom(
                                               child: Column(children: [
                                                 Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
                                                     TextCustom(
-                                                      title: 'Recent Bookings'.tr,
+                                                      title:
+                                                          'Recent Bookings'.tr,
                                                       fontSize: 20,
-                                                      fontFamily: AppThemeData.bold,
+                                                      fontFamily:
+                                                          AppThemeData.bold,
                                                     ),
                                                     InkWell(
                                                       onTap: () {
                                                         // homeController.currentPageIndex.value = 1;
-                                                        Get.toNamed(Routes.BOOKING_HISTORY_SCREEN);
+                                                        Get.toNamed(Routes
+                                                            .BOOKING_HISTORY_SCREEN);
                                                       },
                                                       child: TextCustom(
                                                         title: 'View all'.tr,
                                                         fontSize: 16,
-                                                        fontFamily: AppThemeData.bold,
+                                                        fontFamily:
+                                                            AppThemeData.bold,
                                                       ),
                                                     ),
                                                   ],
                                                 ),
                                                 spaceH(height: 20),
                                                 SingleChildScrollView(
-                                                  scrollDirection: Axis.horizontal,
+                                                  scrollDirection:
+                                                      Axis.horizontal,
                                                   child: ClipRRect(
-                                                    borderRadius: BorderRadius.circular(12),
-                                                    child: controller.isLoading.value
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12),
+                                                    child: controller
+                                                            .isLoading.value
                                                         ? Padding(
-                                                            padding: paddingEdgeInsets(),
-                                                            child: Constant.loader(),
+                                                            padding:
+                                                                paddingEdgeInsets(),
+                                                            child: Constant
+                                                                .loader(),
                                                           )
-                                                        : controller.recentBookingList.isEmpty
-                                                            ? TextCustom(title: "No Data available".tr)
+                                                        : controller
+                                                                .recentBookingList
+                                                                .isEmpty
+                                                            ? TextCustom(
+                                                                title:
+                                                                    "No Data available"
+                                                                        .tr)
                                                             : DataTable(
-                                                                horizontalMargin: 20,
-                                                                columnSpacing: 30,
-                                                                dataRowMaxHeight: 65,
-                                                                headingRowHeight: 65,
-                                                                border: TableBorder.all(
-                                                                  color: themeChange.isDarkTheme() ? AppThemData.greyShade800 : AppThemData.greyShade100,
-                                                                  borderRadius: BorderRadius.circular(12),
+                                                                horizontalMargin:
+                                                                    20,
+                                                                columnSpacing:
+                                                                    30,
+                                                                dataRowMaxHeight:
+                                                                    65,
+                                                                headingRowHeight:
+                                                                    65,
+                                                                border:
+                                                                    TableBorder
+                                                                        .all(
+                                                                  color: themeChange.isDarkTheme()
+                                                                      ? AppThemData
+                                                                          .greyShade800
+                                                                      : AppThemData
+                                                                          .greyShade100,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              12),
                                                                 ),
-                                                                headingRowColor: MaterialStateColor.resolveWith(
-                                                                    (states) => themeChange.isDarkTheme() ? AppThemData.greyShade800 : AppThemData.greyShade100),
+                                                                headingRowColor: WidgetStateColor.resolveWith((states) => themeChange
+                                                                        .isDarkTheme()
+                                                                    ? AppThemData
+                                                                        .greyShade800
+                                                                    : AppThemData
+                                                                        .greyShade100),
                                                                 columns: [
-                                                                  CommonUI.dataColumnWidget(context, columnTitle: "Order Id".tr, width: 150),
-                                                                  CommonUI.dataColumnWidget(context,
-                                                                      columnTitle: "Customer Name".tr,
-                                                                      width: ResponsiveWidget.isMobile(context) ? 150 : MediaQuery.of(context).size.width * 0.08),
-                                                                  CommonUI.dataColumnWidget(context,
-                                                                      columnTitle: "Booking Date".tr,
-                                                                      width: ResponsiveWidget.isMobile(context) ? 220 : MediaQuery.of(context).size.width * 0.05),
-                                                                  CommonUI.dataColumnWidget(context,
-                                                                      columnTitle: "Payment Status".tr,
-                                                                      width: ResponsiveWidget.isMobile(context) ? 220 : MediaQuery.of(context).size.width * 0.07),
-                                                                  CommonUI.dataColumnWidget(context,
-                                                                      columnTitle: "Booking Status".tr,
-                                                                      width: ResponsiveWidget.isMobile(context) ? 220 : MediaQuery.of(context).size.width * 0.07),
+                                                                  CommonUI.dataColumnWidget(
+                                                                      context,
+                                                                      columnTitle:
+                                                                          "Order Id"
+                                                                              .tr,
+                                                                      width:
+                                                                          150),
+                                                                  CommonUI.dataColumnWidget(
+                                                                      context,
+                                                                      columnTitle:
+                                                                          "Customer Name"
+                                                                              .tr,
+                                                                      width: ResponsiveWidget.isMobile(
+                                                                              context)
+                                                                          ? 150
+                                                                          : MediaQuery.of(context).size.width *
+                                                                              0.08),
+                                                                  CommonUI.dataColumnWidget(
+                                                                      context,
+                                                                      columnTitle:
+                                                                          "Booking Date"
+                                                                              .tr,
+                                                                      width: ResponsiveWidget.isMobile(
+                                                                              context)
+                                                                          ? 220
+                                                                          : MediaQuery.of(context).size.width *
+                                                                              0.05),
+                                                                  CommonUI.dataColumnWidget(
+                                                                      context,
+                                                                      columnTitle:
+                                                                          "Payment Status"
+                                                                              .tr,
+                                                                      width: ResponsiveWidget.isMobile(
+                                                                              context)
+                                                                          ? 220
+                                                                          : MediaQuery.of(context).size.width *
+                                                                              0.07),
+                                                                  CommonUI.dataColumnWidget(
+                                                                      context,
+                                                                      columnTitle:
+                                                                          "Booking Status"
+                                                                              .tr,
+                                                                      width: ResponsiveWidget.isMobile(
+                                                                              context)
+                                                                          ? 220
+                                                                          : MediaQuery.of(context).size.width *
+                                                                              0.07),
 
-                                                                  CommonUI.dataColumnWidget(context, columnTitle: "Total".tr, width: 140),
+                                                                  CommonUI.dataColumnWidget(
+                                                                      context,
+                                                                      columnTitle:
+                                                                          "Total"
+                                                                              .tr,
+                                                                      width:
+                                                                          140),
                                                                   // CommonUI.dataColumnWidget(context,
                                                                   //     columnTitle: "Status", width: ResponsiveWidget.isMobile(context) ? 100 : MediaQuery.of(context).size.width * 0.10),
-                                                                  CommonUI.dataColumnWidget(
+                                                                  CommonUI
+                                                                      .dataColumnWidget(
                                                                     context,
-                                                                    columnTitle: "Action".tr,
+                                                                    columnTitle:
+                                                                        "Action"
+                                                                            .tr,
                                                                     width: 100,
                                                                   ),
                                                                 ],
-                                                                rows: controller.recentBookingList
-                                                                    .map((bookingModel) => DataRow(cells: [
-                                                                          DataCell(
-                                                                            TextCustom(
-                                                                              title: bookingModel.id!.isEmpty ? "N/A" : "#${bookingModel.id!.substring(0, 8)}",
-                                                                            ),
-                                                                          ),
-                                                                          DataCell(
-                                                                            FutureBuilder<UserModel?>(
-                                                                                future: FireStoreUtils.getUserByUserID(bookingModel.customerId.toString()), // async work
-                                                                                builder: (BuildContext context, AsyncSnapshot<UserModel?> snapshot) {
-                                                                                  switch (snapshot.connectionState) {
-                                                                                    case ConnectionState.waiting:
-                                                                                      // return Center(child: Constant.loader());
-                                                                                      return const SizedBox();
-                                                                                    default:
-                                                                                      if (snapshot.hasError) {
-                                                                                        return TextCustom(
-                                                                                          title: 'Error: ${snapshot.error}',
-                                                                                        );
-                                                                                      } else {
-                                                                                        UserModel userModel = snapshot.data!;
-                                                                                        return Container(
-                                                                                          alignment: Alignment.centerLeft,
-                                                                                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                                                                                          child: TextButton(
-                                                                                            onPressed: () {},
-                                                                                            child: TextCustom(
-                                                                                              title: userModel.fullName == null
-                                                                                                  ? "N/A"
-                                                                                                  : userModel.fullName!.isEmpty
-                                                                                                      ? "N/A"
-                                                                                                      : userModel.fullName.toString() == "Unknown User"
-                                                                                                          ? "User Deleted"
-                                                                                                          : userModel.fullName.toString(),
-                                                                                            ),
-                                                                                          ),
-                                                                                        );
-                                                                                      }
-                                                                                  }
-                                                                                }),
-                                                                          ),
-                                                                          DataCell(TextCustom(
-                                                                              title: bookingModel.createAt == null
-                                                                                  ? ''
-                                                                                  : Constant.timestampToDateTime(bookingModel.createAt!))),
-                                                                          DataCell(
-                                                                              TextCustom(title: bool.parse(bookingModel.paymentStatus!.toString()) ? "Paid" : "Unpaid")),
-                                                                          DataCell(
-                                                                            // e.bookingStatus.toString()
-                                                                            Constant.bookingStatusText(context, bookingModel.bookingStatus.toString()),
-                                                                          ),
-                                                                          DataCell(TextCustom(title: Constant.amountShow(amount: bookingModel.subTotal))),
-                                                                          DataCell(
-                                                                            Container(
-                                                                              alignment: Alignment.center,
-                                                                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                                                                              child: Row(
-                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                children: [
-                                                                                  InkWell(
-                                                                                    onTap: () async {
-                                                                                      Get.toNamed(Routes.BOOKING_DETAIL, arguments: {'bookingModel': bookingModel});
-                                                                                      // BookingHistoryDetailController bookingHistoryDetailController =
-                                                                                      //     Get.put(BookingHistoryDetailController());
-                                                                                      // await bookingHistoryDetailController.getArgument(bookingModel);
-                                                                                      //
-                                                                                      // HomeController homeController = Get.put(HomeController());
-                                                                                      // homeController.currentPageIndex.value = 3;
-                                                                                    },
-                                                                                    child: SvgPicture.asset(
-                                                                                      "assets/icons/ic_eye.svg",
-                                                                                      color: AppThemData.greyShade400,
-                                                                                      height: 16,
-                                                                                      width: 16,
-                                                                                    ),
-                                                                                  ),
-                                                                                ],
+                                                                rows: controller
+                                                                    .recentBookingList
+                                                                    .map((bookingModel) =>
+                                                                        DataRow(
+                                                                            cells: [
+                                                                              DataCell(
+                                                                                TextCustom(
+                                                                                  title: bookingModel.id!.isEmpty ? "N/A" : "#${bookingModel.id!.substring(0, 8)}",
+                                                                                ),
                                                                               ),
-                                                                            ),
-                                                                          ),
-                                                                        ]))
+                                                                              DataCell(
+                                                                                FutureBuilder<UserModel?>(
+                                                                                    future: FireStoreUtils.getUserByUserID(bookingModel.customerId.toString()), // async work
+                                                                                    builder: (BuildContext context, AsyncSnapshot<UserModel?> snapshot) {
+                                                                                      switch (snapshot.connectionState) {
+                                                                                        case ConnectionState.waiting:
+                                                                                          // return Center(child: Constant.loader());
+                                                                                          return const SizedBox();
+                                                                                        default:
+                                                                                          if (snapshot.hasError) {
+                                                                                            return TextCustom(
+                                                                                              title: 'Error: ${snapshot.error}',
+                                                                                            );
+                                                                                          } else {
+                                                                                            UserModel userModel = snapshot.data!;
+                                                                                            return Container(
+                                                                                              alignment: Alignment.centerLeft,
+                                                                                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                                                                              child: TextButton(
+                                                                                                onPressed: () {},
+                                                                                                child: TextCustom(
+                                                                                                  title: userModel.fullName == null
+                                                                                                      ? "N/A"
+                                                                                                      : userModel.fullName!.isEmpty
+                                                                                                          ? "N/A"
+                                                                                                          : userModel.fullName.toString() == "Unknown User"
+                                                                                                              ? "User Deleted"
+                                                                                                              : userModel.fullName.toString(),
+                                                                                                ),
+                                                                                              ),
+                                                                                            );
+                                                                                          }
+                                                                                      }
+                                                                                    }),
+                                                                              ),
+                                                                              DataCell(TextCustom(title: bookingModel.createAt == null ? '' : Constant.timestampToDateTime(bookingModel.createAt!))),
+                                                                              DataCell(TextCustom(title: bool.parse(bookingModel.paymentStatus!.toString()) ? "Paid" : "Unpaid")),
+                                                                              DataCell(
+                                                                                // e.bookingStatus.toString()
+                                                                                Constant.bookingStatusText(context, bookingModel.bookingStatus.toString()),
+                                                                              ),
+                                                                              DataCell(TextCustom(title: Constant.amountShow(amount: bookingModel.subTotal))),
+                                                                              DataCell(
+                                                                                Container(
+                                                                                  alignment: Alignment.center,
+                                                                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                                                                  child: Row(
+                                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                    children: [
+                                                                                      InkWell(
+                                                                                        onTap: () async {
+                                                                                          Get.toNamed(Routes.BOOKING_DETAIL, arguments: {
+                                                                                            'bookingModel': bookingModel
+                                                                                          });
+                                                                                          // BookingHistoryDetailController bookingHistoryDetailController =
+                                                                                          //     Get.put(BookingHistoryDetailController());
+                                                                                          // await bookingHistoryDetailController.getArgument(bookingModel);
+                                                                                          //
+                                                                                          // HomeController homeController = Get.put(HomeController());
+                                                                                          // homeController.currentPageIndex.value = 3;
+                                                                                        },
+                                                                                        child: SvgPicture.asset(
+                                                                                          "assets/icons/ic_eye.svg",
+                                                                                          color: AppThemData.greyShade400,
+                                                                                          height: 16,
+                                                                                          width: 16,
+                                                                                        ),
+                                                                                      ),
+                                                                                    ],
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ]))
                                                                     .toList()),
                                                   ),
                                                 ),
@@ -635,39 +841,61 @@ class DashboardScreenView extends GetView<DashboardScreenController> {
                                         Expanded(
                                           flex: 3,
                                           child: Visibility(
-                                            visible: controller.userList.isNotEmpty,
+                                            visible:
+                                                controller.userList.isNotEmpty,
                                             child: ContainerCustom(
                                               child: Column(
                                                 children: [
                                                   Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                     children: [
                                                       TextCustom(
-                                                        title: 'Recent Users'.tr,
+                                                        title:
+                                                            'Recent Users'.tr,
                                                         fontSize: 20,
-                                                        fontFamily: AppThemeData.bold,
+                                                        fontFamily:
+                                                            AppThemeData.bold,
                                                       ),
                                                       InkWell(
                                                         onTap: () {
                                                           // homeController.currentPageIndex.value = 2;
-                                                          Get.toNamed(Routes.PASSENGERS_SCREEN);
+                                                          Get.toNamed(Routes
+                                                              .PASSENGERS_SCREEN);
                                                         },
                                                         child: TextCustom(
                                                           title: 'View all'.tr,
                                                           fontSize: 16,
-                                                          fontFamily: AppThemeData.bold,
+                                                          fontFamily:
+                                                              AppThemeData.bold,
                                                         ),
                                                       ),
                                                     ],
                                                   ),
                                                   ListView.separated(
                                                     shrinkWrap: true,
-                                                    scrollDirection: Axis.vertical,
-                                                    itemCount: controller.userList.length >= 5 ? 5 : controller.userList.length,
-                                                    itemBuilder: (context, index) {
-                                                      return userView(context: context, userModel: controller.userList[index], themeChange: themeChange);
+                                                    scrollDirection:
+                                                        Axis.vertical,
+                                                    itemCount: controller
+                                                                .userList
+                                                                .length >=
+                                                            5
+                                                        ? 5
+                                                        : controller
+                                                            .userList.length,
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      return userView(
+                                                          context: context,
+                                                          userModel: controller
+                                                              .userList[index],
+                                                          themeChange:
+                                                              themeChange);
                                                     },
-                                                    separatorBuilder: (BuildContext context, int index) {
+                                                    separatorBuilder:
+                                                        (BuildContext context,
+                                                            int index) {
                                                       return 12.height;
                                                     },
                                                   ),
@@ -690,12 +918,16 @@ class DashboardScreenView extends GetView<DashboardScreenController> {
           ),
           tablet: Scaffold(
             key: controller.scaffoldKeyDrawer,
-            backgroundColor: themeChange.isDarkTheme() ? AppThemData.greyShade950 : AppThemData.greyShade50,
+            backgroundColor: themeChange.isDarkTheme()
+                ? AppThemData.greyShade950
+                : AppThemData.greyShade50,
             appBar: AppBar(
               elevation: 0.0,
               toolbarHeight: 70,
               automaticallyImplyLeading: false,
-              backgroundColor: themeChange.isDarkTheme() ? AppThemData.primaryBlack : AppThemData.primaryWhite,
+              backgroundColor: themeChange.isDarkTheme()
+                  ? AppThemData.primaryBlack
+                  : AppThemData.primaryWhite,
               leadingWidth: 200,
               // title: title,
               leading: GestureDetector(
@@ -710,9 +942,11 @@ class DashboardScreenView extends GetView<DashboardScreenController> {
                             children: [
                               10.width,
                               Icon(
-                                 Icons.menu,
+                                Icons.menu,
                                 size: 30,
-                                color: themeChange.isDarkTheme() ? AppThemData.primary500 : AppThemData.primary500,
+                                color: themeChange.isDarkTheme()
+                                    ? AppThemData.primary500
+                                    : AppThemData.primary500,
                               )
                             ],
                           ),
@@ -756,7 +990,9 @@ class DashboardScreenView extends GetView<DashboardScreenController> {
             drawer: Drawer(
               // key: scaffoldKey,
               width: 270,
-              backgroundColor: themeChange.isDarkTheme() ? AppThemData.primaryBlack : AppThemData.primaryWhite,
+              backgroundColor: themeChange.isDarkTheme()
+                  ? AppThemData.primaryBlack
+                  : AppThemData.primaryWhite,
               child: const MenuWidget(),
             ),
             body: SingleChildScrollView(
@@ -784,7 +1020,8 @@ class DashboardScreenView extends GetView<DashboardScreenController> {
                         commonView(
                           context: context,
                           title: "Today's Earning".tr,
-                          value: Constant.amountShow(amount: controller.todayTotalEarnings.toString()),
+                          value: Constant.amountShow(
+                              amount: controller.todayTotalEarnings.toString()),
                           imageAssets: "assets/icons/ic_coin_2.svg",
                           bgColor: const Color(0xfffbd4f5),
                           textColor: const Color(0xff853987),
@@ -793,7 +1030,8 @@ class DashboardScreenView extends GetView<DashboardScreenController> {
                           context: context,
                           title: "Total Earning".tr,
                           // value: controller.totalEarnings.toString(),
-                          value: Constant.amountShow(amount: controller.totalEarnings.toString()),
+                          value: Constant.amountShow(
+                              amount: controller.totalEarnings.toString()),
                           imageAssets: "assets/icons/ic_currency_dollar.svg",
                           bgColor: const Color(0xffeaeac3),
                           textColor: const Color(0xff7e723a),
@@ -822,18 +1060,21 @@ class DashboardScreenView extends GetView<DashboardScreenController> {
                             child: Constant.loader(),
                           )
                         : Container(
-                            padding: paddingEdgeInsets(horizontal: 24, vertical: 0),
+                            padding:
+                                paddingEdgeInsets(horizontal: 24, vertical: 0),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Expanded(
                                   flex: 10,
                                   child: Visibility(
-                                    visible: controller.recentBookingList.isNotEmpty,
+                                    visible:
+                                        controller.recentBookingList.isNotEmpty,
                                     child: ContainerCustom(
                                       child: Column(children: [
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             TextCustom(
                                               title: 'Recent Bookings'.tr,
@@ -843,7 +1084,8 @@ class DashboardScreenView extends GetView<DashboardScreenController> {
                                             InkWell(
                                               onTap: () {
                                                 // homeController.currentPageIndex.value = 1;
-                                                Get.toNamed(Routes.BOOKING_HISTORY_SCREEN);
+                                                Get.toNamed(Routes
+                                                    .BOOKING_HISTORY_SCREEN);
                                               },
                                               child: TextCustom(
                                                 title: 'View all'.tr,
@@ -857,126 +1099,211 @@ class DashboardScreenView extends GetView<DashboardScreenController> {
                                         SingleChildScrollView(
                                           scrollDirection: Axis.horizontal,
                                           child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(12),
+                                            borderRadius:
+                                                BorderRadius.circular(12),
                                             child: controller.isLoading.value
                                                 ? Padding(
-                                                    padding: paddingEdgeInsets(),
+                                                    padding:
+                                                        paddingEdgeInsets(),
                                                     child: Constant.loader(),
                                                   )
-                                                : controller.recentBookingList.isEmpty
-                                                    ? TextCustom(title: "No Data available".tr)
+                                                : controller.recentBookingList
+                                                        .isEmpty
+                                                    ? TextCustom(
+                                                        title:
+                                                            "No Data available"
+                                                                .tr)
                                                     : DataTable(
                                                         horizontalMargin: 20,
                                                         columnSpacing: 30,
                                                         dataRowMaxHeight: 65,
                                                         headingRowHeight: 65,
                                                         border: TableBorder.all(
-                                                          color: themeChange.isDarkTheme() ? AppThemData.greyShade800 : AppThemData.greyShade100,
-                                                          borderRadius: BorderRadius.circular(12),
+                                                          color: themeChange
+                                                                  .isDarkTheme()
+                                                              ? AppThemData
+                                                                  .greyShade800
+                                                              : AppThemData
+                                                                  .greyShade100,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(12),
                                                         ),
-                                                        headingRowColor: MaterialStateColor.resolveWith(
-                                                            (states) => themeChange.isDarkTheme() ? AppThemData.greyShade800 : AppThemData.greyShade100),
+                                                        headingRowColor: WidgetStateColor.resolveWith(
+                                                            (states) => themeChange
+                                                                    .isDarkTheme()
+                                                                ? AppThemData
+                                                                    .greyShade800
+                                                                : AppThemData
+                                                                    .greyShade100),
                                                         columns: [
-                                                          CommonUI.dataColumnWidget(context, columnTitle: "Order Id".tr, width: 150),
-                                                          CommonUI.dataColumnWidget(context,
-                                                              columnTitle: "Customer Name".tr,
-                                                              width: ResponsiveWidget.isMobile(context) ? 150 : MediaQuery.of(context).size.width * 0.08),
-                                                          CommonUI.dataColumnWidget(context,
-                                                              columnTitle: "Booking Date".tr,
-                                                              width: ResponsiveWidget.isMobile(context) ? 220 : MediaQuery.of(context).size.width * 0.05),
-                                                          CommonUI.dataColumnWidget(context,
-                                                              columnTitle: "Payment Status".tr,
-                                                              width: ResponsiveWidget.isMobile(context) ? 220 : MediaQuery.of(context).size.width * 0.07),
-                                                          CommonUI.dataColumnWidget(context,
-                                                              columnTitle: "Booking Status".tr,
-                                                              width: ResponsiveWidget.isMobile(context) ? 220 : MediaQuery.of(context).size.width * 0.07),
+                                                          CommonUI
+                                                              .dataColumnWidget(
+                                                                  context,
+                                                                  columnTitle:
+                                                                      "Order Id"
+                                                                          .tr,
+                                                                  width: 150),
+                                                          CommonUI.dataColumnWidget(
+                                                              context,
+                                                              columnTitle:
+                                                                  "Customer Name"
+                                                                      .tr,
+                                                              width: ResponsiveWidget
+                                                                      .isMobile(
+                                                                          context)
+                                                                  ? 150
+                                                                  : MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      0.08),
+                                                          CommonUI.dataColumnWidget(
+                                                              context,
+                                                              columnTitle:
+                                                                  "Booking Date"
+                                                                      .tr,
+                                                              width: ResponsiveWidget
+                                                                      .isMobile(
+                                                                          context)
+                                                                  ? 220
+                                                                  : MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      0.05),
+                                                          CommonUI.dataColumnWidget(
+                                                              context,
+                                                              columnTitle:
+                                                                  "Payment Status"
+                                                                      .tr,
+                                                              width: ResponsiveWidget
+                                                                      .isMobile(
+                                                                          context)
+                                                                  ? 220
+                                                                  : MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      0.07),
+                                                          CommonUI.dataColumnWidget(
+                                                              context,
+                                                              columnTitle:
+                                                                  "Booking Status"
+                                                                      .tr,
+                                                              width: ResponsiveWidget
+                                                                      .isMobile(
+                                                                          context)
+                                                                  ? 220
+                                                                  : MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      0.07),
 
-                                                          CommonUI.dataColumnWidget(context, columnTitle: "Total".tr, width: 140),
+                                                          CommonUI
+                                                              .dataColumnWidget(
+                                                                  context,
+                                                                  columnTitle:
+                                                                      "Total"
+                                                                          .tr,
+                                                                  width: 140),
                                                           // CommonUI.dataColumnWidget(context,
                                                           //     columnTitle: "Status", width: ResponsiveWidget.isMobile(context) ? 100 : MediaQuery.of(context).size.width * 0.10),
-                                                          CommonUI.dataColumnWidget(
+                                                          CommonUI
+                                                              .dataColumnWidget(
                                                             context,
-                                                            columnTitle: "Action".tr,
+                                                            columnTitle:
+                                                                "Action".tr,
                                                             width: 100,
                                                           ),
                                                         ],
-                                                        rows: controller.recentBookingList
-                                                            .map((bookingModel) => DataRow(cells: [
-                                                                  DataCell(
-                                                                    TextCustom(
-                                                                      title: bookingModel.id!.isEmpty ? "N/A" : "#${bookingModel.id!.substring(0, 8)}",
-                                                                    ),
-                                                                  ),
-                                                                  DataCell(
-                                                                    FutureBuilder<UserModel?>(
-                                                                        future: FireStoreUtils.getUserByUserID(bookingModel.customerId.toString()), // async work
-                                                                        builder: (BuildContext context, AsyncSnapshot<UserModel?> snapshot) {
-                                                                          switch (snapshot.connectionState) {
-                                                                            case ConnectionState.waiting:
-                                                                              // return Center(child: Constant.loader());
-                                                                              return const SizedBox();
-                                                                            default:
-                                                                              if (snapshot.hasError) {
-                                                                                return TextCustom(
-                                                                                  title: 'Error: ${snapshot.error}',
-                                                                                );
-                                                                              } else {
-                                                                                UserModel userModel = snapshot.data!;
-                                                                                return Container(
-                                                                                  alignment: Alignment.centerLeft,
-                                                                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                                                                                  child: TextButton(
-                                                                                    onPressed: () {},
-                                                                                    child: TextCustom(
-                                                                                      title: userModel.fullName!.isEmpty
-                                                                                          ? "N/A"
-                                                                                          : userModel.fullName.toString() == "Unknown User"
-                                                                                              ? "User Deleted"
-                                                                                              : userModel.fullName.toString(),
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              }
-                                                                          }
-                                                                        }),
-                                                                  ),
-                                                                  DataCell(TextCustom(
-                                                                      title: bookingModel.createAt == null ? '' : Constant.timestampToDateTime(bookingModel.createAt!))),
-                                                                  DataCell(TextCustom(title: bool.parse(bookingModel.paymentStatus!.toString()) ? "Paid" : "Unpaid")),
-                                                                  DataCell(
-                                                                    // e.bookingStatus.toString()
-                                                                    Constant.bookingStatusText(context, bookingModel.bookingStatus.toString()),
-                                                                  ),
-                                                                  DataCell(TextCustom(title: Constant.amountShow(amount: bookingModel.subTotal))),
-                                                                  DataCell(
-                                                                    Container(
-                                                                      alignment: Alignment.center,
-                                                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                                                                      child: Row(
-                                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                        children: [
-                                                                          InkWell(
-                                                                            onTap: () async {
-                                                                              Get.toNamed(Routes.BOOKING_DETAIL, arguments: {'bookingModel': bookingModel});
-                                                                              // BookingHistoryDetailController bookingHistoryDetailController =
-                                                                              //     Get.put(BookingHistoryDetailController());
-                                                                              // await bookingHistoryDetailController.getArgument(bookingModel);
-                                                                              //
-                                                                              // HomeController homeController = Get.put(HomeController());
-                                                                              // homeController.currentPageIndex.value = 3;
-                                                                            },
-                                                                            child: SvgPicture.asset(
-                                                                              "assets/icons/ic_eye.svg",
-                                                                              color: AppThemData.greyShade400,
-                                                                              height: 16,
-                                                                              width: 16,
+                                                        rows: controller
+                                                            .recentBookingList
+                                                            .map(
+                                                                (bookingModel) =>
+                                                                    DataRow(
+                                                                        cells: [
+                                                                          DataCell(
+                                                                            TextCustom(
+                                                                              title: bookingModel.id!.isEmpty ? "N/A" : "#${bookingModel.id!.substring(0, 8)}",
                                                                             ),
                                                                           ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ]))
+                                                                          DataCell(
+                                                                            FutureBuilder<UserModel?>(
+                                                                                future: FireStoreUtils.getUserByUserID(bookingModel.customerId.toString()), // async work
+                                                                                builder: (BuildContext context, AsyncSnapshot<UserModel?> snapshot) {
+                                                                                  switch (snapshot.connectionState) {
+                                                                                    case ConnectionState.waiting:
+                                                                                      // return Center(child: Constant.loader());
+                                                                                      return const SizedBox();
+                                                                                    default:
+                                                                                      if (snapshot.hasError) {
+                                                                                        return TextCustom(
+                                                                                          title: 'Error: ${snapshot.error}',
+                                                                                        );
+                                                                                      } else {
+                                                                                        UserModel userModel = snapshot.data!;
+                                                                                        return Container(
+                                                                                          alignment: Alignment.centerLeft,
+                                                                                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                                                                          child: TextButton(
+                                                                                            onPressed: () {},
+                                                                                            child: TextCustom(
+                                                                                              title: userModel.fullName!.isEmpty
+                                                                                                  ? "N/A"
+                                                                                                  : userModel.fullName.toString() == "Unknown User"
+                                                                                                      ? "User Deleted"
+                                                                                                      : userModel.fullName.toString(),
+                                                                                            ),
+                                                                                          ),
+                                                                                        );
+                                                                                      }
+                                                                                  }
+                                                                                }),
+                                                                          ),
+                                                                          DataCell(
+                                                                              TextCustom(title: bookingModel.createAt == null ? '' : Constant.timestampToDateTime(bookingModel.createAt!))),
+                                                                          DataCell(
+                                                                              TextCustom(title: bool.parse(bookingModel.paymentStatus!.toString()) ? "Paid" : "Unpaid")),
+                                                                          DataCell(
+                                                                            // e.bookingStatus.toString()
+                                                                            Constant.bookingStatusText(context,
+                                                                                bookingModel.bookingStatus.toString()),
+                                                                          ),
+                                                                          DataCell(
+                                                                              TextCustom(title: Constant.amountShow(amount: bookingModel.subTotal))),
+                                                                          DataCell(
+                                                                            Container(
+                                                                              alignment: Alignment.center,
+                                                                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                                                              child: Row(
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                children: [
+                                                                                  InkWell(
+                                                                                    onTap: () async {
+                                                                                      Get.toNamed(Routes.BOOKING_DETAIL, arguments: {
+                                                                                        'bookingModel': bookingModel
+                                                                                      });
+                                                                                      // BookingHistoryDetailController bookingHistoryDetailController =
+                                                                                      //     Get.put(BookingHistoryDetailController());
+                                                                                      // await bookingHistoryDetailController.getArgument(bookingModel);
+                                                                                      //
+                                                                                      // HomeController homeController = Get.put(HomeController());
+                                                                                      // homeController.currentPageIndex.value = 3;
+                                                                                    },
+                                                                                    child: SvgPicture.asset(
+                                                                                      "assets/icons/ic_eye.svg",
+                                                                                      color: AppThemData.greyShade400,
+                                                                                      height: 16,
+                                                                                      width: 16,
+                                                                                    ),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ]))
                                                             .toList()),
                                           ),
                                         ),
@@ -994,17 +1321,18 @@ class DashboardScreenView extends GetView<DashboardScreenController> {
                                       child: Column(
                                         children: [
                                           Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               TextCustom(
                                                 title: 'Recent Users'.tr,
                                                 fontSize: 20,
-
                                               ),
                                               InkWell(
                                                 onTap: () {
                                                   // homeController.currentPageIndex.value = 2;
-                                                  Get.toNamed(Routes.PASSENGERS_SCREEN);
+                                                  Get.toNamed(
+                                                      Routes.PASSENGERS_SCREEN);
                                                 },
                                                 child: TextCustom(
                                                   title: 'View all'.tr,
@@ -1020,11 +1348,21 @@ class DashboardScreenView extends GetView<DashboardScreenController> {
                                             child: ListView.separated(
                                               shrinkWrap: true,
                                               scrollDirection: Axis.vertical,
-                                              itemCount: controller.userList.length >= 5 ? 5 : controller.userList.length,
+                                              itemCount: controller
+                                                          .userList.length >=
+                                                      5
+                                                  ? 5
+                                                  : controller.userList.length,
                                               itemBuilder: (context, index) {
-                                                return userView(context: context, userModel: controller.userList[index], themeChange: themeChange);
+                                                return userView(
+                                                    context: context,
+                                                    userModel: controller
+                                                        .userList[index],
+                                                    themeChange: themeChange);
                                               },
-                                              separatorBuilder: (BuildContext context, int index) {
+                                              separatorBuilder:
+                                                  (BuildContext context,
+                                                      int index) {
                                                 return 12.height;
                                               },
                                             ),
@@ -1048,7 +1386,10 @@ class DashboardScreenView extends GetView<DashboardScreenController> {
   }
 }
 
-userView({required BuildContext context, required UserModel userModel, required themeChange}) {
+userView(
+    {required BuildContext context,
+    required UserModel userModel,
+    required themeChange}) {
   return AnimatedContainer(
     duration: GetNumUtils(400).milliseconds,
     child: Row(
@@ -1071,11 +1412,20 @@ userView({required BuildContext context, required UserModel userModel, required 
               // width: ResponsiveWidget.isMobile(context) ? MediaQuery.sizeOf(context).width * 0.6 : 250,
               child: Text(userModel.fullName.toString(),
                   maxLines: 1,
-                  overflow: TextOverflow.ellipsis ,
-                  style: const TextStyle(fontFamily: AppThemeData.regular, fontWeight: FontWeight.w600, color: AppThemData.gallery700, fontSize: 14)),
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                      fontFamily: AppThemeData.regular,
+                      fontWeight: FontWeight.w600,
+                      color: AppThemData.gallery700,
+                      fontSize: 14)),
             ),
-            Text("${Constant.timestampToTime12Hour(userModel.createdAt!)}  |  ${Constant.timestampToDate(userModel.createdAt!)}",
-                style: const TextStyle(fontSize: 12, fontFamily: AppThemeData.medium, fontWeight: FontWeight.w700, color: AppThemData.gallery500)),
+            Text(
+                "${Constant.timestampToTime12Hour(userModel.createdAt!)}  |  ${Constant.timestampToDate(userModel.createdAt!)}",
+                style: const TextStyle(
+                    fontSize: 12,
+                    fontFamily: AppThemeData.medium,
+                    fontWeight: FontWeight.w700,
+                    color: AppThemData.gallery500)),
           ],
         ),
       ],
@@ -1083,16 +1433,26 @@ userView({required BuildContext context, required UserModel userModel, required 
   );
 }
 
-commonView({required BuildContext context, required String title, required String value, required String imageAssets, required Color bgColor, required Color textColor}) {
+commonView(
+    {required BuildContext context,
+    required String title,
+    required String value,
+    required String imageAssets,
+    required Color bgColor,
+    required Color textColor}) {
   final themeChange = Provider.of<DarkThemeProvider>(context);
   return Container(
     margin: const EdgeInsets.only(right: 24, top: 24),
     padding: const EdgeInsets.all(12),
     height: 120,
-    width: ResponsiveWidget.isDesktop(context) ? (ScreenSize.width(100, context) - 445) / 4 : (ScreenSize.width(100, context) - 80) / 2,
+    width: ResponsiveWidget.isDesktop(context)
+        ? (ScreenSize.width(100, context) - 445) / 4
+        : (ScreenSize.width(100, context) - 80) / 2,
     decoration: BoxDecoration(
       // image: const DecorationImage(image: AssetImage("assets/images/Card1.png"), fit: BoxFit.fill),
-      color: themeChange.isDarkTheme() ? AppThemData.primaryBlack : AppThemData.primaryWhite,
+      color: themeChange.isDarkTheme()
+          ? AppThemData.primaryBlack
+          : AppThemData.primaryWhite,
       // border: Border.all(color: themeChange.getTheme() ? AppColors.greyShade900 : AppColors.greyShade100.withOpacity(.5)),
       borderRadius: BorderRadius.circular(12),
     ),
@@ -1160,28 +1520,37 @@ bookingChartStatistic(BuildContext context) {
                             plotAreaBorderColor: Colors.transparent,
                             borderColor: Colors.transparent,
                             primaryXAxis: CategoryAxis(
-                              axisLine: AxisLine(color: AppThemData.textBlack.withOpacity(.5)),
-                              majorGridLines: const MajorGridLines(color: Colors.transparent),
-                              labelStyle: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600),
+                              axisLine: AxisLine(
+                                  color: AppThemData.textBlack.withOpacity(.5)),
+                              majorGridLines: const MajorGridLines(
+                                  color: Colors.transparent),
+                              labelStyle: const TextStyle(
+                                  fontSize: 10, fontWeight: FontWeight.w600),
                             ),
                             primaryYAxis: NumericAxis(
                               borderWidth: 0,
                               borderColor: Colors.transparent,
-                              axisLine: const AxisLine(color: AppThemData.textBlack),
-                              majorGridLines: const MajorGridLines(color: Colors.transparent, width: 0),
-                              minorTickLines: const MinorTickLines(color: Colors.transparent, width: 0),
+                              axisLine:
+                                  const AxisLine(color: AppThemData.textBlack),
+                              majorGridLines: const MajorGridLines(
+                                  color: Colors.transparent, width: 0),
+                              minorTickLines: const MinorTickLines(
+                                  color: Colors.transparent, width: 0),
                               minimum: 0,
-                              numberFormat: NumberFormat.currency(symbol: Constant.currencyModel!.symbol),
+                              numberFormat: NumberFormat.currency(
+                                  symbol: Constant.currencyModel!.symbol),
                               minorGridLines: const MinorGridLines(),
                               interval: 100,
-                              labelStyle: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600),
+                              labelStyle: const TextStyle(
+                                  fontSize: 10, fontWeight: FontWeight.w600),
                             ),
                             series: <CartesianSeries<ChartData, String>>[
                               SplineAreaSeries<ChartData, String>(
                                 dataSource: controller.bookingChartData!,
                                 xValueMapper: (ChartData data, _) => data.x,
                                 yValueMapper: (ChartData data, _) => data.y,
-                                markerSettings: const MarkerSettings(isVisible: true),
+                                markerSettings:
+                                    const MarkerSettings(isVisible: true),
                                 name: 'Revenue',
                                 color: AppThemData.primary500,
                               ),
@@ -1189,7 +1558,8 @@ bookingChartStatistic(BuildContext context) {
                                 dataSource: controller.bookingChartData!,
                                 xValueMapper: (ChartData data, _) => data.x,
                                 yValueMapper: (ChartData data, _) => data.y,
-                                markerSettings: const MarkerSettings(isVisible: true),
+                                markerSettings:
+                                    const MarkerSettings(isVisible: true),
                                 name: 'Revenue',
                                 color: AppThemData.primary500,
                               ),
@@ -1237,12 +1607,19 @@ usersChartStatistic(BuildContext context) {
                           series: <RadialBarSeries<ChartDataCircle, String>>[
                             RadialBarSeries<ChartDataCircle, String>(
                               dataSource: [
-                                ChartDataCircle('Driver'.tr, controller.totalCab.value, AppThemData.secondary500),
-                                ChartDataCircle('User'.tr, controller.totalUser.value, AppThemData.blue500),
+                                ChartDataCircle(
+                                    'Driver'.tr,
+                                    controller.totalCab.value,
+                                    AppThemData.secondary500),
+                                ChartDataCircle(
+                                    'User'.tr,
+                                    controller.totalUser.value,
+                                    AppThemData.blue500),
                               ],
                               xValueMapper: (ChartDataCircle data, _) => data.x,
                               yValueMapper: (ChartDataCircle data, _) => data.y,
-                              pointColorMapper: (ChartDataCircle data, _) => data.color,
+                              pointColorMapper: (ChartDataCircle data, _) =>
+                                  data.color,
                               useSeriesColor: true,
                               trackOpacity: 0.2,
                               gap: '10%',

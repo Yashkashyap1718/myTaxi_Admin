@@ -1,0 +1,12 @@
+String baseURL = "http://172.93.54.177:3002/";
+String loginEndpoint = "admin/signin"; //POST
+String previewProfileEndpoint = "admin/profile/preview"; //GET
+String updateProfileEndpoint = "admin/profile/update"; //PUT
+String logoutEndpoint = "admin/logout"; //POST
+String addVehicleBrandEndpoint = "admin/vehicle/brand/create"; //POST
+String vehicleBrandListEndpoint = "admin/vehicle/brand/list"; //GET
+String vehicleBrandModelEndpoint = "admin/vehicle/model/create"; //POST
+String vehicleTypeAddEndpoint = "admin/vehicle/type/create"; //POST
+String vehicleModelListEndpoint = "admin/vehicle/model/list"; //GET
+String addDocumentEndpoint = "admin/document/create"; //POST
+String documentListEndpoint = "admin/document/list"; //GET

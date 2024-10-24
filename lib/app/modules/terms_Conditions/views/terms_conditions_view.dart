@@ -37,7 +37,7 @@ class TermsConditionsView extends GetView<TermsConditionsController> {
       init: TermsConditionsController(),
       builder: (controller) {
         return SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Column(mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
             ContainerCustom(
               child:
@@ -65,7 +65,7 @@ class TermsConditionsView extends GetView<TermsConditionsController> {
                         ])
                       ],
                     ) :
-                    TextCustom(title: '${"Terms&Condition"}', fontSize: 14, fontFamily: AppThemeData.medium, color: AppThemData.primaryBlack),
+                    TextCustom(title: "Terms&Condition", fontSize: 14, fontFamily: AppThemeData.medium, color: AppThemData.primaryBlack),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -146,7 +146,7 @@ class TermsConditionsView extends GetView<TermsConditionsController> {
                         ])
                       ],
                     ) :
-                    TextCustom(title: '${"Terms&Condition"}', fontSize: 14, fontFamily: AppThemeData.medium, color: AppThemData.primaryBlack),
+                    TextCustom(title: "Terms&Condition", fontSize: 14, fontFamily: AppThemeData.medium, color: AppThemData.primaryBlack),
                     spaceH(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

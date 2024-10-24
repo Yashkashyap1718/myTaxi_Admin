@@ -47,34 +47,29 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'YOUR_WEB_API_KEY',
-    appId: 'YOUR_WEB_APP_ID',
-    messagingSenderId: 'YOUR_WEB_MESSAGING_SENDER_ID',
-    projectId: 'YOUR_WEB_PROJECT_ID',
-    authDomain: 'YOUR_WEB_AUTH_DOMAIN',
-    storageBucket: 'YOUR_WEB_STORAGE_BUCKET',
-    measurementId: 'YOUR_WEB_MEASUREMENT_ID',
+    apiKey: 'AIzaSyDrcvhfIwVssgCRUQdkSgJRmC1OLpUOcJg',
+    appId: '1:916684783184:web:cf206b0ee0fe96ac269b55',
+    messagingSenderId: '916684783184',
+    projectId: 'mytaxiadmin-a6fcf',
+    authDomain: 'mytaxiadmin-a6fcf.firebaseapp.com',
+    storageBucket: 'mytaxiadmin-a6fcf.appspot.com',
+    measurementId: 'G-L36Y4SVJ3K',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'YOUR_ANDROID_API_KEY',
-    appId: 'YOUR_ANDROID_APP_ID',
-    messagingSenderId: 'YOUR_ANDROID_MESSAGING_SENDER_ID',
-    projectId: 'YOUR_ANDROID_PROJECT_ID',
-    databaseURL: 'YOUR_ANDROID_DATABASE_URL',
-    storageBucket: 'YOUR_ANDROID_STORAGE_BUCKET',
+    apiKey: 'AIzaSyDta__WDxWMSl7WNxZAveacCP-_fIsIFDs',
+    appId: '1:916684783184:android:645b89004faa80b8269b55',
+    messagingSenderId: '916684783184',
+    projectId: 'mytaxiadmin-a6fcf',
+    storageBucket: 'mytaxiadmin-a6fcf.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'YOUR_IOS_API_KEY',
-    appId: 'YOUR_IOS_APP_ID',
-    messagingSenderId: 'YOUR_IOS_MESSAGING_SENDER_ID',
-    projectId: 'YOUR_IOS_PROJECT_ID',
-    databaseURL: 'YOUR_IOS_DATABASE_URL',
-    storageBucket: 'YOUR_IOS_STORAGE_BUCKET',
-    androidClientId: 'YOUR_ANDROID_CLIENT_ID',
-    iosClientId: 'YOUR_IOS_CLIENT_ID',
-    iosBundleId: 'YOUR_IOS_BUNDLE_ID',
+    apiKey: 'AIzaSyDBZmW7O5ZR1cb2TiLlpmH9QrRUzOVHlJw',
+    appId: '1:916684783184:ios:837a8f0563c86bfa269b55',
+    messagingSenderId: '916684783184',
+    projectId: 'mytaxiadmin-a6fcf',
+    storageBucket: 'mytaxiadmin-a6fcf.appspot.com',
+    iosBundleId: 'com.ideativemind.admin',
   );
-
 }

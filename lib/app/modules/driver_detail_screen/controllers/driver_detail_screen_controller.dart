@@ -22,8 +22,10 @@ class DriverDetailScreenController extends GetxController {
   RxList<BookingModel> driverDetailsList = <BookingModel>[].obs;
   RxList<BookingModel> bookingList = <BookingModel>[].obs;
   Rx<TextEditingController> topupController = TextEditingController().obs;
-  RxList<WalletTransactionModel> walletTransactionList = <WalletTransactionModel>[].obs;
-  RxList<WalletTransactionModel> currentPageWalletTransaction = <WalletTransactionModel>[].obs;
+  RxList<WalletTransactionModel> walletTransactionList =
+      <WalletTransactionModel>[].obs;
+  RxList<WalletTransactionModel> currentPageWalletTransaction =
+      <WalletTransactionModel>[].obs;
 
   var currentPage = 1.obs;
   var startIndex = 1.obs;
@@ -55,7 +57,8 @@ class DriverDetailScreenController extends GetxController {
     log("==============>${driverUserModel.value.id}");
     totalItemPerPage.value = Constant.numOfPageIemList.first;
     await getBookings();
-    dateFiledController.value.text = "${DateFormat('yyyy-MM-dd').format(selectedDate.value.start)} to ${DateFormat('yyyy-MM-dd').format(selectedDate.value.end)}";
+    dateFiledController.value.text =
+        "${DateFormat('yyyy-MM-dd').format(selectedDate.value.start)} to ${DateFormat('yyyy-MM-dd').format(selectedDate.value.end)}";
     await getWalletTransactions();
     isLoading.value = false;
   }
@@ -101,7 +104,11 @@ class DriverDetailScreenController extends GetxController {
 
   removeBooking(BookingModel bookingModel) async {
     isLoading = true.obs;
-    await FirebaseFirestore.instance.collection(CollectionName.bookings).doc(bookingModel.id).delete().then((value) {
+    await FirebaseFirestore.instance
+        .collection(CollectionName.bookings)
+        .doc(bookingModel.id)
+        .delete()
+        .then((value) {
       ShowToastDialog.toast("Booking deleted...!".tr);
     }).catchError((error) {
       ShowToastDialog.toast("Something went wrong".tr);
@@ -111,14 +118,17 @@ class DriverDetailScreenController extends GetxController {
 
   getBookings() async {
     isLoading.value = true;
-    bookingList.value = await FireStoreUtils.getBookingByDriverId(selectedPayoutStatusForData.value, driverUserModel.value.id);
+    bookingList.value = await FireStoreUtils.getBookingByDriverId(
+        selectedPayoutStatusForData.value, driverUserModel.value.id);
     setPagination(totalItemPerPage.value);
     isLoading.value = false;
   }
 
   Rx<DateTimeRange> selectedDate = DateTimeRange(
-          start: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0),
-          end: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 59, 0))
+          start: DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day, 0, 0, 0),
+          end: DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day, 23, 59, 0))
       .obs;
 
   setPagination(String page) {
@@ -126,12 +136,15 @@ class DriverDetailScreenController extends GetxController {
     int itemPerPage = pageValue(page);
     totalPage.value = (bookingList.length / itemPerPage).ceil();
     startIndex.value = (currentPage.value - 1) * itemPerPage;
-    endIndex.value = (currentPage.value * itemPerPage) > bookingList.length ? bookingList.length : (currentPage.value * itemPerPage);
+    endIndex.value = (currentPage.value * itemPerPage) > bookingList.length
+        ? bookingList.length
+        : (currentPage.value * itemPerPage);
     if (endIndex.value < startIndex.value) {
       currentPage.value = 1;
       setPagination(page);
     } else {
-      currentPageBooking.value = bookingList.sublist(startIndex.value, endIndex.value);
+      currentPageBooking.value =
+          bookingList.sublist(startIndex.value, endIndex.value);
     }
     isLoading.value = false;
     update();
@@ -159,19 +172,25 @@ class DriverDetailScreenController extends GetxController {
         type: "customer",
         note: "Wallet Top up by admin");
     ShowToastDialog.showLoader("Please wait".tr);
-    await FireStoreUtils.setWalletTransaction(transactionModel).then((value) async {
+    await FireStoreUtils.setWalletTransaction(transactionModel)
+        .then((value) async {
       if (value == true) {
-        await FireStoreUtils.updateDriverWallet(amount: topupController.value.text, userId: driverUserModel.value.id!).then((value) async {});
+        await FireStoreUtils.updateDriverWallet(
+                amount: topupController.value.text,
+                userId: driverUserModel.value.id!)
+            .then((value) async {});
       }
     });
     ShowToastDialog.closeLoader();
-    driverUserModel.value = (await FireStoreUtils.getDriverByDriverID(driverUserModel.value.id!))!;
+    driverUserModel.value =
+        (await FireStoreUtils.getDriverByDriverID(driverUserModel.value.id!))!;
     Get.back();
     ShowToastDialog.toast("Amount added in your wallet.");
   }
 
   getWalletTransactions() async {
-    await FireStoreUtils.getWalletTransactionOfUser(driverUserModel.value.id!).then((value) {
+    await FireStoreUtils.getWalletTransactionOfUser(driverUserModel.value.id!)
+        .then((value) {
       walletTransactionList.value = value ?? [];
       setPaginationForTransactionHistory(totalItemPerPage.value);
     });
@@ -189,19 +208,18 @@ class DriverDetailScreenController extends GetxController {
     int itemPerPage = pageValue(page);
     totalPage.value = (walletTransactionList.length / itemPerPage).ceil();
     startIndex.value = (currentPage.value - 1) * itemPerPage;
-    endIndex.value = (currentPage.value * itemPerPage) > walletTransactionList.length ? walletTransactionList.length : (currentPage.value * itemPerPage);
+    endIndex.value =
+        (currentPage.value * itemPerPage) > walletTransactionList.length
+            ? walletTransactionList.length
+            : (currentPage.value * itemPerPage);
     if (endIndex.value < startIndex.value) {
       currentPage.value = 1;
       setPagination(page);
     } else {
-      currentPageWalletTransaction.value = walletTransactionList.sublist(startIndex.value, endIndex.value);
+      currentPageWalletTransaction.value =
+          walletTransactionList.sublist(startIndex.value, endIndex.value);
     }
     isLoading.value = false;
     update();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 }

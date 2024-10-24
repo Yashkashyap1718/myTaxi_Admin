@@ -35,12 +35,16 @@ class VerifyDocumentScreenView extends GetView<VerifyDocumentScreenController> {
       init: VerifyDocumentScreenController(),
       builder: (controller) {
         return Scaffold(
-          backgroundColor: themeChange.isDarkTheme() ? AppThemData.greyShade950 : AppThemData.greyShade50,
+          backgroundColor: themeChange.isDarkTheme()
+              ? AppThemData.greyShade950
+              : AppThemData.greyShade50,
           appBar: AppBar(
             elevation: 0.0,
             toolbarHeight: 70,
             automaticallyImplyLeading: false,
-            backgroundColor: themeChange.isDarkTheme() ? AppThemData.primaryBlack : AppThemData.primaryWhite,
+            backgroundColor: themeChange.isDarkTheme()
+                ? AppThemData.primaryBlack
+                : AppThemData.primaryWhite,
             leadingWidth: 200,
             // title: title,
             leading: Builder(
@@ -59,7 +63,9 @@ class VerifyDocumentScreenView extends GetView<VerifyDocumentScreenController> {
                             child: Icon(
                               Icons.menu,
                               size: 30,
-                              color: themeChange.isDarkTheme() ? AppThemData.primary500 : AppThemData.primary500,
+                              color: themeChange.isDarkTheme()
+                                  ? AppThemData.primary500
+                                  : AppThemData.primary500,
                             ),
                           )
                         : SizedBox(
@@ -124,7 +130,9 @@ class VerifyDocumentScreenView extends GetView<VerifyDocumentScreenController> {
           drawer: Drawer(
             // key: scaffoldKey,
             width: 270,
-            backgroundColor: themeChange.isDarkTheme() ? AppThemData.primaryBlack : AppThemData.primaryWhite,
+            backgroundColor: themeChange.isDarkTheme()
+                ? AppThemData.primaryBlack
+                : AppThemData.primaryWhite,
             child: const MenuWidget(),
           ),
           body: Row(
@@ -145,64 +153,103 @@ class VerifyDocumentScreenView extends GetView<VerifyDocumentScreenController> {
                               child: Column(children: [
                                 ResponsiveWidget.isDesktop(context)
                                     ? Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
-                                          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                            TextCustom(title: controller.title.value, fontSize: 20, fontFamily: AppThemeData.bold),
-                                            spaceH(height: 2),
-                                            Row(children: [
-                                              GestureDetector(
-                                                  onTap: () => Get.offAllNamed(Routes.DASHBOARD_SCREEN),
-                                                  child: TextCustom(
-                                                      title: 'Dashboard'.tr,
+                                          Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                TextCustom(
+                                                    title:
+                                                        controller.title.value,
+                                                    fontSize: 20,
+                                                    fontFamily:
+                                                        AppThemeData.bold),
+                                                spaceH(height: 2),
+                                                Row(children: [
+                                                  GestureDetector(
+                                                      onTap: () =>
+                                                          Get.offAllNamed(Routes
+                                                              .DASHBOARD_SCREEN),
+                                                      child: TextCustom(
+                                                          title: 'Dashboard'.tr,
+                                                          fontSize: 14,
+                                                          fontFamily:
+                                                              AppThemeData
+                                                                  .medium,
+                                                          color: AppThemData
+                                                              .greyShade500)),
+                                                  const TextCustom(
+                                                      title: ' / ',
                                                       fontSize: 14,
-                                                      fontFamily: AppThemeData.medium,
-                                                      color: AppThemData.greyShade500)),
-                                              const TextCustom(
-                                                  title: ' / ',
-                                                  fontSize: 14,
-                                                  fontFamily: AppThemeData.medium,
-                                                  color: AppThemData.greyShade500),
-                                              TextCustom(
-                                                  title: ' ${controller.title.value} ',
-                                                  fontSize: 14,
-                                                  fontFamily: AppThemeData.medium,
-                                                  color: AppThemData.primary500)
-                                            ])
-                                          ]),
+                                                      fontFamily:
+                                                          AppThemeData.medium,
+                                                      color: AppThemData
+                                                          .greyShade500),
+                                                  TextCustom(
+                                                      title:
+                                                          ' ${controller.title.value} ',
+                                                      fontSize: 14,
+                                                      fontFamily:
+                                                          AppThemeData.medium,
+                                                      color: AppThemData
+                                                          .primary500)
+                                                ])
+                                              ]),
                                           NumberOfRowsDropDown(
                                             controller: controller,
                                           )
                                         ],
                                       )
                                     : Column(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                            TextCustom(title: controller.title.value, fontSize: 20, fontFamily: AppThemeData.bold),
-                                            spaceH(height: 2),
-                                            Row(children: [
-                                              GestureDetector(
-                                                  onTap: () => Get.offAllNamed(Routes.DASHBOARD_SCREEN),
-                                                  child: TextCustom(
-                                                      title: 'Dashboard'.tr,
+                                          Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                TextCustom(
+                                                    title:
+                                                        controller.title.value,
+                                                    fontSize: 20,
+                                                    fontFamily:
+                                                        AppThemeData.bold),
+                                                spaceH(height: 2),
+                                                Row(children: [
+                                                  GestureDetector(
+                                                      onTap: () =>
+                                                          Get.offAllNamed(Routes
+                                                              .DASHBOARD_SCREEN),
+                                                      child: TextCustom(
+                                                          title: 'Dashboard'.tr,
+                                                          fontSize: 14,
+                                                          fontFamily:
+                                                              AppThemeData
+                                                                  .medium,
+                                                          color: AppThemData
+                                                              .greyShade500)),
+                                                  const TextCustom(
+                                                      title: ' / ',
                                                       fontSize: 14,
-                                                      fontFamily: AppThemeData.medium,
-                                                      color: AppThemData.greyShade500)),
-                                              const TextCustom(
-                                                  title: ' / ',
-                                                  fontSize: 14,
-                                                  fontFamily: AppThemeData.medium,
-                                                  color: AppThemData.greyShade500),
-                                              TextCustom(
-                                                  title: ' ${controller.title.value} ',
-                                                  fontSize: 14,
-                                                  fontFamily: AppThemeData.medium,
-                                                  color: AppThemData.primary500)
-                                            ])
-                                          ]),
+                                                      fontFamily:
+                                                          AppThemeData.medium,
+                                                      color: AppThemData
+                                                          .greyShade500),
+                                                  TextCustom(
+                                                      title:
+                                                          ' ${controller.title.value} ',
+                                                      fontSize: 14,
+                                                      fontFamily:
+                                                          AppThemeData.medium,
+                                                      color: AppThemData
+                                                          .primary500)
+                                                ])
+                                              ]),
                                           spaceH(),
                                           NumberOfRowsDropDown(
                                             controller: controller,
@@ -219,170 +266,260 @@ class VerifyDocumentScreenView extends GetView<VerifyDocumentScreenController> {
                                             padding: paddingEdgeInsets(),
                                             child: Constant.loader(),
                                           )
-                                        : controller.currentPageVerifyDriver.isEmpty
-                                            ? TextCustom(title: "No Data available".tr)
+                                        : controller
+                                                .currentPageVerifyDriver.isEmpty
+                                            ? TextCustom(
+                                                title: "No Data available".tr)
                                             : DataTable(
                                                 horizontalMargin: 20,
                                                 columnSpacing: 30,
                                                 dataRowMaxHeight: 65,
                                                 headingRowHeight: 65,
                                                 border: TableBorder.all(
-                                                  color: themeChange.isDarkTheme() ? AppThemData.greyShade800 : AppThemData.greyShade100,
-                                                  borderRadius: BorderRadius.circular(12),
+                                                  color: themeChange
+                                                          .isDarkTheme()
+                                                      ? AppThemData.greyShade800
+                                                      : AppThemData
+                                                          .greyShade100,
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
                                                 ),
-                                                headingRowColor: MaterialStateColor.resolveWith((states) =>
-                                                    themeChange.isDarkTheme() ? AppThemData.greyShade800 : AppThemData.greyShade100),
+                                                headingRowColor:
+                                                    MaterialStateColor.resolveWith(
+                                                        (states) => themeChange
+                                                                .isDarkTheme()
+                                                            ? AppThemData
+                                                                .greyShade800
+                                                            : AppThemData
+                                                                .greyShade100),
                                                 columns: [
-                                                  CommonUI.dataColumnWidget(context,
-                                                      columnTitle: "Driver Name".tr,
-                                                      width: ResponsiveWidget.isMobile(context)
+                                                  CommonUI.dataColumnWidget(
+                                                      context,
+                                                      columnTitle:
+                                                          "Driver Name".tr,
+                                                      width: ResponsiveWidget
+                                                              .isMobile(context)
                                                           ? 200
-                                                          : MediaQuery.of(context).size.width * 0.20),
-                                                  CommonUI.dataColumnWidget(context,
-                                                      columnTitle: "Driver Email".tr,
-                                                      width: ResponsiveWidget.isMobile(context)
+                                                          : MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.20),
+                                                  CommonUI.dataColumnWidget(
+                                                      context,
+                                                      columnTitle:
+                                                          "Driver Email".tr,
+                                                      width: ResponsiveWidget
+                                                              .isMobile(context)
                                                           ? 250
-                                                          : MediaQuery.of(context).size.width * 0.25),
-                                                  CommonUI.dataColumnWidget(context,
-                                                      columnTitle: "Document Verify".tr,
-                                                      width: ResponsiveWidget.isMobile(context)
+                                                          : MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.25),
+                                                  CommonUI.dataColumnWidget(
+                                                      context,
+                                                      columnTitle:
+                                                          "Document Verify".tr,
+                                                      width: ResponsiveWidget
+                                                              .isMobile(context)
                                                           ? 140
-                                                          : MediaQuery.of(context).size.width * 0.14),
-                                                  CommonUI.dataColumnWidget(context,
+                                                          : MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.14),
+                                                  CommonUI.dataColumnWidget(
+                                                      context,
                                                       columnTitle: "Action".tr,
-                                                      width: ResponsiveWidget.isMobile(context)
+                                                      width: ResponsiveWidget
+                                                              .isMobile(context)
                                                           ? 120
-                                                          : MediaQuery.of(context).size.width * 0.12),
+                                                          : MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.12),
                                                 ],
-                                                rows: controller.currentPageVerifyDriver
-                                                    .map((verifyDriverModel) => DataRow(cells: [
-                                                          DataCell(TextCustom(
-                                                              title: verifyDriverModel.driverName!.isEmpty
-                                                                  ? "N/A"
-                                                                  : verifyDriverModel.driverName.toString())),
-                                                          DataCell(TextCustom(
-                                                              title: verifyDriverModel.driverEmail!.isEmpty
-                                                                  ? "N/A"
-                                                                  : Constant.maskEmail(email: verifyDriverModel.driverEmail.toString()))),
-                                                          DataCell(
-                                                            FutureBuilder<DriverUserModel?>(
-                                                              future:
-                                                                  FireStoreUtils.getDriverByDriverID(verifyDriverModel.driverId.toString()),
-                                                              builder: (BuildContext context, AsyncSnapshot<DriverUserModel?> snapshot) {
-                                                                switch (snapshot.connectionState) {
-                                                                  case ConnectionState.waiting:
-                                                                    return const SizedBox();
-                                                                  default:
-                                                                    if (snapshot.hasError) {
-                                                                      return TextCustom(
-                                                                        title: 'Error: ${snapshot.error}',
-                                                                      );
-                                                                    } else {
-                                                                      if (snapshot.data == null) {
-                                                                        // Handle null data case
-                                                                        return TextCustom(
-                                                                          title: 'Error: Data is null'.tr,
-                                                                        );
-                                                                      } else {
-                                                                        DriverUserModel driverUserModel = snapshot.data!;
-                                                                        return Container(
-                                                                          alignment: Alignment.centerLeft,
-                                                                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                                                                          child: InkWell(
-                                                                              onTap: () async {
-                                                                                controller.editingVerifyDocumentId.value =
-                                                                                    verifyDriverModel.driverId!;
-                                                                                controller.getDriverDetails(verifyDriverModel.driverId);
-                                                                                controller.verifyDriverModel.value = verifyDriverModel;
-                                                                                controller.verifyDocumentList.value =
-                                                                                    verifyDriverModel.verifyDocument!;
-                                                                                showDialog(
-                                                                                    context: context,
-                                                                                    builder: (context) => const VerifyDriverDialog());
-                                                                              },
-                                                                              child: driverUserModel.isVerified!
-                                                                                  ? SvgPicture.asset(
-                                                                                      "assets/icons/ic_check.svg",
-                                                                                      color: AppThemData.green500,
-                                                                                      height: 20,
-                                                                                      width: 20,
-                                                                                    )
-                                                                                  : const TextCustom(
-                                                                                      title: "Verify",
-                                                                                      fontSize: 16,
-                                                                                      color: AppThemData.red500,
-                                                                                    )
-                                                                              // SvgPicture.asset(
-                                                                              //         "assets/icons/ic_close.svg",
-                                                                              //         color: AppThemData.red500,
-                                                                              //         height: 20,
-                                                                              //         width: 20,
-                                                                              //       ),
-                                                                              ),
-                                                                        );
-                                                                      }
-                                                                    }
-                                                                }
-                                                              },
-                                                            ),
-                                                          ),
-                                                          DataCell(
-                                                            Container(
-                                                              alignment: Alignment.center,
-                                                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                                                              child: Row(
-                                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                                children: [
-                                                                  InkWell(
-                                                                    onTap: () async {
-                                                                      // controller.getDriverVehicleDetails(e.driverId);
-                                                                      controller.editingVerifyDocumentId.value =
-                                                                          verifyDriverModel.driverId!;
-                                                                      controller.getDriverDetails(verifyDriverModel.driverId);
-                                                                      controller.verifyDriverModel.value = verifyDriverModel;
-                                                                      controller.verifyDocumentList.value =
-                                                                          verifyDriverModel.verifyDocument!;
-                                                                      showDialog(
-                                                                          context: context,
-                                                                          builder: (context) => const VerifyDriverDialog());
-                                                                    },
-                                                                    child: SvgPicture.asset(
-                                                                      "assets/icons/ic_edit.svg",
-                                                                      color: AppThemData.greyShade400,
-                                                                      height: 16,
-                                                                      width: 16,
-                                                                    ),
-                                                                  ),
-                                                                  spaceW(width: 20),
-                                                                  InkWell(
-                                                                    onTap: () async {
-                                                                      // controller.removeVerifyDocument(verifyDriverModel);
-                                                                      // controller.getData();
-                                                                      if (Constant.isDemo) {
-                                                                        DialogBox.demoDialogBox();
-                                                                      } else {
-                                                                        // controller.removeVehicleTypeModel(vehicleTypeModel);
-                                                                        // controller.getData();
-                                                                        bool confirmDelete =
-                                                                            await DialogBox.showConfirmationDeleteDialog(context);
-                                                                        if (confirmDelete) {
-                                                                          await controller.removeVerifyDocument(verifyDriverModel);
-                                                                          controller.getData();
+                                                rows: controller
+                                                    .currentPageVerifyDriver
+                                                    .map(
+                                                        (verifyDriverModel) =>
+                                                            DataRow(cells: [
+                                                              DataCell(TextCustom(
+                                                                  title: verifyDriverModel
+                                                                          .driverName!
+                                                                          .isEmpty
+                                                                      ? "N/A"
+                                                                      : verifyDriverModel
+                                                                          .driverName
+                                                                          .toString())),
+                                                              DataCell(TextCustom(
+                                                                  title: verifyDriverModel
+                                                                          .driverEmail!
+                                                                          .isEmpty
+                                                                      ? "N/A"
+                                                                      : Constant.maskEmail(
+                                                                          email: verifyDriverModel
+                                                                              .driverEmail
+                                                                              .toString()))),
+                                                              DataCell(
+                                                                FutureBuilder<
+                                                                    DriverUserModel?>(
+                                                                  future: FireStoreUtils.getDriverByDriverID(
+                                                                      verifyDriverModel
+                                                                          .driverId
+                                                                          .toString()),
+                                                                  builder: (BuildContext
+                                                                          context,
+                                                                      AsyncSnapshot<
+                                                                              DriverUserModel?>
+                                                                          snapshot) {
+                                                                    switch (snapshot
+                                                                        .connectionState) {
+                                                                      case ConnectionState
+                                                                            .waiting:
+                                                                        return const SizedBox();
+                                                                      default:
+                                                                        if (snapshot
+                                                                            .hasError) {
+                                                                          return TextCustom(
+                                                                            title:
+                                                                                'Error: ${snapshot.error}',
+                                                                          );
+                                                                        } else {
+                                                                          if (snapshot.data ==
+                                                                              null) {
+                                                                            // Handle null data case
+                                                                            return TextCustom(
+                                                                              title: 'Error: Data is null'.tr,
+                                                                            );
+                                                                          } else {
+                                                                            DriverUserModel
+                                                                                driverUserModel =
+                                                                                snapshot.data!;
+                                                                            return Container(
+                                                                              alignment: Alignment.centerLeft,
+                                                                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                                                              child: InkWell(
+                                                                                  onTap: () async {
+                                                                                    controller.editingVerifyDocumentId.value = verifyDriverModel.driverId!;
+                                                                                    controller.getDriverDetails(verifyDriverModel.driverId);
+                                                                                    controller.verifyDriverModel.value = verifyDriverModel;
+                                                                                    controller.verifyDocumentList.value = verifyDriverModel.verifyDocument!;
+                                                                                    showDialog(context: context, builder: (context) => const VerifyDriverDialog());
+                                                                                  },
+                                                                                  child: driverUserModel.isVerified!
+                                                                                      ? SvgPicture.asset(
+                                                                                          "assets/icons/ic_check.svg",
+                                                                                          color: AppThemData.green500,
+                                                                                          height: 20,
+                                                                                          width: 20,
+                                                                                        )
+                                                                                      : const TextCustom(
+                                                                                          title: "Verify",
+                                                                                          fontSize: 16,
+                                                                                          color: AppThemData.red500,
+                                                                                        )
+                                                                                  // SvgPicture.asset(
+                                                                                  //         "assets/icons/ic_close.svg",
+                                                                                  //         color: AppThemData.red500,
+                                                                                  //         height: 20,
+                                                                                  //         width: 20,
+                                                                                  //       ),
+                                                                                  ),
+                                                                            );
+                                                                          }
                                                                         }
-                                                                      }
-                                                                    },
-                                                                    child: SvgPicture.asset(
-                                                                      "assets/icons/ic_delete.svg",
-                                                                      color: AppThemData.greyShade400,
-                                                                      height: 16,
-                                                                      width: 16,
-                                                                    ),
-                                                                  ),
-                                                                ],
+                                                                    }
+                                                                  },
+                                                                ),
                                                               ),
-                                                            ),
-                                                          ),
-                                                        ]))
+                                                              DataCell(
+                                                                Container(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  padding: const EdgeInsets
+                                                                      .symmetric(
+                                                                      horizontal:
+                                                                          8,
+                                                                      vertical:
+                                                                          8),
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .start,
+                                                                    children: [
+                                                                      InkWell(
+                                                                        onTap:
+                                                                            () async {
+                                                                          // controller.getDriverVehicleDetails(e.driverId);
+                                                                          controller
+                                                                              .editingVerifyDocumentId
+                                                                              .value = verifyDriverModel.driverId!;
+                                                                          controller
+                                                                              .getDriverDetails(verifyDriverModel.driverId);
+                                                                          controller
+                                                                              .verifyDriverModel
+                                                                              .value = verifyDriverModel;
+                                                                          controller
+                                                                              .verifyDocumentList
+                                                                              .value = verifyDriverModel.verifyDocument!;
+                                                                          showDialog(
+                                                                              context: context,
+                                                                              builder: (context) => const VerifyDriverDialog());
+                                                                        },
+                                                                        child: SvgPicture
+                                                                            .asset(
+                                                                          "assets/icons/ic_edit.svg",
+                                                                          color:
+                                                                              AppThemData.greyShade400,
+                                                                          height:
+                                                                              16,
+                                                                          width:
+                                                                              16,
+                                                                        ),
+                                                                      ),
+                                                                      spaceW(
+                                                                          width:
+                                                                              20),
+                                                                      InkWell(
+                                                                        onTap:
+                                                                            () async {
+                                                                          // controller.removeVerifyDocument(verifyDriverModel);
+                                                                          // controller.getData();
+                                                                          if (Constant
+                                                                              .isDemo) {
+                                                                            DialogBox.demoDialogBox();
+                                                                          } else {
+                                                                            // controller.removeVehicleTypeModel(vehicleTypeModel);
+                                                                            // controller.getData();
+                                                                            bool
+                                                                                confirmDelete =
+                                                                                await DialogBox.showConfirmationDeleteDialog(context);
+                                                                            if (confirmDelete) {
+                                                                              await controller.removeVerifyDocument(verifyDriverModel);
+                                                                              controller.getData();
+                                                                            }
+                                                                          }
+                                                                        },
+                                                                        child: SvgPicture
+                                                                            .asset(
+                                                                          "assets/icons/ic_delete.svg",
+                                                                          color:
+                                                                              AppThemData.greyShade400,
+                                                                          height:
+                                                                              16,
+                                                                          width:
+                                                                              16,
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ]))
                                                     .toList()),
                                   ),
                                 ),
@@ -391,19 +528,29 @@ class VerifyDocumentScreenView extends GetView<VerifyDocumentScreenController> {
                                     ? SingleChildScrollView(
                                         scrollDirection: Axis.horizontal,
                                         child: Visibility(
-                                          visible: controller.totalPage.value > 1,
+                                          visible:
+                                              controller.totalPage.value > 1,
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
                                             children: [
                                               Align(
-                                                alignment: Alignment.centerRight,
+                                                alignment:
+                                                    Alignment.centerRight,
                                                 child: WebPagination(
-                                                    currentPage: controller.currentPage.value,
-                                                    totalPage: controller.totalPage.value,
-                                                    displayItemCount: controller.pageValue("5"),
+                                                    currentPage: controller
+                                                        .currentPage.value,
+                                                    totalPage: controller
+                                                        .totalPage.value,
+                                                    displayItemCount: controller
+                                                        .pageValue("5"),
                                                     onPageChanged: (page) {
-                                                      controller.currentPage.value = page;
-                                                      controller.setPagination(controller.totalItemPerPage.value);
+                                                      controller.currentPage
+                                                          .value = page;
+                                                      controller.setPagination(
+                                                          controller
+                                                              .totalItemPerPage
+                                                              .value);
                                                     }),
                                               ),
                                             ],
@@ -413,17 +560,25 @@ class VerifyDocumentScreenView extends GetView<VerifyDocumentScreenController> {
                                     : Visibility(
                                         visible: controller.totalPage.value > 1,
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
                                           children: [
                                             Align(
                                               alignment: Alignment.centerRight,
                                               child: WebPagination(
-                                                  currentPage: controller.currentPage.value,
-                                                  totalPage: controller.totalPage.value,
-                                                  displayItemCount: controller.pageValue("5"),
+                                                  currentPage: controller
+                                                      .currentPage.value,
+                                                  totalPage: controller
+                                                      .totalPage.value,
+                                                  displayItemCount:
+                                                      controller.pageValue("5"),
                                                   onPageChanged: (page) {
-                                                    controller.currentPage.value = page;
-                                                    controller.setPagination(controller.totalItemPerPage.value);
+                                                    controller.currentPage
+                                                        .value = page;
+                                                    controller.setPagination(
+                                                        controller
+                                                            .totalItemPerPage
+                                                            .value);
                                                   }),
                                             ),
                                           ],
@@ -469,20 +624,28 @@ class VerifyDriverDialog extends StatelessWidget {
                               children: [
                                 Container(
                                   alignment: Alignment.center,
-                                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                                  decoration: const BoxDecoration(shape: BoxShape.circle),
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 8),
+                                  decoration: const BoxDecoration(
+                                      shape: BoxShape.circle),
                                   child: NetworkImageWidget(
-                                    imageUrl: '${controller.driverUserModel.value.profilePic}',
+                                    imageUrl:
+                                        '${controller.driverUserModel.value.profilePic}',
                                     height: 80,
                                     width: 80,
                                   ),
                                 ),
                                 TextCustom(
-                                    title: controller.verifyDriverModel.value.driverName.toString(),
+                                    title: controller
+                                        .verifyDriverModel.value.driverName
+                                        .toString(),
                                     fontSize: 14,
                                     fontFamily: AppThemeData.bold),
                                 TextCustom(
-                                    title: Constant.maskEmail(email: controller.verifyDriverModel.value.driverEmail.toString()),
+                                    title: Constant.maskEmail(
+                                        email: controller
+                                            .verifyDriverModel.value.driverEmail
+                                            .toString()),
                                     fontSize: 14,
                                     fontFamily: AppThemeData.bold),
                               ],
@@ -505,42 +668,72 @@ class VerifyDriverDialog extends StatelessWidget {
                                 dataRowMaxHeight: 65,
                                 headingRowHeight: 65,
                                 border: TableBorder.all(
-                                  color: themeChange.isDarkTheme() ? AppThemData.greyShade900 : AppThemData.greyShade100,
+                                  color: themeChange.isDarkTheme()
+                                      ? AppThemData.greyShade900
+                                      : AppThemData.greyShade100,
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 headingRowColor: MaterialStateColor.resolveWith(
-                                    (states) => themeChange.isDarkTheme() ? AppThemData.greyShade900 : AppThemData.greyShade100),
+                                    (states) => themeChange.isDarkTheme()
+                                        ? AppThemData.greyShade900
+                                        : AppThemData.greyShade100),
                                 columns: [
-                                  CommonUI.dataColumnWidget(context, columnTitle: "Name".tr, width: 150),
-                                  CommonUI.dataColumnWidget(context, columnTitle: "Document".tr, width: 150),
-                                  CommonUI.dataColumnWidget(context, columnTitle: "Verify".tr, width: 100),
+                                  CommonUI.dataColumnWidget(context,
+                                      columnTitle: "Name".tr, width: 150),
+                                  CommonUI.dataColumnWidget(context,
+                                      columnTitle: "Document".tr, width: 150),
+                                  CommonUI.dataColumnWidget(context,
+                                      columnTitle: "Verify".tr, width: 100),
                                 ],
                                 rows: controller.verifyDocumentList
-                                    .map((verifyDocumentModel) => DataRow(cells: [
+                                    .map((verifyDocumentModel) =>
+                                        DataRow(cells: [
                                           DataCell(
                                             FutureBuilder<DocumentsModel?>(
-                                                future: FireStoreUtils.getDocumentByDocumentId(verifyDocumentModel.documentId.toString()),
+                                                future: FireStoreUtils
+                                                    .getDocumentByDocumentId(
+                                                        verifyDocumentModel
+                                                            .documentId
+                                                            .toString()),
                                                 // async work
-                                                builder: (BuildContext context, AsyncSnapshot<DocumentsModel?> snapshot) {
-                                                  switch (snapshot.connectionState) {
-                                                    case ConnectionState.waiting:
+                                                builder: (BuildContext context,
+                                                    AsyncSnapshot<
+                                                            DocumentsModel?>
+                                                        snapshot) {
+                                                  switch (snapshot
+                                                      .connectionState) {
+                                                    case ConnectionState
+                                                          .waiting:
                                                       // return Center(child: Constant.loader());
                                                       return const SizedBox();
                                                     default:
                                                       if (snapshot.hasError) {
                                                         return TextCustom(
-                                                          title: 'Error: ${snapshot.error}',
+                                                          title:
+                                                              'Error: ${snapshot.error}',
                                                         );
                                                       } else {
-                                                        DocumentsModel documentModel = snapshot.data!;
+                                                        DocumentsModel
+                                                            documentModel =
+                                                            snapshot.data!;
                                                         return Container(
-                                                          alignment: Alignment.centerLeft,
-                                                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  horizontal: 8,
+                                                                  vertical: 8),
                                                           child: TextButton(
                                                             onPressed: () {},
                                                             child: TextCustom(
-                                                              title:
-                                                                  documentModel.title!.isEmpty ? "N/A".tr : documentModel.title.toString(),
+                                                              title: documentModel
+                                                                      .title
+                                                                      .isEmpty
+                                                                  ? "N/A".tr
+                                                                  : documentModel
+                                                                      .title
+                                                                      .toString(),
                                                             ),
                                                           ),
                                                         );
@@ -551,13 +744,19 @@ class VerifyDriverDialog extends StatelessWidget {
                                           DataCell(
                                             GestureDetector(
                                               onTap: () {
-                                                viewURLImage(verifyDocumentModel.documentImage!.first.toString());
+                                                viewURLImage(verifyDocumentModel
+                                                    .documentImage!.first
+                                                    .toString());
                                               },
                                               child: Container(
                                                 alignment: Alignment.centerLeft,
-                                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 8,
+                                                        vertical: 8),
                                                 child: NetworkImageWidget(
-                                                  imageUrl: '${verifyDocumentModel.documentImage!.first}',
+                                                  imageUrl:
+                                                      '${verifyDocumentModel.documentImage!.first}',
                                                   borderRadius: 10,
                                                   height: 40,
                                                   width: 100,
@@ -571,16 +770,30 @@ class VerifyDriverDialog extends StatelessWidget {
                                               child: Transform.scale(
                                                 scale: 0.8,
                                                 child: CupertinoSwitch(
-                                                  activeColor: AppThemData.primary500,
-                                                  value: verifyDocumentModel.isVerify ?? false,
+                                                  activeColor:
+                                                      AppThemData.primary500,
+                                                  value: verifyDocumentModel
+                                                          .isVerify ??
+                                                      false,
                                                   onChanged: (value) async {
-                                                    int index = controller.verifyDocumentList.indexOf(verifyDocumentModel);
+                                                    int index = controller
+                                                        .verifyDocumentList
+                                                        .indexOf(
+                                                            verifyDocumentModel);
                                                     if (index != -1) {
-                                                      controller.verifyDocumentList[index] = verifyDocumentModel.copyWith(isVerify: value);
-                                                      controller.verifyDocumentList.refresh();
+                                                      controller.verifyDocumentList[
+                                                              index] =
+                                                          verifyDocumentModel
+                                                              .copyWith(
+                                                                  isVerify:
+                                                                      value);
+                                                      controller
+                                                          .verifyDocumentList
+                                                          .refresh();
                                                     }
                                                     // verifyDocumentModel.isVerify = value;
-                                                    controller.isVerify.value = value;
+                                                    controller.isVerify.value =
+                                                        value;
                                                     // controller.updateVerifyStatus(verifyDocumentModel, value);
                                                   },
                                                 ),
@@ -596,7 +809,9 @@ class VerifyDriverDialog extends StatelessWidget {
                     spaceH(),
                     ContainerCustom(
                       padding: const EdgeInsets.all(0),
-                      borderColor: themeChange.isDarkTheme() ? AppThemData.greyShade900 : AppThemData.greyShade100,
+                      borderColor: themeChange.isDarkTheme()
+                          ? AppThemData.greyShade900
+                          : AppThemData.greyShade100,
                       child: Obx(
                         () {
                           if (controller.isLoadingVehicleDetails.value) {
@@ -607,7 +822,9 @@ class VerifyDriverDialog extends StatelessWidget {
                             );
                           } else {
                             // Loading is complete
-                            if (controller.driverUserDetails.value.driverVehicleDetails == null) {
+                            if (controller.driverUserDetails.value
+                                    .driverVehicleDetails ==
+                                null) {
                               // Data is not available
                               return Center(
                                 child: Padding(
@@ -626,9 +843,11 @@ class VerifyDriverDialog extends StatelessWidget {
                               return Column(
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 12),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         TextCustom(
                                           title: 'Verify'.tr,
@@ -638,11 +857,22 @@ class VerifyDriverDialog extends StatelessWidget {
                                           child: Transform.scale(
                                             scale: 0.8,
                                             child: CupertinoSwitch(
-                                              activeColor: AppThemData.primary500,
-                                              value: controller.driverUserDetails.value.driverVehicleDetails!.isVerified ?? false,
+                                              activeColor:
+                                                  AppThemData.primary500,
+                                              value: controller
+                                                      .driverUserDetails
+                                                      .value
+                                                      .driverVehicleDetails!
+                                                      .isVerified ??
+                                                  false,
                                               onChanged: (value) async {
-                                                controller.driverUserDetails.value.driverVehicleDetails!.isVerified = value;
-                                                controller.driverUserDetails.refresh();
+                                                controller
+                                                    .driverUserDetails
+                                                    .value
+                                                    .driverVehicleDetails!
+                                                    .isVerified = value;
+                                                controller.driverUserDetails
+                                                    .refresh();
                                                 // Save this change to Firestore or your backend.
                                               },
                                             ),
@@ -655,19 +885,27 @@ class VerifyDriverDialog extends StatelessWidget {
                                     height: 1,
                                     child: ContainerCustom(
                                       padding: const EdgeInsets.all(0),
-                                      color: themeChange.isDarkTheme() ? AppThemData.greyShade900 : AppThemData.greyShade100,
+                                      color: themeChange.isDarkTheme()
+                                          ? AppThemData.greyShade900
+                                          : AppThemData.greyShade100,
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 12),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         TextCustom(
                                           title: 'BrandName'.tr,
                                         ),
                                         TextCustom(
-                                          title: controller.driverUserDetails.value.driverVehicleDetails!.brandName ??
+                                          title: controller
+                                                  .driverUserDetails
+                                                  .value
+                                                  .driverVehicleDetails!
+                                                  .brandName ??
                                               "Driver has not added brand name",
                                         ),
                                       ],
@@ -677,19 +915,28 @@ class VerifyDriverDialog extends StatelessWidget {
                                     height: 1,
                                     child: ContainerCustom(
                                       padding: const EdgeInsets.all(0),
-                                      color: themeChange.isDarkTheme() ? AppThemData.greyShade900 : AppThemData.greyShade100,
+                                      color: themeChange.isDarkTheme()
+                                          ? AppThemData.greyShade900
+                                          : AppThemData.greyShade100,
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 12),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         TextCustom(
                                           title: 'ModelName'.tr,
                                         ),
                                         TextCustom(
-                                          title: controller.driverUserDetails.value.driverVehicleDetails!.modelName.toString(),
+                                          title: controller
+                                              .driverUserDetails
+                                              .value
+                                              .driverVehicleDetails!
+                                              .modelName
+                                              .toString(),
                                         ),
                                       ],
                                     ),
@@ -698,19 +945,28 @@ class VerifyDriverDialog extends StatelessWidget {
                                     height: 1,
                                     child: ContainerCustom(
                                       padding: const EdgeInsets.all(0),
-                                      color: themeChange.isDarkTheme() ? AppThemData.greyShade900 : AppThemData.greyShade100,
+                                      color: themeChange.isDarkTheme()
+                                          ? AppThemData.greyShade900
+                                          : AppThemData.greyShade100,
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 12),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         TextCustom(
                                           title: 'VehicleNumber'.tr,
                                         ),
                                         TextCustom(
-                                          title: controller.driverUserDetails.value.driverVehicleDetails!.vehicleNumber.toString(),
+                                          title: controller
+                                              .driverUserDetails
+                                              .value
+                                              .driverVehicleDetails!
+                                              .vehicleNumber
+                                              .toString(),
                                         ),
                                       ],
                                     ),
@@ -719,19 +975,28 @@ class VerifyDriverDialog extends StatelessWidget {
                                     height: 1,
                                     child: ContainerCustom(
                                       padding: const EdgeInsets.all(0),
-                                      color: themeChange.isDarkTheme() ? AppThemData.greyShade900 : AppThemData.greyShade100,
+                                      color: themeChange.isDarkTheme()
+                                          ? AppThemData.greyShade900
+                                          : AppThemData.greyShade100,
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 12),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         TextCustom(
                                           title: 'VehicleTypeName'.tr,
                                         ),
                                         TextCustom(
-                                          title: controller.driverUserDetails.value.driverVehicleDetails!.vehicleTypeName.toString(),
+                                          title: controller
+                                              .driverUserDetails
+                                              .value
+                                              .driverVehicleDetails!
+                                              .vehicleTypeName
+                                              .toString(),
                                         ),
                                       ],
                                     ),
@@ -740,7 +1005,9 @@ class VerifyDriverDialog extends StatelessWidget {
                                     height: 1,
                                     child: ContainerCustom(
                                       padding: const EdgeInsets.all(0),
-                                      color: themeChange.isDarkTheme() ? AppThemData.greyShade900 : AppThemData.greyShade100,
+                                      color: themeChange.isDarkTheme()
+                                          ? AppThemData.greyShade900
+                                          : AppThemData.greyShade100,
                                     ),
                                   ),
                                 ],
@@ -760,7 +1027,9 @@ class VerifyDriverDialog extends StatelessWidget {
                 children: [
                   CustomButtonWidget(
                     buttonTitle: "Close".tr,
-                    buttonColor: themeChange.isDarkTheme() ? AppThemData.greyShade900 : AppThemData.greyShade100,
+                    buttonColor: themeChange.isDarkTheme()
+                        ? AppThemData.greyShade900
+                        : AppThemData.greyShade100,
                     onPress: () {
                       Navigator.pop(context);
                     },
@@ -787,7 +1056,8 @@ class VerifyDriverDialog extends StatelessWidget {
   }
 }
 
-rowDataWidget({required String name, required String value, required themeChange}) {
+rowDataWidget(
+    {required String name, required String value, required themeChange}) {
   return Row(
     children: [
       TextCustom(
@@ -832,7 +1102,9 @@ viewURLImage(String image) {
                   child: Container(
                     padding: const EdgeInsets.all(4),
                     margin: const EdgeInsets.all(10),
-                    decoration: const BoxDecoration(shape: BoxShape.circle, color: AppThemData.greyShade500),
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppThemData.greyShade500),
                     child: const Icon(Icons.close),
                   ),
                 ),

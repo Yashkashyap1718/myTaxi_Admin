@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:admin/app/constant/api_constant.dart';
 import 'package:admin/app/constant/booking_status.dart';
 import 'package:admin/app/constant/collection_name.dart';
 import 'package:admin/app/constant/constants.dart';
@@ -10,6 +13,7 @@ import 'package:admin/app/utils/fire_store_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http; // For making HTTP requests
 import 'package:nb_utils/nb_utils.dart';
 
 class DashboardScreenController extends GetxController {
@@ -68,6 +72,7 @@ class DashboardScreenController extends GetxController {
   getData() async {
     isUserData = true.obs;
     Constant.getAdminData();
+    getProfile();
     Constant.getCurrencyData();
     Constant.getLanguageData();
     bookingList.value = await FireStoreUtils.getRecentBooking("All");
@@ -80,11 +85,82 @@ class DashboardScreenController extends GetxController {
     totalUser.value = await FireStoreUtils.countUsers();
     bookingChartData = List.filled(12, ChartData("", 0));
     usersChartData = List.filled(12, ChartData("", 0));
-    usersCircleChartData = List.filled(12, ChartDataCircle("", 0, Colors.amber));
+    usersCircleChartData =
+        List.filled(12, ChartDataCircle("", 0, Colors.amber));
     late RxList<ChartDataCircle> chartData;
     getBookingData();
     isUserData = false.obs;
     chartData = <ChartDataCircle>[].obs;
+  }
+
+  Future<String?> getTokenFromLocalStorage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token'); // Returns the saved token
+  }
+
+  // Function to store profile data in SharedPreferences
+  Future<void> saveProfileData(Map<String, dynamic> profileData) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Save each field or save the whole map as a JSON string
+    String profileJson = jsonEncode(profileData);
+    await prefs.setString('profile_data', profileJson);
+
+    log('Profile data saved locally.');
+  }
+
+// Function to fetch profile data
+  Future<void> getProfile() async {
+    final String url = baseURL + previewProfileEndpoint;
+
+    try {
+      String? token = await getTokenFromLocalStorage();
+
+      // Send GET request with the token in headers
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          "Content-Type": "application/json",
+          "token": token!,
+        },
+      );
+
+      // Log the status code for debugging
+      log('Response status: ${response.statusCode}');
+
+      // Log the full response body for debugging
+      log('Response body: ${response.body}');
+
+      // Check if the response status code is 200 (OK)
+      if (response.statusCode == 200) {
+        // Parse the response body
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+
+        // Check if the status is true
+        if (responseData['status'] == true) {
+          // Extract profile data
+          final Map<String, dynamic> profileData = responseData['data'];
+// Store profile data locally
+          await saveProfileData(profileData);
+
+          log('Profile data stored locally.');
+          // Log profile information for debugging
+          log('Profile name: ${profileData['name']}');
+          log('Profile email: ${profileData['email']}');
+          log('Profile phone: ${profileData['phone']}');
+          log('Profile role: ${profileData['role']}');
+          // You can access other fields from profileData here
+        } else {
+          log('Failed to fetch profile: ${responseData['msg']}');
+        }
+      } else {
+        // Handle non-200 responses
+        log('Failed to fetch profile. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      // Log any errors
+      log('Error fetching profile: $e');
+    }
   }
 
   // tempMethod() async {
@@ -109,7 +185,8 @@ class DashboardScreenController extends GetxController {
 
   getTodayStatisticData() async {
     for (var booking in bookingList) {
-      if (Constant.timestampToDate(booking.createAt!) == Constant.timestampToDate(Timestamp.now())) {
+      if (Constant.timestampToDate(booking.createAt!) ==
+          Constant.timestampToDate(Timestamp.now())) {
         if (booking.bookingStatus == BookingStatus.bookingCompleted) {
           todayTotalEarnings.value += Constant.calculateFinalAmount(booking);
         }
@@ -119,8 +196,14 @@ class DashboardScreenController extends GetxController {
 
   getAllStatisticData() async {
     totalBookings.value = bookingList.length;
-    totalService.value = bookingList.where((element) => element.bookingStatus == BookingStatus.bookingCompleted).length;
-    totalBookingPlaced.value = bookingList.where((element) => element.bookingStatus == BookingStatus.bookingPlaced).length;
+    totalService.value = bookingList
+        .where((element) =>
+            element.bookingStatus == BookingStatus.bookingCompleted)
+        .length;
+    totalBookingPlaced.value = bookingList
+        .where(
+            (element) => element.bookingStatus == BookingStatus.bookingPlaced)
+        .length;
     totalBookingActive.value = bookingList
         .where((element) =>
             element.bookingStatus == BookingStatus.bookingAccepted ||
@@ -129,8 +212,14 @@ class DashboardScreenController extends GetxController {
             element.bookingStatus == BookingStatus.bookingCancelled ||
             element.bookingStatus == BookingStatus.bookingPlaced)
         .length;
-    totalBookingCompleted.value = bookingList.where((element) => element.bookingStatus == BookingStatus.bookingCompleted).length;
-    totalBookingCanceled.value = bookingList.where((element) => element.bookingStatus == BookingStatus.bookingCancelled).length;
+    totalBookingCompleted.value = bookingList
+        .where((element) =>
+            element.bookingStatus == BookingStatus.bookingCompleted)
+        .length;
+    totalBookingCanceled.value = bookingList
+        .where((element) =>
+            element.bookingStatus == BookingStatus.bookingCancelled)
+        .length;
 
     for (var booking in bookingList) {
       if (booking.bookingStatus == BookingStatus.bookingCompleted) {
@@ -145,10 +234,13 @@ class DashboardScreenController extends GetxController {
       ChartDataCircle('Total Service', totalService.value, Colors.blue),
       ChartDataCircle('Total Booking', totalBookings.value, Colors.purple),
       ChartDataCircle('Total Users', totalCab.value, Colors.green),
-      ChartDataCircle('Booking Placed', totalBookingPlaced.value, Colors.yellow),
+      ChartDataCircle(
+          'Booking Placed', totalBookingPlaced.value, Colors.yellow),
       ChartDataCircle('Booking Active', totalBookingActive.value, Colors.brown),
-      ChartDataCircle('Booking Completed', totalBookingCompleted.value, Colors.deepOrange),
-      ChartDataCircle('Booking Canceled', totalBookingCanceled.value, Colors.red),
+      ChartDataCircle(
+          'Booking Completed', totalBookingCompleted.value, Colors.deepOrange),
+      ChartDataCircle(
+          'Booking Canceled', totalBookingCanceled.value, Colors.red),
     ];
   }
 
@@ -172,22 +264,27 @@ class DashboardScreenController extends GetxController {
     isLoadingBookingChart.value = false;
   }
 
-  getBookingMonthWiseData(String monthValue, int index, String monthName) async {
+  getBookingMonthWiseData(
+      String monthValue, int index, String monthName) async {
     int month = int.parse(monthValue);
     DateTime firstDayOfMonth = DateTime(DateTime.now().year, month, 1);
-    DateTime lastDayOfMonth = DateTime(DateTime.now().year, month + 1, 0, 23, 59, 59);
+    DateTime lastDayOfMonth =
+        DateTime(DateTime.now().year, month + 1, 0, 23, 59, 59);
 
     List<BookingModel> bookingHistory = [];
 
     try {
       QuerySnapshot value = await FirebaseFirestore.instance
           .collection(CollectionName.bookings)
-          .where("createAt", isGreaterThanOrEqualTo: firstDayOfMonth, isLessThanOrEqualTo: lastDayOfMonth)
+          .where("createAt",
+              isGreaterThanOrEqualTo: firstDayOfMonth,
+              isLessThanOrEqualTo: lastDayOfMonth)
           .where("bookingStatus", isEqualTo: "booking_completed")
           .get();
 
       for (var element in value.docs) {
-        Map<String, dynamic>? elementData = element.data() as Map<String, dynamic>?;
+        Map<String, dynamic>? elementData =
+            element.data() as Map<String, dynamic>?;
         // bookingChartData
         if (elementData != null) {
           BookingModel orderHistoryModel = BookingModel.fromJson(elementData);

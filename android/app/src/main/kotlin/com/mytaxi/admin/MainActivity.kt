@@ -1,4 +1,4 @@
-package com.mytaxi.admin
+package com.ideativemind.admin
 
 import io.flutter.embedding.android.FlutterActivity
 
