@@ -1,12 +1,15 @@
-import 'package:admin/app/constant/collection_name.dart';
-import 'package:admin/app/constant/constants.dart';
+import 'dart:convert';
+
 import 'package:admin/app/constant/show_toast.dart';
 import 'package:admin/app/models/documents_model.dart';
 import 'package:admin/app/modules/document_screen/views/document_screen_view.dart';
-import 'package:admin/app/utils/fire_store_utils.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'package:nb_utils/nb_utils.dart';
+
+import '../../../constant/api_constant.dart';
 
 class DocumentScreenController extends GetxController {
   RxString title = "Document".tr.obs;
@@ -32,6 +35,41 @@ class DocumentScreenController extends GetxController {
     // List<DocumentsModel> data = await FireStoreUtils.getDocument();
     // documentsList.addAll(data);
     isLoading(false);
+  }
+
+  // Function to add a Documnets
+  Future<void> addDocumentsAPI() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString("token");
+      log('---token form brand----$token');
+
+      log('token------${token}');
+      final response = await http.post(
+        Uri.parse(baseURL + addDocumentEndpoint),
+        headers: {
+          'token': token
+              .toString(), // Assuming you use Bearer token for authorization
+        },
+        body: jsonEncode({
+          "name": documentNameController.value.text,
+          "side": documentSide.value == SideAt.isTwoSide ? true : false,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        log('----addVehicleBrandAPI----${response.body}');
+        // Brand added successfully
+        ShowToastDialog.toast("Documents added successfully!".tr);
+        // await getDocuments(); // Refresh the brand list
+      } else {
+        // Handle errors here
+        ShowToastDialog.toast("Failed to add Documents: ${response.body}".tr);
+      }
+    } catch (error) {
+      log("Error adding Documents: $error");
+      ShowToastDialog.toast("An error occurred: $error".tr);
+    }
   }
 
   setDefaultData() {

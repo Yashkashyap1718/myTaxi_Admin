@@ -656,20 +656,19 @@ class BookingDetailView extends GetView<BookingDetailController> {
                                                               spaceW(width: 12),
                                                               Expanded(
                                                                   child: TextCustom(
-                                                                      title: (controller
-                                                                                  .bookingModel.value.vehicleType ==
-                                                                              null
-                                                                          ? ""
-                                                                          : controller
-                                                                              .bookingModel
-                                                                              .value
-                                                                              .vehicleType!
-                                                                              .title),
-                                                                      fontSize:
-                                                                          16,
-                                                                      fontFamily:
-                                                                          AppThemeData
-                                                                              .medium)),
+                                                                      title: ("controller"
+                                                                          //     .bookingModel.value.vehicleType ==
+                                                                          // null
+                                                                          // ? ""
+                                                                          // : controller
+                                                                          //     .bookingModel
+                                                                          //     .value
+                                                                          //     .vehicleType!
+                                                                          //     .title
+
+                                                                          ),
+                                                                      fontSize: 16,
+                                                                      fontFamily: AppThemeData.medium)),
                                                               Row(
                                                                 children: [
                                                                   SvgPicture.asset(
@@ -677,15 +676,18 @@ class BookingDetailView extends GetView<BookingDetailController> {
                                                                   spaceW(
                                                                       width: 6),
                                                                   TextCustom(
-                                                                      title: (controller
-                                                                                  .bookingModel.value.vehicleType ==
-                                                                              null
-                                                                          ? ""
-                                                                          : controller
-                                                                              .bookingModel
-                                                                              .value
-                                                                              .vehicleType!
-                                                                              .persons),
+                                                                      title:
+                                                                          ("controller"
+                                                                          //         .bookingModel.value.vehicleType ==
+                                                                          //     null
+                                                                          // ? ""
+                                                                          // : controller
+                                                                          //     .bookingModel
+                                                                          //     .value
+                                                                          //     .vehicleType!
+                                                                          //     .persons
+
+                                                                          ),
                                                                       fontSize:
                                                                           16,
                                                                       fontFamily:
@@ -1385,7 +1387,7 @@ class BookingDetailView extends GetView<BookingDetailController> {
                                                                               12),
                                                                       Expanded(
                                                                           child: TextCustom(
-                                                                              title: (controller.bookingModel.value.vehicleType == null ? "" : controller.bookingModel.value.vehicleType!.title),
+                                                                              title: ("controller.bookingModel.value.vehicleType == null ? " " : controller.bookingModel.value.vehicleType!.title"),
                                                                               fontSize: 16,
                                                                               fontFamily: AppThemeData.medium)),
                                                                       Row(
@@ -1395,7 +1397,7 @@ class BookingDetailView extends GetView<BookingDetailController> {
                                                                           spaceW(
                                                                               width: 6),
                                                                           TextCustom(
-                                                                              title: (controller.bookingModel.value.vehicleType == null ? "" : controller.bookingModel.value.vehicleType!.persons),
+                                                                              title: ("ontroller.bookingModel.value.vehicleType == null ? " " : controller.bookingModel.value.vehicleType!.persons"),
                                                                               fontSize: 16,
                                                                               fontFamily: AppThemeData.regular)
                                                                         ],
@@ -2042,7 +2044,7 @@ class BookingDetailView extends GetView<BookingDetailController> {
                                                                               12),
                                                                       Expanded(
                                                                           child: TextCustom(
-                                                                              title: (controller.bookingModel.value.vehicleType == null ? "" : controller.bookingModel.value.vehicleType!.title),
+                                                                              title: ("controller.bookingModel.value.vehicleType == null ? " " : controller.bookingModel.value.vehicleType!.title"),
                                                                               fontSize: 16,
                                                                               fontFamily: AppThemeData.medium)),
                                                                       Row(
@@ -2052,7 +2054,7 @@ class BookingDetailView extends GetView<BookingDetailController> {
                                                                           spaceW(
                                                                               width: 6),
                                                                           TextCustom(
-                                                                              title: (controller.bookingModel.value.vehicleType == null ? "" : controller.bookingModel.value.vehicleType!.persons),
+                                                                              title: ("controller.bookingModel.value.vehicleType == null ? " " : controller.bookingModel.value.vehicleType!.persons"),
                                                                               fontSize: 16,
                                                                               fontFamily: AppThemeData.regular)
                                                                         ],

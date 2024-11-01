@@ -84,9 +84,9 @@ class LoginPageController extends GetxController {
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(payload),
       );
-      print('---pay--$payload');
-
-      log('Response Body: ${response.body}');
+      // print('---pay--$payload');
+      //
+      // log('Response Body: ${response.body}');
 
       log(response.body); // Log the response body for debugging
       final Map<String, dynamic> responseData = jsonDecode(response.body);

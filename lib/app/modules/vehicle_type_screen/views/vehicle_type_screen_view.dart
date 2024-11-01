@@ -1,16 +1,14 @@
-import 'dart:io';
+import 'dart:html' as html;
 
 import 'package:admin/app/components/menu_widget.dart';
-import 'package:admin/app/utils/fire_store_utils.dart';
 import 'package:admin/widget/container_custom.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+
 import '../../../../widget/common_ui.dart';
 import '../../../../widget/global_widgets.dart';
 import '../../../../widget/text_widget.dart';
@@ -431,7 +429,7 @@ class VehicleTypeScreenView extends GetView<VehicleTypeScreenController> {
                                                               DataRow(cells: [
                                                                 DataCell(TextCustom(
                                                                     title: vehicleTypeModel
-                                                                        .title
+                                                                        .name
                                                                         .toString())),
                                                                 DataCell(
                                                                   Container(
@@ -463,7 +461,7 @@ class VehicleTypeScreenView extends GetView<VehicleTypeScreenController> {
                                                                 DataCell(TextCustom(
                                                                     title: vehicleTypeModel
                                                                         .charges
-                                                                        .farMinimumCharges
+                                                                        .fareMinimumCharges
                                                                         .toString())),
                                                                 DataCell(TextCustom(
                                                                     title: vehicleTypeModel
@@ -484,26 +482,26 @@ class VehicleTypeScreenView extends GetView<VehicleTypeScreenController> {
                                                                       activeColor:
                                                                           AppThemData
                                                                               .primary500,
-                                                                      value: vehicleTypeModel
-                                                                          .isActive!,
+                                                                      value:
+                                                                          true,
                                                                       onChanged:
                                                                           (value) async {
                                                                         print(
                                                                             'vehicle tyep status $value');
-                                                                        print(
-                                                                            'vehicle tyep  get ${vehicleTypeModel.isActive!}');
-                                                                        if (Constant
-                                                                            .isDemo) {
-                                                                          DialogBox
-                                                                              .demoDialogBox();
-                                                                        } else {
-                                                                          vehicleTypeModel.isActive =
-                                                                              value;
-                                                                          // await FireStoreUtils.updateVehicleType(
-                                                                          //     vehicleTypeModel);
-                                                                          controller
-                                                                              .getData();
-                                                                        }
+                                                                        // print(
+                                                                        //     'vehicle tyep  get ${vehicleTypeModel.isActive!}');
+                                                                        // if (Constant
+                                                                        //     .isDemo) {
+                                                                        //   DialogBox
+                                                                        //       .demoDialogBox();
+                                                                        // } else {
+                                                                        // vehicleTypeModel.isActive =
+                                                                        //     value;
+                                                                        // await FireStoreUtils.updateVehicleType(
+                                                                        //     vehicleTypeModel);
+                                                                        controller
+                                                                            .getData();
+                                                                        // }
                                                                       },
                                                                     ),
                                                                   ),
@@ -539,18 +537,18 @@ class VehicleTypeScreenView extends GetView<VehicleTypeScreenController> {
                                                                                 vehicleTypeModel.image;
                                                                             controller.editingId.value =
                                                                                 vehicleTypeModel.id;
-                                                                            controller.isEnable.value =
-                                                                                vehicleTypeModel.isActive!;
+                                                                            // controller.isEnable.value =
+                                                                            //     vehicleTypeModel.isActive!;
                                                                             controller.minimumChargeWithKm.value.text =
-                                                                                vehicleTypeModel.charges.fareMinimumChargesWithinKm;
+                                                                                vehicleTypeModel.charges.fareMinimumChargesWithinKm.toString();
                                                                             controller.minimumCharge.value.text =
-                                                                                vehicleTypeModel.charges.farMinimumCharges;
+                                                                                vehicleTypeModel.charges.fareMinimumCharges.toString();
                                                                             controller.perKm.value.text =
-                                                                                vehicleTypeModel.charges.farePerKm;
+                                                                                vehicleTypeModel.charges.farePerKm.toString();
                                                                             controller.vehicleTitle.value.text =
-                                                                                vehicleTypeModel.title;
+                                                                                vehicleTypeModel.name;
                                                                             controller.person.value.text =
-                                                                                vehicleTypeModel.persons;
+                                                                                vehicleTypeModel.persons.toString();
                                                                             controller.vehicleTypeImage.value.text =
                                                                                 vehicleTypeModel.image;
                                                                             showDialog(
@@ -574,17 +572,19 @@ class VehicleTypeScreenView extends GetView<VehicleTypeScreenController> {
                                                                         InkWell(
                                                                           onTap:
                                                                               () async {
-                                                                            if (Constant.isDemo) {
-                                                                              DialogBox.demoDialogBox();
-                                                                            } else {
-                                                                              // controller.removeVehicleTypeModel(vehicleTypeModel);
-                                                                              // controller.getData();
-                                                                              bool confirmDelete = await DialogBox.showConfirmationDeleteDialog(context);
-                                                                              if (confirmDelete) {
-                                                                                await controller.removeVehicleTypeModel(vehicleTypeModel);
-                                                                                controller.getData();
-                                                                              }
+                                                                            // if (Constant.isDemo) {
+                                                                            //   DialogBox.demoDialogBox();
+                                                                            // } else {
+                                                                            // controller.removeVehicleTypeModel(vehicleTypeModel);
+                                                                            // controller.getData();
+                                                                            bool
+                                                                                confirmDelete =
+                                                                                await DialogBox.showConfirmationDeleteDialog(context);
+                                                                            if (confirmDelete) {
+                                                                              await controller.removeVehicleTypeModel(vehicleTypeModel);
+                                                                              controller.getData();
                                                                             }
+                                                                            // }
                                                                           },
                                                                           child:
                                                                               SvgPicture.asset(
@@ -621,6 +621,7 @@ class VehicleTypeScreenView extends GetView<VehicleTypeScreenController> {
     );
   }
 }
+// Update with your actual import
 
 class VehicleTypeDialog extends StatelessWidget {
   const VehicleTypeDialog({super.key});
@@ -649,181 +650,160 @@ class VehicleTypeDialog extends StatelessWidget {
                       color: AppThemData.primaryBlack,
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
+                  const SizedBox(height: 20),
+                ],
+              ),
+            ),
+            // Image Container
+            Container(
+              height: 0.18.sh,
+              width: 0.30.sw,
+              decoration: BoxDecoration(
+                color: themeChange.isDarkTheme()
+                    ? AppThemData.greyShade900
+                    : AppThemData.greyShade100,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Stack(
+                children: [
+                  if (controller.imageFile.value.path.isNotEmpty)
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.network(
+                        controller.imageFile.value.path,
+                        fit: BoxFit.contain,
+                        height: 0.18.sh,
+                        width: 0.30.sw,
+                      ),
+                    ),
+                  Center(
+                    child: InkWell(
+                      onTap: () async {
+                        // Image picker for web
+                        html.FileUploadInputElement uploadInput =
+                            html.FileUploadInputElement();
+                        uploadInput.accept =
+                            'image/*'; // Accept all image types
+                        uploadInput.click();
+
+                        uploadInput.onChange.listen((e) async {
+                          final files = uploadInput.files;
+                          if (files!.isEmpty) {
+                            print('No image selected.'); // Log message
+                            return;
+                          }
+
+                          final file = files[0];
+                          print(
+                              'Selected file: ${file.name}, type: ${file.type}'); // Log selected file
+
+                          // Optional: Check for specific image types
+                          if (!['image/png', 'image/jpeg', 'image/gif']
+                              .contains(file.type)) {
+                            print(
+                                'Unsupported file type: ${file.type}'); // Log unsupported file type
+                            return;
+                          }
+
+                          final reader = html.FileReader();
+                          reader
+                              .readAsDataUrl(file); // Read the file as Data URL
+
+                          reader.onLoadEnd.listen((e) {
+                            // Update the controller with image information
+                            controller.vehicleTypeImage.value.text =
+                                file.name; // Name of the image file
+                            controller.imageURL.value =
+                                reader.result as String; // Save the data URL
+                            controller.mimeType.value =
+                                file.type; // Get mimeType
+                            controller.isImageUpdated.value =
+                                true; // Mark as updated
+
+                            // Log image URL for debugging
+                            print('Image URL: ${controller.imageURL.value}');
+                          });
+                        });
+                      },
+                      child: controller.imageURL.value
+                              .isEmpty // Check for image URL instead of path
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    'Upload Image'.tr,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: AppThemData.greyShade500,
+                                      fontFamily: AppThemeData.medium,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                const Icon(
+                                  Icons.file_upload_outlined,
+                                  color: AppThemData.greyShade500,
+                                ),
+                              ],
+                            )
+                          : Image.network(controller
+                              .imageURL.value), // Display the uploaded image
+                    ),
                   ),
                 ],
               ),
             ),
-            controller.isEditing.value == true
-                ? Container(
-                    height: 0.18.sh,
-                    width: 0.30.sw,
-                    decoration: BoxDecoration(
-                      color: themeChange.isDarkTheme()
-                          ? AppThemData.greyShade900
-                          : AppThemData.greyShade100,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Stack(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: CachedNetworkImage(
-                            fit: BoxFit.contain,
-                            height: 0.18.sh,
-                            width: 0.30.sw,
-                            imageUrl: controller.imageFile.value.path.isEmpty
-                                ? controller.imageURL.value
-                                : controller.imageFile.value.path,
-                          ),
-                        ),
-                        Center(
-                          child: InkWell(
-                            onTap: () async {
-                              if (Constant.isDemo) {
-                                DialogBox.demoDialogBox();
-                              } else {
-                                ImagePicker picker = ImagePicker();
-                                final img = await picker.pickImage(
-                                    source: ImageSource.gallery,
-                                    imageQuality: 80);
-                                if (img != null) {
-                                  File imageFile = File(img.path);
-                                  controller.vehicleTypeImage.value.text =
-                                      img.name;
-                                  controller.imageFile.value = imageFile;
-                                  controller.mimeType.value = "${img.mimeType}";
-                                  controller.isImageUpdated.value = true;
-                                }
-                              }
-                            },
-                            child: controller.imageFile.value.path.isEmpty
-                                ? const Icon(
-                                    Icons.add,
-                                    color: AppThemData.greyShade500,
-                                  )
-                                : const SizedBox(),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                : Container(
-                    height: 0.18.sh,
-                    width: 0.30.sw,
-                    decoration: BoxDecoration(
-                      color: themeChange.isDarkTheme()
-                          ? AppThemData.greyShade900
-                          : AppThemData.greyShade100,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Stack(
-                      children: [
-                        if (controller.imageFile.value.path.isNotEmpty)
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: CachedNetworkImage(
-                              fit: BoxFit.contain,
-                              height: 0.18.sh,
-                              width: 0.30.sw,
-                              imageUrl: controller.imageFile.value.path,
-                            ),
-                          ),
-                        Center(
-                          child: InkWell(
-                            onTap: () async {
-                              if (Constant.isDemo) {
-                                DialogBox.demoDialogBox();
-                              } else {
-                                ImagePicker picker = ImagePicker();
-                                final img = await picker.pickImage(
-                                    source: ImageSource.gallery,
-                                    imageQuality: 80);
-                                if (img != null) {
-                                  File imageFile = File(img.path);
-                                  controller.vehicleTypeImage.value.text =
-                                      img.name;
-                                  controller.imageFile.value = imageFile;
-                                  controller.mimeType.value = "${img.mimeType}";
-                                  controller.isImageUpdated.value = true;
-                                }
-                              }
-                            },
-                            child: controller.imageFile.value.path.isEmpty
-                                ? Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          'upload image'.tr,
-                                          style: const TextStyle(
-                                              fontSize: 16,
-                                              color: AppThemData.greyShade500,
-                                              fontFamily: AppThemeData.medium),
-                                          textAlign: TextAlign
-                                              .center, // Center the text within the Expanded widget
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 12,
-                                      ),
-                                      const Icon(
-                                        Icons.file_upload_outlined,
-                                        color: AppThemData.greyShade500,
-                                      ),
-                                    ],
-                                  )
-                                : const SizedBox(),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
             spaceH(height: 16),
             SizedBox(
               child: CustomTextFormField(
-                  title: "Title".tr,
-                  hintText: "Enter Title".tr,
-                  controller: controller.vehicleTitle.value),
+                title: "Title".tr,
+                hintText: "Enter Title".tr,
+                controller: controller.vehicleTitle.value,
+              ),
             ),
             spaceH(),
             Row(
               children: [
                 Expanded(
-                    child: CustomTextFormField(
-                  title: "Fare Minimum Charges".tr,
-                  hintText: "Enter  MinimumCharges".tr,
-                  controller: controller.minimumCharge.value,
-                  maxLine: 1,
-                )),
+                  child: CustomTextFormField(
+                    title: "Fare Minimum Charges".tr,
+                    hintText: "Enter Minimum Charges".tr,
+                    controller: controller.minimumCharge.value,
+                    maxLine: 1,
+                  ),
+                ),
                 spaceW(),
                 Expanded(
-                    child: CustomTextFormField(
-                  title: "Fare MinCharges With Km".tr,
-                  hintText: "Enter MinCharges With Km".tr,
-                  controller: controller.minimumChargeWithKm.value,
-                  maxLine: 1,
-                )),
+                  child: CustomTextFormField(
+                    title: "Fare Min Charges With Km".tr,
+                    hintText: "Enter Min Charges With Km".tr,
+                    controller: controller.minimumChargeWithKm.value,
+                    maxLine: 1,
+                  ),
+                ),
               ],
             ),
             Row(
               children: [
                 Expanded(
-                    child: CustomTextFormField(
-                  title: "Fare Per Km".tr,
-                  hintText: "Enter Fare Per Km".tr,
-                  controller: controller.perKm.value,
-                  maxLine: 1,
-                )),
+                  child: CustomTextFormField(
+                    title: "Fare Per Km".tr,
+                    hintText: "Enter Fare Per Km".tr,
+                    controller: controller.perKm.value,
+                    maxLine: 1,
+                  ),
+                ),
                 spaceW(),
                 Expanded(
-                    child: CustomTextFormField(
-                  title: "Person".tr,
-                  hintText: "Enter Person".tr,
-                  controller: controller.person.value,
-                  maxLine: 1,
-                )),
+                  child: CustomTextFormField(
+                    title: "Person".tr,
+                    hintText: "Enter Person".tr,
+                    controller: controller.person.value,
+                    maxLine: 1,
+                  ),
+                ),
               ],
             ),
             Row(
@@ -871,28 +851,21 @@ class VehicleTypeDialog extends StatelessWidget {
                   buttonTitle:
                       controller.isEditing.value ? "Edit".tr : "Save".tr,
                   onPress: () {
-                    if (Constant.isDemo) {
-                      DialogBox.demoDialogBox();
-                    } else {
-                      if (controller.vehicleTitle.value.text.isNotEmpty &&
-                          controller.vehicleTypeImage.value.text.isNotEmpty &&
-                          controller.minimumCharge.value.text.isNotEmpty &&
-                          controller
-                              .minimumChargeWithKm.value.text.isNotEmpty &&
-                          controller.perKm.value.text.isNotEmpty &&
-                          controller.person.value.text.isNotEmpty) {
-                        controller.isEditing.value
-                            ? controller.isEditing(true)
-                            : controller.isLoading(true);
-                        controller.isEditing.value
-                            ? controller.updateVehicleType()
-                            : controller.addVehicleTyep();
+                    if (controller.vehicleTitle.value.text.isNotEmpty &&
+                        controller.imageURL.value.isNotEmpty &&
+                        controller.minimumCharge.value.text.isNotEmpty &&
+                        controller.minimumChargeWithKm.value.text.isNotEmpty &&
+                        controller.perKm.value.text.isNotEmpty &&
+                        controller.person.value.text.isNotEmpty) {
+                      // controller.isEditing.value
+                      //     ? controller.updateVehicleType()
+                      controller.addVehicleTypeViaAPI();
 
-                        Navigator.pop(context);
-                      } else {
-                        ShowToastDialog.toast("All Fields are Required...".tr);
-                        controller.isLoading = false.obs;
-                      }
+                      Navigator.pop(context);
+                    } else {
+                      ShowToastDialog.toast("All Fields are Required...".tr);
+                      controller.isLoading.value =
+                          false; // Ensure loading is set to false
                     }
                   },
                 ),

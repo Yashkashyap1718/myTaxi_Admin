@@ -1,75 +1,84 @@
-import 'dart:convert';
-
 class VehicleTypeModel {
   final String id;
+  final String name;
+  final String slug;
+  final String term;
+  final String type;
+  final String parent;
   final String image;
-   bool ? isActive;
-  final String title;
-  final String persons;
+  final String status;
+  final int persons;
   final Charges charges;
+  final int createdAt;
+  final int updatedAt;
 
   VehicleTypeModel({
     required this.id,
+    required this.name,
+    required this.slug,
+    required this.term,
+    required this.type,
+    required this.parent,
     required this.image,
-    required this.isActive,
-    required this.title,
-    required this.charges,
+    required this.status,
     required this.persons,
+    required this.charges,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
-  factory VehicleTypeModel.fromRawJson(String str) => VehicleTypeModel.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
-  factory VehicleTypeModel.fromJson(Map<String, dynamic> json) => VehicleTypeModel(
-        id: json["id"],
+  factory VehicleTypeModel.fromJson(Map<String, dynamic> json) =>
+      VehicleTypeModel(
+        id: json["_id"],
+        name: json["name"],
+        slug: json["slug"],
+        term: json["term"],
+        type: json["type"],
+        parent: json["parent"],
         image: json["image"],
-        isActive: json["isActive"],
-        title: json["title"],
-        charges: json["charges"] == null
-            ? Charges(
-                fareMinimumChargesWithinKm: "0",
-                farMinimumCharges: "0",
-                farePerKm: "0",
-              )
-            : Charges.fromJson(json["charges"]),
+        status: json["status"],
         persons: json["persons"],
+        charges: Charges.fromJson(json["charges"]),
+        createdAt: json["createdAt"],
+        updatedAt: json["updatedAt"],
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
+        "_id": id,
+        "name": name,
+        "slug": slug,
+        "term": term,
+        "type": type,
+        "parent": parent,
         "image": image,
-        "isActive": isActive,
-        "title": title,
-        "charges": charges.toJson(),
+        "status": status,
         "persons": persons,
+        "charges": charges.toJson(),
+        "createdAt": createdAt,
+        "updatedAt": updatedAt,
       };
 }
 
 class Charges {
-  final String fareMinimumChargesWithinKm;
-  final String farMinimumCharges;
-  final String farePerKm;
+  final int farePerKm;
+  final int fareMinimumChargesWithinKm;
+  final int fareMinimumCharges;
 
   Charges({
-    required this.fareMinimumChargesWithinKm,
-    required this.farMinimumCharges,
     required this.farePerKm,
+    required this.fareMinimumChargesWithinKm,
+    required this.fareMinimumCharges,
   });
 
-  factory Charges.fromRawJson(String str) => Charges.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
   factory Charges.fromJson(Map<String, dynamic> json) => Charges(
-        fareMinimumChargesWithinKm: json["fare_minimum_charges_within_km"],
-        farMinimumCharges: json["far_minimum_charges"],
         farePerKm: json["fare_per_km"],
+        fareMinimumChargesWithinKm: json["fare_minimum_charges_within_km"],
+        fareMinimumCharges: json["fare_minimum_charges"],
       );
 
   Map<String, dynamic> toJson() => {
-        "fare_minimum_charges_within_km": fareMinimumChargesWithinKm,
-        "far_minimum_charges": farMinimumCharges,
         "fare_per_km": farePerKm,
+        "fare_minimum_charges_within_km": fareMinimumChargesWithinKm,
+        "fare_minimum_charges": fareMinimumCharges,
       };
 }

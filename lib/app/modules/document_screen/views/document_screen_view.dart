@@ -21,7 +21,6 @@ import 'package:provider/provider.dart';
 
 import '../../../components/menu_widget.dart';
 import '../../../routes/app_pages.dart';
-import '../../../utils/fire_store_utils.dart';
 import '../controllers/document_screen_controller.dart';
 
 class DocumentScreenView extends GetView<DocumentScreenController> {
@@ -638,19 +637,22 @@ class DocumentDialog extends StatelessWidget {
             CustomButtonWidget(
               buttonTitle: controller.isEditing.value ? "Edit".tr : "Save".tr,
               onPress: () {
-                if (Constant.isDemo) {
-                  DialogBox.demoDialogBox();
+                // if (Constant.isDemo) {
+                //   DialogBox.demoDialogBox();
+                // }
+                // else {
+                if (controller.documentNameController.value.text != "") {
+                  // controller.isEditing.value
+                  //     ? controller.updateDocument()
+                  //     :
+
+                  controller.addDocumentsAPI();
+                  controller.setDefaultData();
+                  Navigator.pop(context);
                 } else {
-                  if (controller.documentNameController.value.text != "") {
-                    controller.isEditing.value
-                        ? controller.updateDocument()
-                        : controller.addDocument();
-                    controller.setDefaultData();
-                    Navigator.pop(context);
-                  } else {
-                    ShowToastDialog.toast("All Fields are Required...".tr);
-                  }
+                  ShowToastDialog.toast("All Fields are Required...".tr);
                 }
+                // }
               },
             ),
           ],

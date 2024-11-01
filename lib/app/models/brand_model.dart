@@ -11,16 +11,16 @@ class BrandModel {
   }
 
   BrandModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    title = json['title'];
-    isEnable = json['isEnable'];
+    id = json['_id']; // Correctly mapping the API response
+    title = json['name'];
+    isEnable = json['status'] == "Active"; // Map status to a boolean
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['title'] = title;
-    data['isEnable'] = isEnable;
+    data['_id'] = id;
+    data['name'] = title;
+    data['status'] = isEnable! ? "Active" : "Inactive";
     return data;
   }
 }

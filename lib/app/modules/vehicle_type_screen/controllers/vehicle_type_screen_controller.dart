@@ -1,13 +1,15 @@
+import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:admin/app/constant/api_constant.dart';
 import 'package:admin/app/models/vehicle_type_model.dart';
-import 'package:admin/app/utils/fire_store_utils.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../constant/collection_name.dart';
 import '../../../constant/constants.dart';
 import '../../../constant/show_toast.dart';
 
@@ -20,7 +22,6 @@ class VehicleTypeScreenController extends GetxController {
 
   RxList<VehicleTypeModel> vehicleTypeList = <VehicleTypeModel>[].obs;
   Rx<TextEditingController> vehicleTypeImage = TextEditingController().obs;
-  // Rx<VehicleTypeModel> vehicleTypeModel = VehicleTypeModel().obs;
 
   RxString title = "VehicleType".obs;
   RxBool isEnable = false.obs;
@@ -38,13 +39,58 @@ class VehicleTypeScreenController extends GetxController {
     super.onInit();
   }
 
+  // getData() async {
+  //   isLoading(true);
+  //   vehicleTypeList.clear();
+  //   // Fetch data logic here...
+  //   isLoading(false);
+  // }
+
   getData() async {
     isLoading(true);
-    vehicleTypeList.clear();
-    // List<VehicleTypeModel> data = await FireStoreUtils.getVehicleType();
-    // vehicleTypeList.addAll(data);
+    vehicleTypeList.clear(); // Clear the existing list before fetching new data
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("token");
 
-    isLoading(false);
+    log('----token--from--getData---$token');
+    try {
+      final response = await http.get(
+        Uri.parse(
+            baseURL + vehicleTypeListEndpoint), // Replace with your endpoint
+        headers: {
+          "Content-Type": "application/json",
+          "token": token ?? "",
+        },
+      );
+
+      // log("Fetching vehicle types: ${response.statusCode}");
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        // log("Full API Response: $responseData"); // Log the entire response
+
+        // Check if the API response indicates success
+        if (responseData["status"] == true) {
+          // Extract the 'data' field which contains the list of vehicle types
+          final List<dynamic> data = responseData["data"];
+          vehicleTypeList.addAll(
+              data.map((json) => VehicleTypeModel.fromJson(json)).toList());
+          // log("Vehicle types fetched: ${vehicleTypeList.length}");
+        } else {
+          // Show the message from the API if fetching vehicle types failed
+          ShowToastDialog.toast(
+              "Failed to fetch vehicle types: ${responseData["msg"]}");
+        }
+      } else {
+        ShowToastDialog.toast(
+            "Failed to fetch vehicle types. Status code: ${response.statusCode}");
+      }
+    } catch (e) {
+      log("Error fetching vehicle types: $e");
+      ShowToastDialog.toast("An error occurred while fetching vehicle types.");
+    } finally {
+      isLoading(false);
+    }
   }
 
   setDefaultData() {
@@ -64,45 +110,99 @@ class VehicleTypeScreenController extends GetxController {
     imageURL.value = '';
   }
 
+  Future<void> addVehicleTypeViaAPI() async {
+    isLoading(true);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("token");
+
+    log('----token--from--addvehicle---$token');
+
+    // Initialize the base64Image variable
+    String? base64Image;
+
+    // Handle image selection for web
+    if (kIsWeb && imageURL.value.isNotEmpty) {
+      base64Image = imageURL.value
+          .split(',')
+          .last; // Extract base64 part if using data URL
+    } else if (imageFile.value.path.isNotEmpty && !kIsWeb) {
+      try {
+        List<int> imageBytes = await imageFile.value.readAsBytes();
+        base64Image = base64Encode(imageBytes);
+        // log("Encoded image: $base64Image");
+      } catch (e) {
+        log("Error reading image file: $e");
+        ShowToastDialog.toast("Failed to read image file.");
+      }
+    } else {
+      log("No image selected or unsupported on the web.");
+    }
+
+    // Prepare the request body
+    final body = {
+      "name": vehicleTitle.value.text,
+      "fare_per_km": double.tryParse(perKm.value.text) ?? 0,
+      "fare_minimum_charges_within_km":
+          double.tryParse(minimumChargeWithKm.value.text) ?? 0,
+      "fare_minimum_charges": double.tryParse(minimumCharge.value.text) ?? 0,
+      "persons": int.tryParse(person.value.text) ?? 0,
+      "logo": base64Image != null ? "data:image/png;base64,$base64Image" : null,
+    };
+
+    // Send the POST request
+    try {
+      final response = await http.post(
+        Uri.parse(baseURL + vehicleTypeAddEndpoint),
+        headers: {
+          "Content-Type": "application/json",
+          "token": token ?? "",
+        },
+        body: jsonEncode(body),
+      );
+
+      // log("Request body: $body");
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        if (responseData["status"] == true) {
+          ShowToastDialog.toast(responseData["msg"]);
+          getData(); // Refresh data if needed
+        } else {
+          ShowToastDialog.toast("Failed to add vehicle type.");
+        }
+      } else {
+        ShowToastDialog.toast("Error: ${response.statusCode}");
+      }
+    } catch (e) {
+      log("Error in addVehicleTypeViaAPI: $e");
+      ShowToastDialog.toast("An error occurred while adding vehicle type.");
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  // Other existing methods...
+
   updateVehicleType() async {
-    isLoading = true.obs;
+    isLoading(true);
     String docId = editingId.value;
-    // String url = await FireStoreUtils.uploadPic(PickedFile(imageFile.value.path), "vehicleTyepImage", docId, mimeType.value);
-    // await FireStoreUtils.updateVehicleType(VehicleTypeModel(
-    //     id: docId,
-    //     image: url,
-    //     isActive: isEnable.value,
-    //     title: vehicleTitle.value.text,
-    //     charges: Charges(fareMinimumChargesWithinKm: minimumChargeWithKm.value.text, farMinimumCharges: minimumCharge.value.text, farePerKm: perKm.value.text),
-    //     persons: person.value.text));
+    // Update vehicle type logic here...
     await getData();
-    isLoading = false.obs;
+    isLoading(false);
   }
 
   addVehicleTyep() async {
-    isLoading = true.obs;
+    isLoading(true);
     String docId = Constant.getRandomString(20);
-    // String url = await FireStoreUtils.uploadPic(PickedFile(imageFile.value.path), "vehicleTyepImage", docId, mimeType.value);
-
-    // FireStoreUtils.addVehicleType(VehicleTypeModel(
-    //     id: docId,
-    //     image: url,
-    //     isActive: isEnable.value,
-    //     title: vehicleTitle.value.text,
-    //     charges: Charges(fareMinimumChargesWithinKm: minimumChargeWithKm.value.text, farMinimumCharges: minimumCharge.value.text, farePerKm: perKm.value.text),
-    //     persons: person.value.text));
+    // Add vehicle type logic here...
     await getData();
-    isLoading = false.obs;
+    isLoading(false);
   }
 
   removeVehicleTypeModel(VehicleTypeModel vehicleTypeModel) async {
-    isLoading = true.obs;
-    // await FirebaseFirestore.instance.collection(CollectionName.vehicleType).doc(vehicleTypeModel.id).delete().then((value) {
-    //   ShowToastDialog.toast("VehicleType deleted...!".tr);
-    // }).catchError((error) {
-    //   ShowToastDialog.toast("Something went wrong".tr);
-    // });
+    isLoading(true);
+    // Remove vehicle type logic here...
     await getData();
-    isLoading = false.obs;
+    isLoading(false);
   }
 }

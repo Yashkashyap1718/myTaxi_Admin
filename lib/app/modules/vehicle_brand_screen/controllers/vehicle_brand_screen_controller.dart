@@ -1,14 +1,14 @@
-import 'dart:developer';
+import 'dart:convert';
 
-import 'package:admin/app/constant/collection_name.dart';
+import 'package:admin/app/constant/api_constant.dart';
 import 'package:admin/app/constant/constants.dart';
 import 'package:admin/app/constant/show_toast.dart';
 import 'package:admin/app/models/brand_model.dart';
-import 'package:admin/app/models/model_vehicle_model.dart';
-import 'package:admin/app/utils/fire_store_utils.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'package:nb_utils/nb_utils.dart';
 
 class VehicleBrandScreenController extends GetxController {
   RxString title = "Vehicle Brand".tr.obs;
@@ -21,11 +21,18 @@ class VehicleBrandScreenController extends GetxController {
   var startIndex = 1.obs;
   var endIndex = 1.obs;
   var totalPage = 1.obs;
+  RxString imageURL = "".obs;
+  Rx<File> imageFile = File('').obs;
+  RxBool isImageUpdated = false.obs;
+  Rx<TextEditingController> vehicleTypeImage = TextEditingController().obs;
+  RxString mimeType = 'image/png'.obs;
   RxList<BrandModel> currentPageVehicleBrand = <BrandModel>[].obs;
 
   Rx<TextEditingController> titleController = TextEditingController().obs;
   RxBool isEditing = false.obs;
   RxBool isEnable = false.obs;
+
+  RxList<BrandModel> brandList = <BrandModel>[].obs;
 
   @override
   void onInit() {
@@ -34,13 +41,61 @@ class VehicleBrandScreenController extends GetxController {
     super.onInit();
   }
 
-  getBrand() async {
-    isLoading.value = true;
-    // await FireStoreUtils.countVehicleBrand();
+  // getBrand() async {
+  //   isLoading.value = true;
+  //   // await FireStoreUtils.countVehicleBrand();
+  //
+  //   // vehicleBrandList.value = await FireStoreUtils.getVehicleBrand();
+  //   setPagination(totalItemPerPage.value);
+  //   isLoading.value = false;
+  // }
 
-    // vehicleBrandList.value = await FireStoreUtils.getVehicleBrand();
-    setPagination(totalItemPerPage.value);
-    isLoading.value = false;
+  // Method to fetch brand data from API
+  Future<void> getBrand() async {
+    isLoading(true);
+    brandList.clear(); // Clear existing data before fetching
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("token");
+
+    try {
+      final response = await http.get(
+        Uri.parse(baseURL + vehicleBrandListEndpoint), // Construct the full URL
+        headers: {
+          "Content-Type": "application/json",
+          "token": token ?? "", // Include token in the headers
+        },
+      );
+
+      log("Fetching vehicle brands: ${response.statusCode}");
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        log("Full API Response: $responseData"); // Log the entire response
+
+        // Check if the API response indicates success
+        if (responseData["status"] == true) {
+          // Extract the 'data' field which contains the list of brands
+          final List<dynamic> data = responseData["data"];
+          brandList.addAll(
+            data.map((json) => BrandModel.fromJson(json)).toList(),
+          );
+          log("Vehicle brands fetched: ${brandList.length}");
+        } else {
+          // Show the message from the API if fetching brands failed
+          ShowToastDialog.toast(
+              "Failed to fetch brands: ${responseData["msg"]}");
+        }
+      } else {
+        ShowToastDialog.toast(
+            "Failed to fetch brands. Status code: ${response.statusCode}");
+      }
+    } catch (e) {
+      log("Error fetching vehicle brands: $e");
+      ShowToastDialog.toast("An error occurred while fetching vehicle brands.");
+    } finally {
+      isLoading(false);
+    }
   }
 
   // setPagination(String page) {
@@ -133,5 +188,42 @@ class VehicleBrandScreenController extends GetxController {
     //   ).catchError((error) {
     //     ShowToastDialog.toast("Something went wrong".tr);
     //   });
+  }
+
+  // Function to add a brand
+  Future<void> addVehicleBrandAPI() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString("token");
+      log('---token form brand----$token');
+
+      log('token------${token}');
+      final response = await http.post(
+        Uri.parse(baseURL + addVehicleBrandEndpoint),
+        headers: {
+          'token': token
+              .toString(), // Assuming you use Bearer token for authorization
+        },
+        body: jsonEncode({
+          "name": titleController.value.text,
+        }),
+      );
+
+      log("${jsonEncode({
+            "name": titleController.value.text,
+          })}");
+      if (response.statusCode == 200) {
+        log('----addVehicleBrandAPI----${response.body}');
+        // Brand added successfully
+        ShowToastDialog.toast("Brand added successfully!".tr);
+        await getBrand(); // Refresh the brand list
+      } else {
+        // Handle errors here
+        ShowToastDialog.toast("Failed to add brand: ${response.body}".tr);
+      }
+    } catch (error) {
+      log("Error adding brand: $error");
+      ShowToastDialog.toast("An error occurred: $error".tr);
+    }
   }
 }
