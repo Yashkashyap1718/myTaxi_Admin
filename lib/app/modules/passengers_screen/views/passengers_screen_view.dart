@@ -46,7 +46,6 @@ class PassengersScreenView extends GetView<PassengersScreenController> {
                 ? AppThemData.primaryBlack
                 : AppThemData.primaryWhite,
             leadingWidth: 200,
-            // title: title,
             leading: Builder(
               builder: (BuildContext context) {
                 return GestureDetector(
