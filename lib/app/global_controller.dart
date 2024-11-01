@@ -9,7 +9,7 @@ class GlobalController extends GetxController {
   @override
   Future<void> onInit() async {
     await getData();
-    Constant.getLanguageData();
+    // Constant.getLanguageData();
     super.onInit();
   }
 
@@ -17,7 +17,8 @@ class GlobalController extends GetxController {
     isLoading.value = false;
     await Constant.getAdminData();
 
-    bool isLogin = await AppSharedPreference.appSharedPreference.getIsUserLoggedIn();
+    bool isLogin =
+        await AppSharedPreference.appSharedPreference.getIsUserLoggedIn();
     if (Get.currentRoute != Routes.ERROR_SCREEN) {
       if (!isLogin) {
         Get.offAllNamed(Routes.LOGIN_PAGE);

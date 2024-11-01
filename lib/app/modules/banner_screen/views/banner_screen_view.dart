@@ -502,7 +502,7 @@ class BannerScreenView extends GetView<BannerScreenController> {
                                                                           } else {
                                                                             bannerModel.isEnable =
                                                                                 value;
-                                                                            await FireStoreUtils.updateBanner(bannerModel);
+                                                                            // await FireStoreUtils.updateBanner(bannerModel);
                                                                             controller.getData();
                                                                           }
                                                                         },

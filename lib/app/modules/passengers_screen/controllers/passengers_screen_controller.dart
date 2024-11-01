@@ -7,7 +7,7 @@ import 'package:admin/app/models/user_model.dart';
 import 'package:admin/app/models/wallet_transaction_model.dart';
 import 'package:admin/app/utils/fire_store_utils.dart';
 import 'package:admin/app/utils/toast.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,8 +17,6 @@ import 'package:nb_utils/nb_utils.dart';
 
 class PassengersScreenController extends GetxController {
   RxString title = "Users".tr.obs;
-
-
 
   RxBool isLoading = true.obs;
   RxInt selectedGender = 1.obs;
@@ -44,7 +42,8 @@ class PassengersScreenController extends GetxController {
   void onInit() {
     totalItemPerPage.value = Constant.numOfPageIemList.first;
     getUser();
-    dateFiledController.value.text = "${DateFormat('yyyy-MM-dd').format(selectedDate.value.start)} to ${DateFormat('yyyy-MM-dd').format(selectedDate.value.end)}";
+    dateFiledController.value.text =
+        "${DateFormat('yyyy-MM-dd').format(selectedDate.value.start)} to ${DateFormat('yyyy-MM-dd').format(selectedDate.value.end)}";
     super.onInit();
   }
 
@@ -62,24 +61,26 @@ class PassengersScreenController extends GetxController {
 
   removePassengers(UserModel userModel) async {
     isLoading = true.obs;
-    await FirebaseFirestore.instance.collection(CollectionName.users).doc(userModel.id).delete().then((value) {
-      ShowToastDialog.toast("Passengers deleted...!".tr);
-    }).catchError((error) {
-      ShowToastDialog.toast("Something went wrong".tr);
-    });
+    // await FirebaseFirestore.instance.collection(CollectionName.users).doc(userModel.id).delete().then((value) {
+    //   ShowToastDialog.toast("Passengers deleted...!".tr);
+    // }).catchError((error) {
+    //   ShowToastDialog.toast("Something went wrong".tr);
+    // });
     isLoading = false.obs;
   }
 
   getUser() async {
     isLoading.value = true;
-    await FireStoreUtils.countUsers();
+    // await FireStoreUtils.countUsers();
     setPagination(totalItemPerPage.value);
     isLoading.value = false;
   }
 
   Rx<DateTimeRange> selectedDate = DateTimeRange(
-          start: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0),
-          end: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 59, 0))
+          start: DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day, 0, 0, 0),
+          end: DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day, 23, 59, 0))
       .obs;
 
   setPagination(String page) async {
@@ -88,15 +89,20 @@ class PassengersScreenController extends GetxController {
     int itemPerPage = pageValue(page);
     totalPage.value = (Constant.usersLength! / itemPerPage).ceil();
     startIndex.value = (currentPage.value - 1) * itemPerPage;
-    endIndex.value = (currentPage.value * itemPerPage) > Constant.usersLength! ? Constant.usersLength! : (currentPage.value * itemPerPage);
+    endIndex.value = (currentPage.value * itemPerPage) > Constant.usersLength!
+        ? Constant.usersLength!
+        : (currentPage.value * itemPerPage);
     if (endIndex.value < startIndex.value) {
       currentPage.value = 1;
       setPagination(page);
     } else {
       try {
-        List<UserModel> currentPageUserData =
-            await FireStoreUtils.getUsers(currentPage.value, itemPerPage, searchController.value.text.toSlug(delimiter: "-"), selectedSearchTypeForData.value);
-        currentPageUser.value = currentPageUserData;
+        // List<UserModel> currentPageUserData = await FireStoreUtils.getUsers(
+        //     currentPage.value,
+        //     itemPerPage,
+        //     searchController.value.text.toSlug(delimiter: "-"),
+        //     selectedSearchTypeForData.value);
+        // currentPageUser.value = currentPageUserData;
       } catch (error) {
         log(error.toString());
       }
@@ -132,7 +138,8 @@ class PassengersScreenController extends GetxController {
   }
 
   Rx<TextEditingController> userNameController = TextEditingController().obs;
-  Rx<TextEditingController> walletAmountController = TextEditingController().obs;
+  Rx<TextEditingController> walletAmountController =
+      TextEditingController().obs;
   Rx<TextEditingController> phoneNumberController = TextEditingController().obs;
   Rx<TextEditingController> emailController = TextEditingController().obs;
   Rx<TextEditingController> imageController = TextEditingController().obs;
@@ -148,9 +155,12 @@ class PassengersScreenController extends GetxController {
     userModel.value = usersModel;
     userNameController.value.text = userModel.value.fullName!;
     walletAmountController.value.text = userModel.value.walletAmount!;
-    phoneNumberController.value.text = "${userModel.value.countryCode!} ${userModel.value.phoneNumber!}";
+    phoneNumberController.value.text =
+        "${userModel.value.countryCode!} ${userModel.value.phoneNumber!}";
     emailController.value.text = userModel.value.email!;
-    userModel.value.gender == "Male" ? selectedGender.value = 1 : selectedGender.value = 2;
+    userModel.value.gender == "Male"
+        ? selectedGender.value = 1
+        : selectedGender.value = 2;
     // addressController.value.text = userModel.value.address!;
     imageController.value.text = userModel.value.profilePic!;
     editingId.value = userModel.value.id!;
@@ -160,7 +170,7 @@ class PassengersScreenController extends GetxController {
     WalletTransactionModel transactionModel = WalletTransactionModel(
         id: Constant.getUuid(),
         amount: walletAmountController.value.text,
-        createdDate: Timestamp.now(),
+        // createdDate: Timestamp.now(),
         paymentType: 'admin',
         transactionId: DateTime.now().millisecondsSinceEpoch.toString(),
         userId: userModel.value.id,
@@ -168,25 +178,31 @@ class PassengersScreenController extends GetxController {
         type: "customer",
         note: "Admin Top Up");
 
-    await FireStoreUtils.setWalletTransaction(transactionModel).then((value) async {
-      if (value == true) {
-        ShowToast.successToast("Amount added to your wallet".tr);
-        await FireStoreUtils.updateUserWallet(amount: walletAmountController.value.text, userId: userModel.value.id.toString()).then((value) async {
-          await FireStoreUtils.getUserByUserID(userModel.value.id.toString()).then((value) {
-            if (value != null) {
-              userModel.value = value;
-            }
-          });
-        });
-      }
-    });
+    // await FireStoreUtils.setWalletTransaction(transactionModel)
+    //     .then((value) async {
+    //   if (value == true) {
+    //     ShowToast.successToast("Amount added to your wallet".tr);
+    //     await FireStoreUtils.updateUserWallet(
+    //             amount: walletAmountController.value.text,
+    //             userId: userModel.value.id.toString())
+    //         .then((value) async {
+    //       await FireStoreUtils.getUserByUserID(userModel.value.id.toString())
+    //           .then((value) {
+    //         if (value != null) {
+    //           userModel.value = value;
+    //         }
+    //       });
+    //     });
+    // }
+    // });
   }
 
   pickPhoto() async {
     try {
       uploading.value = true;
       ImagePicker picker = ImagePicker();
-      final img = await picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
+      final img =
+          await picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
 
       File imageFile = File(img!.path);
 

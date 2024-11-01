@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:admin/app/constant/collection_name.dart';
@@ -21,7 +21,7 @@ class CancelingReasonController extends GetxController {
 
   Future<void> getData() async {
     isLoading(true);
-    cancelingReasonList.value = await FireStoreUtils.getCancelingReason();
+    // cancelingReasonList.value = await FireStoreUtils.getCancelingReason();
     isLoading(false);
   }
 
@@ -34,8 +34,10 @@ class CancelingReasonController extends GetxController {
 
   updateReason() async {
     isEditing.value = true;
-    cancelingReasonList[cancelingReasonList.indexWhere((element) => element == editingValue.value)] = reasonController.value.text;
-    await FireStoreUtils.addCancelingReason(cancelingReasonList);
+    cancelingReasonList[cancelingReasonList
+            .indexWhere((element) => element == editingValue.value)] =
+        reasonController.value.text;
+    // await FireStoreUtils.addCancelingReason(cancelingReasonList);
     setDefaultData();
     isEditing.value = false;
   }
@@ -43,11 +45,11 @@ class CancelingReasonController extends GetxController {
   removeReason(String reason) async {
     isLoading.value = true;
     cancelingReasonList.remove(reason);
-    await FirebaseFirestore.instance.collection(CollectionName.settings).doc("canceling_reason").set(<String, List<String>>{"reasons": cancelingReasonList}).then((value) {
-      ShowToastDialog.toast("Canceling Reason Deleted...!".tr);
-    }).catchError((error) {
-      ShowToastDialog.toast("Something went wrong".tr);
-    });
+    // await FirebaseFirestore.instance.collection(CollectionName.settings).doc("canceling_reason").set(<String, List<String>>{"reasons": cancelingReasonList}).then((value) {
+    //   ShowToastDialog.toast("Canceling Reason Deleted...!".tr);
+    // }).catchError((error) {
+    //   ShowToastDialog.toast("Something went wrong".tr);
+    // });
     setDefaultData();
     isLoading.value = false;
   }
@@ -55,7 +57,7 @@ class CancelingReasonController extends GetxController {
   addReason() async {
     isLoading.value = true;
     cancelingReasonList.add(reasonController.value.text);
-    await FireStoreUtils.addCancelingReason(cancelingReasonList);
+    // await FireStoreUtils.addCancelingReason(cancelingReasonList);
     setDefaultData();
     isLoading.value = false;
   }

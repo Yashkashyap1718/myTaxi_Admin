@@ -9,7 +9,8 @@ class SupportTicketScreenController extends GetxController {
   RxString title = "Support Ticket".tr.obs;
 
   RxList<SupportTicketModel> supportTicketList = <SupportTicketModel>[].obs;
-  RxList<SupportTicketModel> currentPageSupportTicketList = <SupportTicketModel>[].obs;
+  RxList<SupportTicketModel> currentPageSupportTicketList =
+      <SupportTicketModel>[].obs;
 
   Rx<TextEditingController> notesController = TextEditingController().obs;
 
@@ -27,7 +28,7 @@ class SupportTicketScreenController extends GetxController {
 
   getData() async {
     isLoading(true);
-    supportTicketList.value = (await FireStoreUtils.getSupportTicket())!;
+    // supportTicketList.value = (await FireStoreUtils.getSupportTicket())!;
     // supportTicketList.clear();
     // List<SupportTicketModel>? data = await FireStoreUtils.getSupportTicket();
     // supportTicketList.addAll(data!);
@@ -41,12 +42,15 @@ class SupportTicketScreenController extends GetxController {
     totalPage.value = (supportTicketList.length / itemPerPage).ceil();
     startIndex.value = (currentPage.value - 1) * itemPerPage;
     endIndex.value =
-        (currentPage.value * itemPerPage) > supportTicketList.length ? supportTicketList.length : (currentPage.value * itemPerPage);
+        (currentPage.value * itemPerPage) > supportTicketList.length
+            ? supportTicketList.length
+            : (currentPage.value * itemPerPage);
     if (endIndex.value < startIndex.value) {
       currentPage.value = 1;
       setPagination(page);
     } else {
-      currentPageSupportTicketList.value = supportTicketList.sublist(startIndex.value, endIndex.value);
+      currentPageSupportTicketList.value =
+          supportTicketList.sublist(startIndex.value, endIndex.value);
     }
     isLoading.value = false;
     update();

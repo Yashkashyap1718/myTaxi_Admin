@@ -634,38 +634,39 @@ class VehicleModelScreenView extends GetView<VehicleModelScreenController> {
                                                     .map(
                                                         (modelVehicleModel) =>
                                                             DataRow(cells: [
-                                                              DataCell(
-                                                                FutureBuilder<
-                                                                        BrandModel?>(
-                                                                    future: FireStoreUtils.getVehicleBrandByBrandId(modelVehicleModel
-                                                                        .brandId
-                                                                        .toString()),
-                                                                    builder: (BuildContext
-                                                                            context,
-                                                                        AsyncSnapshot<BrandModel?>
-                                                                            snapshot) {
-                                                                      switch (snapshot
-                                                                          .connectionState) {
-                                                                        case ConnectionState
-                                                                              .waiting:
-                                                                          // return Center(child: Constant.loader());
-                                                                          return const SizedBox();
-                                                                        default:
-                                                                          if (snapshot
-                                                                              .hasError) {
-                                                                            return Text('Error: ${snapshot.error}');
-                                                                          } else {
-                                                                            if (snapshot.data !=
-                                                                                null) {
-                                                                              BrandModel vehicleBrandModel = snapshot.data!;
-                                                                              return TextCustom(title: vehicleBrandModel.title.toString());
-                                                                            } else {
-                                                                              return const Text('N/A'); // Handle null data case.
-                                                                            }
-                                                                          }
-                                                                      }
-                                                                    }),
-                                                              ),
+                                                              // DataCell(
+                                                              //   FutureBuilder<
+                                                              //           BrandModel?>(
+                                                              //       future: FireStoreUtils.getVehicleBrandByBrandId(modelVehicleModel
+                                                              //           .brandId
+                                                              //           .toString()),
+                                                              //       builder: (BuildContext
+                                                              //               context,
+                                                              //           AsyncSnapshot<BrandModel?>
+                                                              //               snapshot) {
+                                                              //         switch (snapshot
+                                                              //             .connectionState) {
+                                                              //           case ConnectionState
+                                                              //                 .waiting:
+                                                              //             // return Center(child: Constant.loader());
+                                                              //             return const SizedBox();
+                                                              //           default:
+                                                              //             if (snapshot
+                                                              //                 .hasError) {
+                                                              //               return Text('Error: ${snapshot.error}');
+                                                              //             } else {
+                                                              //               if (snapshot.data !=
+                                                              //                   null) {
+                                                              //                 BrandModel vehicleBrandModel = snapshot.data!;
+                                                              //                 return TextCustom(title: vehicleBrandModel.title.toString());
+                                                              //               } else {
+                                                              //                 return const Text('N/A'); // Handle null data case.
+                                                              //               }
+                                                              //             }
+                                                              //         }
+                                                              //       }),
+                                                              // ),
+
                                                               DataCell(TextCustom(
                                                                   title:
                                                                       "${modelVehicleModel.title}")),

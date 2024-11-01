@@ -17,7 +17,7 @@ import 'package:admin/widget/container_custom.dart';
 import 'package:admin/widget/global_widgets.dart';
 import 'package:admin/widget/text_widget.dart';
 import 'package:admin/widget/web_pagination.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -1517,38 +1517,39 @@ class DriverDetailScreenView extends StatelessWidget {
                                                                               title: bookingModel.id!.isEmpty ? "N/A".tr : "#${bookingModel.id!.substring(0, 8)}",
                                                                             ),
                                                                           ),
+                                                                          // DataCell(
+                                                                          //   FutureBuilder<UserModel?>(
+                                                                          //       future: FireStoreUtils.getUserByUserID(bookingModel.customerId.toString()), // async work
+                                                                          //       builder: (BuildContext context, AsyncSnapshot<UserModel?> snapshot) {
+                                                                          //         switch (snapshot.connectionState) {
+                                                                          //           case ConnectionState.waiting:
+                                                                          //             // return Center(child: Constant.loader());
+                                                                          //             return const SizedBox();
+                                                                          //           default:
+                                                                          //             if (snapshot.hasError) {
+                                                                          //               return TextCustom(
+                                                                          //                 title: 'Error: ${snapshot.error}',
+                                                                          //               );
+                                                                          //             } else {
+                                                                          //               UserModel userModel = snapshot.data!;
+                                                                          //               return Container(
+                                                                          //                 alignment: Alignment.centerLeft,
+                                                                          //                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                                                          //                 child: TextCustom(
+                                                                          //                   title: userModel.fullName!.isEmpty
+                                                                          //                       ? "N/A".tr
+                                                                          //                       : userModel.fullName.toString() == "Unknown User"
+                                                                          //                           ? "User Deleted".tr
+                                                                          //                           : userModel.fullName.toString(),
+                                                                          //                 ),
+                                                                          //               );
+                                                                          //             }
+                                                                          //         }
+                                                                          //       }),
+                                                                          // ),
+
                                                                           DataCell(
-                                                                            FutureBuilder<UserModel?>(
-                                                                                future: FireStoreUtils.getUserByUserID(bookingModel.customerId.toString()), // async work
-                                                                                builder: (BuildContext context, AsyncSnapshot<UserModel?> snapshot) {
-                                                                                  switch (snapshot.connectionState) {
-                                                                                    case ConnectionState.waiting:
-                                                                                      // return Center(child: Constant.loader());
-                                                                                      return const SizedBox();
-                                                                                    default:
-                                                                                      if (snapshot.hasError) {
-                                                                                        return TextCustom(
-                                                                                          title: 'Error: ${snapshot.error}',
-                                                                                        );
-                                                                                      } else {
-                                                                                        UserModel userModel = snapshot.data!;
-                                                                                        return Container(
-                                                                                          alignment: Alignment.centerLeft,
-                                                                                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                                                                                          child: TextCustom(
-                                                                                            title: userModel.fullName!.isEmpty
-                                                                                                ? "N/A".tr
-                                                                                                : userModel.fullName.toString() == "Unknown User"
-                                                                                                    ? "User Deleted".tr
-                                                                                                    : userModel.fullName.toString(),
-                                                                                          ),
-                                                                                        );
-                                                                                      }
-                                                                                  }
-                                                                                }),
-                                                                          ),
-                                                                          DataCell(
-                                                                              TextCustom(title: bookingModel.createAt == null ? '' : Constant.timestampToDate(bookingModel.createAt!))),
+                                                                              TextCustom(title: "Constant.timestampToDate(bookingModel.createAt!)")),
                                                                           DataCell(
                                                                               TextCustom(title: bool.parse(bookingModel.paymentStatus!.toString()) ? "Paid".tr : "Unpaid".tr)),
                                                                           DataCell(
@@ -1854,11 +1855,12 @@ class TransactionHistoryDialog extends StatelessWidget {
                                                   CrossAxisAlignment.center,
                                               children: [
                                                 TextCustom(
-                                                  title: (walletTransactionModel
-                                                              .createdDate ??
-                                                          Timestamp.now())
-                                                      .toDate()
-                                                      .dateMonthYear(),
+                                                  title:
+                                                      ("walletTransactionModel"),
+                                                  //         .createdDate ??
+                                                  //     Timestamp.now())
+                                                  // .toDate()
+                                                  // .dateMonthYear(),
                                                   fontFamily:
                                                       AppThemeData.medium,
                                                   fontSize: 14,
@@ -1890,11 +1892,12 @@ class TransactionHistoryDialog extends StatelessWidget {
                                                 ),
                                                 const SizedBox(width: 8),
                                                 TextCustom(
-                                                  title: (walletTransactionModel
-                                                              .createdDate ??
-                                                          Timestamp.now())
-                                                      .toDate()
-                                                      .time(),
+                                                  title:
+                                                      ("walletTransactionModel"),
+                                                  //     .createdDate ??
+                                                  // Timestamp.now())
+                                                  // .toDate()
+                                                  // .time(),
                                                   fontSize: 14,
                                                   fontFamily:
                                                       AppThemeData.medium,

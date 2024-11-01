@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SupportTicketModel {
   String? id;
@@ -9,13 +9,13 @@ class SupportTicketModel {
   String? type;
   String? userId;
   String? notes;
-  Timestamp? createAt;
-  Timestamp? updateAt;
+  // Timestamp? createAt;
+  // Timestamp? updateAt;
   List<dynamic>? attachments;
 
   @override
   String toString() {
-    return 'SupportTicketModel{id: $id, title: $title, subject: $subject, description: $description, status: $status, attachments: $attachments, userID: $userId, notes: $notes, type: $type, createAt: $createAt, updateAt: $updateAt}';
+    return 'SupportTicketModel{id: $id, title: $title, subject: $subject, description: $description, status: $status, attachments: $attachments, userID: $userId, notes: $notes, type: $type,}';
   }
 
   SupportTicketModel(
@@ -27,8 +27,8 @@ class SupportTicketModel {
       this.status,
       this.userId,
       this.notes,
-      this.createAt,
-      this.updateAt,
+      // this.createAt,
+      // this.updateAt,
       this.attachments});
 
   SupportTicketModel.fromJson(Map<String, dynamic> json) {
@@ -40,8 +40,8 @@ class SupportTicketModel {
     status = json['status'] ?? "";
     notes = json['notes'] ?? "";
     userId = json['userId'] ?? "";
-    createAt = json['createAt'] ?? "";
-    updateAt = json['updateAt'] ?? "";
+    // createAt = json['createAt'] ?? "";
+    // updateAt = json['updateAt'] ?? "";
     attachments = json['attachments'].cast<String>() ?? [];
   }
 
@@ -55,8 +55,8 @@ class SupportTicketModel {
     data['status'] = status;
     data['notes'] = notes;
     data['userId'] = userId;
-    data['createAt'] = createAt;
-    data['updateAt'] = updateAt;
+    // data['createAt'] = createAt;
+    // data['updateAt'] = updateAt;
     data['attachments'] = attachments;
     return data;
   }

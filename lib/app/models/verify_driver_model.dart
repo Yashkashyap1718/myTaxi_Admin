@@ -1,14 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 
 class VerifyDriverModel {
-  Timestamp? createAt;
+  // Timestamp? createAt;
   String? driverEmail;
   String? driverId;
   String? driverName;
   List<VerifyDocumentModel>? verifyDocument;
 
   VerifyDriverModel({
-    this.createAt,
+    // this.createAt,
     this.driverEmail,
     this.driverId,
     this.driverName,
@@ -17,11 +17,11 @@ class VerifyDriverModel {
 
   @override
   String toString() {
-    return 'VerifyDriverModel{createAt: $createAt, driverEmail: $driverEmail, driverId: $driverId, driverName: $driverName, verifyDocument: $verifyDocument}';
+    return 'VerifyDriverModel{driverEmail: $driverEmail, driverId: $driverId, driverName: $driverName, verifyDocument: $verifyDocument}';
   }
 
   VerifyDriverModel.fromJson(Map<String, dynamic> json) {
-    createAt = json['createAt'] != null ? Timestamp.fromMillisecondsSinceEpoch(json['createAt'].millisecondsSinceEpoch) : null;
+    // createAt = json['createAt'] != null ? Timestamp.fromMillisecondsSinceEpoch(json['createAt'].millisecondsSinceEpoch) : null;
     driverEmail = json['driverEmail'];
     driverId = json['driverId'];
     driverName = json['driverName'];
@@ -35,7 +35,7 @@ class VerifyDriverModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['createAt'] = createAt;
+    // data['createAt'] = createAt;
     data['driverEmail'] = driverEmail;
     data['driverId'] = driverId;
     data['driverName'] = driverName;
@@ -88,7 +88,6 @@ class VerifyDocumentModel {
     return data;
   }
 
-
   VerifyDocumentModel copyWith({
     String? documentId,
     String? name,
@@ -106,5 +105,4 @@ class VerifyDocumentModel {
       isVerify: isVerify ?? this.isVerify,
     );
   }
-
 }

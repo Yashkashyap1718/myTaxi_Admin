@@ -8,7 +8,7 @@ import 'package:admin/app/models/driver_user_model.dart';
 import 'package:admin/app/models/wallet_transaction_model.dart';
 import 'package:admin/app/routes/app_pages.dart';
 import 'package:admin/app/utils/fire_store_utils.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -104,22 +104,22 @@ class DriverDetailScreenController extends GetxController {
 
   removeBooking(BookingModel bookingModel) async {
     isLoading = true.obs;
-    await FirebaseFirestore.instance
-        .collection(CollectionName.bookings)
-        .doc(bookingModel.id)
-        .delete()
-        .then((value) {
-      ShowToastDialog.toast("Booking deleted...!".tr);
-    }).catchError((error) {
-      ShowToastDialog.toast("Something went wrong".tr);
-    });
+    // await FirebaseFirestore.instance
+    //     .collection(CollectionName.bookings)
+    //     .doc(bookingModel.id)
+    //     .delete()
+    //     .then((value) {
+    //   ShowToastDialog.toast("Booking deleted...!".tr);
+    // }).catchError((error) {
+    //   ShowToastDialog.toast("Something went wrong".tr);
+    // });
     isLoading = false.obs;
   }
 
   getBookings() async {
     isLoading.value = true;
-    bookingList.value = await FireStoreUtils.getBookingByDriverId(
-        selectedPayoutStatusForData.value, driverUserModel.value.id);
+    // bookingList.value = await FireStoreUtils.getBookingByDriverId(
+    //     selectedPayoutStatusForData.value, driverUserModel.value.id);
     setPagination(totalItemPerPage.value);
     isLoading.value = false;
   }
@@ -164,36 +164,36 @@ class DriverDetailScreenController extends GetxController {
     WalletTransactionModel transactionModel = WalletTransactionModel(
         id: Constant.getUuid(),
         amount: topupController.value.text,
-        createdDate: Timestamp.now(),
+        // createdDate: Timestamp.now(),
         paymentType: "admin",
         transactionId: transactionId,
         userId: driverUserModel.value.id!,
         isCredit: true,
         type: "customer",
         note: "Wallet Top up by admin");
-    ShowToastDialog.showLoader("Please wait".tr);
-    await FireStoreUtils.setWalletTransaction(transactionModel)
-        .then((value) async {
-      if (value == true) {
-        await FireStoreUtils.updateDriverWallet(
-                amount: topupController.value.text,
-                userId: driverUserModel.value.id!)
-            .then((value) async {});
-      }
-    });
+    // ShowToastDialog.showLoader("Please wait".tr);
+    // await FireStoreUtils.setWalletTransaction(transactionModel)
+    //     .then((value) async {
+    //   if (value == true) {
+    //     await FireStoreUtils.updateDriverWallet(
+    //             amount: topupController.value.text,
+    //             userId: driverUserModel.value.id!)
+    //         .then((value) async {});
+    //   }
+    // });
     ShowToastDialog.closeLoader();
-    driverUserModel.value =
-        (await FireStoreUtils.getDriverByDriverID(driverUserModel.value.id!))!;
+    // driverUserModel.value =
+    //     (await FireStoreUtils.getDriverByDriverID(driverUserModel.value.id!))!;
     Get.back();
     ShowToastDialog.toast("Amount added in your wallet.");
   }
 
   getWalletTransactions() async {
-    await FireStoreUtils.getWalletTransactionOfUser(driverUserModel.value.id!)
-        .then((value) {
-      walletTransactionList.value = value ?? [];
-      setPaginationForTransactionHistory(totalItemPerPage.value);
-    });
+    // await FireStoreUtils.getWalletTransactionOfUser(driverUserModel.value.id!)
+    //     .then((value) {
+    //   walletTransactionList.value = value ?? [];
+    //   setPaginationForTransactionHistory(totalItemPerPage.value);
+    // });
   }
 
   setDefaultData() {

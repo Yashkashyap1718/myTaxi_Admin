@@ -8,7 +8,6 @@ import 'package:intl/intl.dart';
 class PayoutRequestController extends GetxController {
   RxString title = "Payout Request".tr.obs;
 
-
   RxBool isLoading = true.obs;
   // RxList<BookingModel> bookingList = <BookingModel>[].obs;
   RxList<WithdrawModel> payoutRequestList = <WithdrawModel>[].obs;
@@ -40,7 +39,8 @@ class PayoutRequestController extends GetxController {
   void onInit() {
     totalItemPerPage.value = Constant.numOfPageIemList.first;
     getPayoutRequest();
-    dateFiledController.value.text = "${DateFormat('yyyy-MM-dd').format(selectedDate.value.start)} to ${DateFormat('yyyy-MM-dd').format(selectedDate.value.end)}";
+    dateFiledController.value.text =
+        "${DateFormat('yyyy-MM-dd').format(selectedDate.value.start)} to ${DateFormat('yyyy-MM-dd').format(selectedDate.value.end)}";
     super.onInit();
   }
 
@@ -48,14 +48,16 @@ class PayoutRequestController extends GetxController {
     isLoading.value = true;
     // tempList.value = await FireStoreUtils.getBooking();
     // bookingList.value = await FireStoreUtils.getBooking();
-    payoutRequestList.value = await FireStoreUtils.getPayoutRequest(status: selectedPayoutStatus.value);
+    // payoutRequestList.value = await FireStoreUtils.getPayoutRequest(status: selectedPayoutStatus.value);
     setPagination(totalItemPerPage.value);
     isLoading.value = false;
   }
 
   Rx<DateTimeRange> selectedDate = DateTimeRange(
-          start: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0),
-          end: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 59, 0))
+          start: DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day, 0, 0, 0),
+          end: DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day, 23, 59, 0))
       .obs;
 
   setPagination(String page) {
@@ -63,12 +65,16 @@ class PayoutRequestController extends GetxController {
     int itemPerPage = pageValue(page);
     totalPage.value = (payoutRequestList.length / itemPerPage).ceil();
     startIndex.value = (currentPage.value - 1) * itemPerPage;
-    endIndex.value = (currentPage.value * itemPerPage) > payoutRequestList.length ? payoutRequestList.length : (currentPage.value * itemPerPage);
+    endIndex.value =
+        (currentPage.value * itemPerPage) > payoutRequestList.length
+            ? payoutRequestList.length
+            : (currentPage.value * itemPerPage);
     if (endIndex.value < startIndex.value) {
       currentPage.value = 1;
       setPagination(page);
     } else {
-      currentPayoutRequest.value = payoutRequestList.sublist(startIndex.value, endIndex.value);
+      currentPayoutRequest.value =
+          payoutRequestList.sublist(startIndex.value, endIndex.value);
     }
     isLoading.value = false;
     update();

@@ -8,7 +8,8 @@ import 'package:admin/app/utils/toast.dart';
 class ContactUsController extends GetxController {
   RxString title = "Contact Us".tr.obs;
 
-  Rx<TextEditingController> emailSubjectController = TextEditingController().obs;
+  Rx<TextEditingController> emailSubjectController =
+      TextEditingController().obs;
   Rx<TextEditingController> emailController = TextEditingController().obs;
   Rx<TextEditingController> phoneNumberController = TextEditingController().obs;
   Rx<TextEditingController> addressController = TextEditingController().obs;
@@ -16,7 +17,10 @@ class ContactUsController extends GetxController {
   Rx<ContactUsModel> contactUsModel = ContactUsModel().obs;
 
   setContactData() {
-    if (emailSubjectController.value.text.isEmpty || emailController.value.text.isEmpty || phoneNumberController.value.text.isEmpty || addressController.value.text.isEmpty) {
+    if (emailSubjectController.value.text.isEmpty ||
+        emailController.value.text.isEmpty ||
+        phoneNumberController.value.text.isEmpty ||
+        addressController.value.text.isEmpty) {
       ShowToast.errorToast("Please fill all data".tr);
     } else {
       Constant.waitingLoader();
@@ -25,23 +29,23 @@ class ContactUsController extends GetxController {
       contactUsModel.value.phoneNumber = phoneNumberController.value.text;
       contactUsModel.value.address = addressController.value.text;
 
-      FireStoreUtils.setContactusSetting(contactUsModel.value).then((value) {
-        Get.back();
-        ShowToast.successToast("Contact data updated".tr);
-      });
+      // FireStoreUtils.setContactusSetting(contactUsModel.value).then((value) {
+      //   Get.back();
+      //   ShowToast.successToast("Contact data updated".tr);
+      // });
     }
   }
 
   getContactData() {
-    FireStoreUtils.getContactusSetting().then((value) {
-      if (value != null) {
-        contactUsModel.value = value;
-        emailSubjectController.value.text = contactUsModel.value.emailSubject!;
-        emailController.value.text = contactUsModel.value.email!;
-        phoneNumberController.value.text = contactUsModel.value.phoneNumber!;
-        addressController.value.text = contactUsModel.value.address!;
-      }
-    });
+    // FireStoreUtils.getContactusSetting().then((value) {
+    //   if (value != null) {
+    //     contactUsModel.value = value;
+    //     emailSubjectController.value.text = contactUsModel.value.emailSubject!;
+    //     emailController.value.text = contactUsModel.value.email!;
+    //     phoneNumberController.value.text = contactUsModel.value.phoneNumber!;
+    //     addressController.value.text = contactUsModel.value.address!;
+    //   }
+    // });
   }
 
   @override

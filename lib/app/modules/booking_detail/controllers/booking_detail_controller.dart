@@ -34,12 +34,12 @@ class BookingDetailController extends GetxController {
       // ShowToast.errorToast("");
     }
 
-    await FireStoreUtils.getDriverByDriverID(bookingModel.value.driverId.toString()).then((value) {
-      driverModel.value = value!;
-    });
-    await FireStoreUtils.getCustomerByCustomerID(bookingModel.value.customerId.toString()).then((value) {
-      userModel.value = value!;
-    });
+    // await FireStoreUtils.getDriverByDriverID(bookingModel.value.driverId.toString()).then((value) {
+    //   driverModel.value = value!;
+    // });
+    // await FireStoreUtils.getCustomerByCustomerID(bookingModel.value.customerId.toString()).then((value) {
+    //   userModel.value = value!;
+    // });
 
     isLoading.value = false;
   }

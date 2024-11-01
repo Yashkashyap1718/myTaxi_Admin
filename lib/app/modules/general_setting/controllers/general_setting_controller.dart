@@ -14,8 +14,10 @@ import '../../../constant/constants.dart';
 class GeneralSettingController extends GetxController {
   RxString title = "General Setting".tr.obs;
 
-  Rx<TextEditingController> googleMapKeyController = TextEditingController().obs;
-  Rx<TextEditingController> notificationServerKeyController = TextEditingController().obs;
+  Rx<TextEditingController> googleMapKeyController =
+      TextEditingController().obs;
+  Rx<TextEditingController> notificationServerKeyController =
+      TextEditingController().obs;
 
   Rx<ConstantModel> constantModel = ConstantModel().obs;
   Rx<File> imageFile = File('').obs;
@@ -28,15 +30,16 @@ class GeneralSettingController extends GetxController {
   RxString fileName = ''.obs;
   RxString uploadFileUrl = ''.obs;
 
-
   Future<String?> uploadFile() async {
     try {
       String docId = Constant.getUuid();
-      String name = kIsWeb ? fileName.value : Random().nextInt(100000).toString();
+      String name =
+          kIsWeb ? fileName.value : Random().nextInt(100000).toString();
       FirebaseStorage storage = FirebaseStorage.instance;
       Reference ref = storage.ref().child('uploadedFiles/$docId/$name');
 
-      UploadTask uploadTask = ref.putData(fileBytes.value, SettableMetadata(contentType: mimeType.value));
+      UploadTask uploadTask = ref.putData(
+          fileBytes.value, SettableMetadata(contentType: mimeType.value));
       TaskSnapshot taskSnapshot = await uploadTask;
       String downloadURL = await taskSnapshot.ref.getDownloadURL();
       uploadFileUrl.value = downloadURL;
@@ -58,17 +61,16 @@ class GeneralSettingController extends GetxController {
       if (result != null && result.files.isNotEmpty) {
         PlatformFile pickedFile = result.files.first;
 
-
         if (kIsWeb) {
           fileName.value = pickedFile.name;
           fileBytes.value = pickedFile.bytes!;
           uploadFile();
-
         } else {
           file.value = File(pickedFile.path!);
           uploadFile();
         }
-        mimeType.value = pickedFile.extension == 'json' ? 'application/json' : '';
+        mimeType.value =
+            pickedFile.extension == 'json' ? 'application/json' : '';
       } else {
         print("--> No file selected");
       }
@@ -77,10 +79,10 @@ class GeneralSettingController extends GetxController {
     }
   }
 
-  setDefaultData(){
-     // mimeType = 'application/json'.obs;
-     fileName.value = '';
-     uploadFileUrl.value = '';
+  setDefaultData() {
+    // mimeType = 'application/json'.obs;
+    fileName.value = '';
+    uploadFileUrl.value = '';
   }
 
   // void launchURL() {
@@ -106,13 +108,13 @@ class GeneralSettingController extends GetxController {
   Future<void> getSettingData() async {
     try {
       isLoading(true);
-      final settingData = await FireStoreUtils.getGeneralSetting();
-      if (settingData != null) {
-        constantModel.value = settingData;
-        googleMapKeyController.value.text = constantModel.value.googleMapKey ?? '';
-        notificationServerKeyController.value.text = constantModel.value.notificationServerKey ?? '';
-        uploadFileUrl.value = constantModel.value.jsonFileURL ?? '';
-      }
+      // final settingData = await FireStoreUtils.getGeneralSetting();
+      // if (settingData != null) {
+      //   constantModel.value = settingData;
+      //   googleMapKeyController.value.text = constantModel.value.googleMapKey ?? '';
+      //   notificationServerKeyController.value.text = constantModel.value.notificationServerKey ?? '';
+      //   uploadFileUrl.value = constantModel.value.jsonFileURL ?? '';
+      // }
     } catch (e) {
       print("Error fetching setting data: $e");
     } finally {
@@ -121,10 +123,8 @@ class GeneralSettingController extends GetxController {
   }
 
   @override
-  void onInit()async {
-
+  void onInit() async {
     await getSettingData();
-
 
     super.onInit();
   }

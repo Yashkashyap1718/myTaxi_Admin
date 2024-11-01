@@ -49,14 +49,14 @@ class AdminProfileController extends GetxController {
   }
 
   getData() {
-    FireStoreUtils.getAdmin().then((value) {
-      if (value != null) {
-        nameController.value.text = value.name!;
-        contactNumberController.value.text = value.contactNumber!;
-        emailController.value.text = value.email!;
-        imageController.value.text = value.image!;
-      }
-    });
+    // FireStoreUtils.getAdmin().then((value) {
+    //   if (value != null) {
+    //     nameController.value.text = value.name!;
+    //     contactNumberController.value.text = value.contactNumber!;
+    //     emailController.value.text = value.email!;
+    //     imageController.value.text = value.image!;
+    //   }
+    // });
   }
 
   pickPhoto() async {
@@ -94,21 +94,21 @@ class AdminProfileController extends GetxController {
   setAdminData() async {
     Constant.waitingLoader();
     if (imagePath.value.path.isNotEmpty) {
-      String? downloadUrl = await FireStoreUtils.uploadPic(
-          PickedFile(imagePath.value.path), "admin", "admin", mimeType.value);
-      Constant.adminModel!.image = downloadUrl;
-      log(downloadUrl.toString());
+      // String? downloadUrl = await FireStoreUtils.uploadPic(
+      //     PickedFile(imagePath.value.path), "admin", "admin", mimeType.value);
+      // Constant.adminModel!.image = downloadUrl;
+      // log(downloadUrl.toString());
     }
     Constant.adminModel!.email = emailController.value.text;
     Constant.adminModel!.name = nameController.value.text;
     Constant.adminModel!.contactNumber = contactNumberController.value.text;
 
-    await FireStoreUtils.setAdmin(Constant.adminModel!).then((value) async {
-      await FireStoreUtils.getAdmin();
-      // await homeController.getAdminData();
-      Get.back();
-      ShowToast.successToast("Profile updated successfully".tr);
-    }).catchError((e) => log("-->$e"));
+    // await FireStoreUtils.setAdmin(Constant.adminModel!).then((value) async {
+    //   await FireStoreUtils.getAdmin();
+    //   // await homeController.getAdminData();
+    //   Get.back();
+    //   ShowToast.successToast("Profile updated successfully".tr);
+    // }).catchError((e) => log("-->$e"));
   }
 
   setAdminPassword() async {
@@ -121,11 +121,11 @@ class AdminProfileController extends GetxController {
       } else {
         Constant.waitingLoader();
         Constant.adminModel!.password = confirmPasswordController.value.text;
-        await FireStoreUtils.setAdmin(Constant.adminModel!).then((value) async {
-          await FireStoreUtils.getAdmin();
-          Get.back();
-          ShowToast.successToast("Password updated successfully".tr);
-        });
+        // await FireStoreUtils.setAdmin(Constant.adminModel!).then((value) async {
+        //   await FireStoreUtils.getAdmin();
+        //   Get.back();
+        //   ShowToast.successToast("Password updated successfully".tr);
+        // });
       }
     }
   }

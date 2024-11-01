@@ -154,13 +154,13 @@ class AboutAppView extends GetView<AboutAppController> {
                                         Constant.waitingLoader();
                                         Constant.constantModel!.aboutApp =
                                             controller.result.value;
-                                        await FireStoreUtils.setGeneralSetting(
-                                                Constant.constantModel!)
-                                            .then((value) {
-                                          ShowToast.successToast(
-                                              "About App updated");
-                                          Get.back();
-                                        });
+                                        // await FireStoreUtils.setGeneralSetting(
+                                        //         Constant.constantModel!)
+                                        //     .then((value) {
+                                        //   ShowToast.successToast(
+                                        //       "About App updated");
+                                        //   Get.back();
+                                        // });
                                       }
                                     },
                                   ),
@@ -276,13 +276,13 @@ class AboutAppView extends GetView<AboutAppController> {
                                         Constant.waitingLoader();
                                         Constant.constantModel!.aboutApp =
                                             controller.result.value;
-                                        await FireStoreUtils.setGeneralSetting(
-                                                Constant.constantModel!)
-                                            .then((value) {
-                                          ShowToast.successToast(
-                                              "About App updated");
-                                          Get.back();
-                                        });
+                                        // await FireStoreUtils.setGeneralSetting(
+                                        //         Constant.constantModel!)
+                                        //     .then((value) {
+                                        //   ShowToast.successToast(
+                                        //       "About App updated");
+                                        //   Get.back();
+                                        // });
                                       }
                                     },
                                   ),
@@ -291,142 +291,143 @@ class AboutAppView extends GetView<AboutAppController> {
                             ],
                           ),
                     spaceH(height: 20),
-                    FutureBuilder<ConstantModel?>(
-                        future: FireStoreUtils.getGeneralSetting(),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<ConstantModel?> snapshot) {
-                          switch (snapshot.connectionState) {
-                            case ConnectionState.waiting:
-                              return Center(child: Constant.loader());
-                            default:
-                              if (snapshot.hasError) {
-                                return Text('Error: ${snapshot.error}');
-                              } else {
-                                ConstantModel constantModel = snapshot.data!;
-                                return SingleChildScrollView(
-                                  child: Container(
-                                    height: 0.6.sh,
-                                    decoration: BoxDecoration(
-                                      color: themeChange.isDarkTheme()
-                                          ? AppThemData.greyShade950
-                                          : AppThemData.greyShade50,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: HtmlEditor(
-                                      controller: htmlEditorController,
-                                      htmlEditorOptions: HtmlEditorOptions(
-                                        hint: 'Your text here...',
-                                        initialText: constantModel.aboutApp,
-                                        shouldEnsureVisible: true,
-                                      ),
-                                      htmlToolbarOptions: HtmlToolbarOptions(
-                                        toolbarPosition:
-                                            ToolbarPosition.aboveEditor,
-                                        //by default
-                                        toolbarType:
-                                            ToolbarType.nativeScrollable,
-                                        //by default
-                                        onButtonPressed: (ButtonType type,
-                                            bool? status,
-                                            Function? updateStatus) {
-                                          log("button '${describeEnum(type)}' pressed, the current selected status is $status");
-                                          return true;
-                                        },
-                                        onDropdownChanged: (DropdownType type,
-                                            dynamic changed,
-                                            Function(dynamic)?
-                                                updateSelectedItem) {
-                                          log("dropdown '${describeEnum(type)}' changed to $changed");
-                                          return true;
-                                        },
-                                        mediaLinkInsertInterceptor:
-                                            (String url, InsertFileType type) {
-                                          log(url);
-                                          return true;
-                                        },
-                                      ),
-                                      otherOptions:
-                                          const OtherOptions(height: 500),
-                                      callbacks: Callbacks(onBeforeCommand:
-                                          (String? currentHtml) {
-                                        log('html before change is $currentHtml');
-                                      }, onChangeContent: (String? changed) {
-                                        log('content changed to $changed');
-                                      }, onChangeCodeview: (String? changed) {
-                                        log('code changed to $changed');
-                                      }, onChangeSelection:
-                                          (EditorSettings settings) {
-                                        log('parent element is ${settings.parentElement}');
-                                        log('font name is ${settings.fontName}');
-                                      }, onDialogShown: () {
-                                        log('dialog shown');
-                                      }, onEnter: () {
-                                        log('enter/return pressed');
-                                      }, onFocus: () {
-                                        log('editor focused');
-                                      }, onBlur: () {
-                                        log('editor unfocused');
-                                      }, onBlurCodeview: () {
-                                        log('codeview either focused or unfocused');
-                                      }, onInit: () {
-                                        log('init');
-                                      }, onImageUploadError: (FileUpload? file,
-                                          String? base64Str,
-                                          UploadError error) {
-                                        log(describeEnum(error));
-                                        log(base64Str ?? '');
-                                        if (file != null) {
-                                          log(file.name.toString());
-                                          log(file.size.toString());
-                                          log(file.type.toString());
-                                        }
-                                      }, onKeyDown: (int? keyCode) {
-                                        log('$keyCode key downed');
-                                        log('current character count: ${htmlEditorController.characterCount}');
-                                      }, onKeyUp: (int? keyCode) {
-                                        log('$keyCode key released');
-                                      }, onMouseDown: () {
-                                        log('mouse downed');
-                                      }, onMouseUp: () {
-                                        log('mouse released');
-                                      }, onNavigationRequestMobile:
-                                          (String url) {
-                                        log(url);
-                                        return NavigationActionPolicy.ALLOW;
-                                      }, onPaste: () {
-                                        log('pasted into editor');
-                                      }, onScroll: () {
-                                        log('editor scrolled');
-                                      }),
-                                      plugins: [
-                                        SummernoteAtMention(
-                                            getSuggestionsMobile:
-                                                (String value) {
-                                              var mentions = <String>[
-                                                'test1',
-                                                'test2',
-                                                'test3'
-                                              ];
-                                              return mentions
-                                                  .where((element) =>
-                                                      element.contains(value))
-                                                  .toList();
-                                            },
-                                            mentionsWeb: [
-                                              'test1',
-                                              'test2',
-                                              'test3'
-                                            ],
-                                            onSelect: (String value) {
-                                              log(value);
-                                            }),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              }
-                          }
-                        }),
+                    // FutureBuilder<ConstantModel?>(
+                    //     future: FireStoreUtils.getGeneralSetting(),
+                    //     builder: (BuildContext context,
+                    //         AsyncSnapshot<ConstantModel?> snapshot) {
+                    //       switch (snapshot.connectionState) {
+                    //         case ConnectionState.waiting:
+                    //           return Center(child: Constant.loader());
+                    //         default:
+                    //           if (snapshot.hasError) {
+                    //             return Text('Error: ${snapshot.error}');
+                    //           } else {
+                    //             ConstantModel constantModel = snapshot.data!;
+                    //             return SingleChildScrollView(
+                    //               child: Container(
+                    //                 height: 0.6.sh,
+                    //                 decoration: BoxDecoration(
+                    //                   color: themeChange.isDarkTheme()
+                    //                       ? AppThemData.greyShade950
+                    //                       : AppThemData.greyShade50,
+                    //                   borderRadius: BorderRadius.circular(10),
+                    //                 ),
+                    //                 child: HtmlEditor(
+                    //                   controller: htmlEditorController,
+                    //                   htmlEditorOptions: HtmlEditorOptions(
+                    //                     hint: 'Your text here...',
+                    //                     initialText: constantModel.aboutApp,
+                    //                     shouldEnsureVisible: true,
+                    //                   ),
+                    //                   htmlToolbarOptions: HtmlToolbarOptions(
+                    //                     toolbarPosition:
+                    //                         ToolbarPosition.aboveEditor,
+                    //                     //by default
+                    //                     toolbarType:
+                    //                         ToolbarType.nativeScrollable,
+                    //                     //by default
+                    //                     onButtonPressed: (ButtonType type,
+                    //                         bool? status,
+                    //                         Function? updateStatus) {
+                    //                       log("button '${describeEnum(type)}' pressed, the current selected status is $status");
+                    //                       return true;
+                    //                     },
+                    //                     onDropdownChanged: (DropdownType type,
+                    //                         dynamic changed,
+                    //                         Function(dynamic)?
+                    //                             updateSelectedItem) {
+                    //                       log("dropdown '${describeEnum(type)}' changed to $changed");
+                    //                       return true;
+                    //                     },
+                    //                     mediaLinkInsertInterceptor:
+                    //                         (String url, InsertFileType type) {
+                    //                       log(url);
+                    //                       return true;
+                    //                     },
+                    //                   ),
+                    //                   otherOptions:
+                    //                       const OtherOptions(height: 500),
+                    //                   callbacks: Callbacks(onBeforeCommand:
+                    //                       (String? currentHtml) {
+                    //                     log('html before change is $currentHtml');
+                    //                   }, onChangeContent: (String? changed) {
+                    //                     log('content changed to $changed');
+                    //                   }, onChangeCodeview: (String? changed) {
+                    //                     log('code changed to $changed');
+                    //                   }, onChangeSelection:
+                    //                       (EditorSettings settings) {
+                    //                     log('parent element is ${settings.parentElement}');
+                    //                     log('font name is ${settings.fontName}');
+                    //                   }, onDialogShown: () {
+                    //                     log('dialog shown');
+                    //                   }, onEnter: () {
+                    //                     log('enter/return pressed');
+                    //                   }, onFocus: () {
+                    //                     log('editor focused');
+                    //                   }, onBlur: () {
+                    //                     log('editor unfocused');
+                    //                   }, onBlurCodeview: () {
+                    //                     log('codeview either focused or unfocused');
+                    //                   }, onInit: () {
+                    //                     log('init');
+                    //                   }, onImageUploadError: (FileUpload? file,
+                    //                       String? base64Str,
+                    //                       UploadError error) {
+                    //                     log(describeEnum(error));
+                    //                     log(base64Str ?? '');
+                    //                     if (file != null) {
+                    //                       log(file.name.toString());
+                    //                       log(file.size.toString());
+                    //                       log(file.type.toString());
+                    //                     }
+                    //                   }, onKeyDown: (int? keyCode) {
+                    //                     log('$keyCode key downed');
+                    //                     log('current character count: ${htmlEditorController.characterCount}');
+                    //                   }, onKeyUp: (int? keyCode) {
+                    //                     log('$keyCode key released');
+                    //                   }, onMouseDown: () {
+                    //                     log('mouse downed');
+                    //                   }, onMouseUp: () {
+                    //                     log('mouse released');
+                    //                   }, onNavigationRequestMobile:
+                    //                       (String url) {
+                    //                     log(url);
+                    //                     return NavigationActionPolicy.ALLOW;
+                    //                   }, onPaste: () {
+                    //                     log('pasted into editor');
+                    //                   }, onScroll: () {
+                    //                     log('editor scrolled');
+                    //                   }),
+                    //                   plugins: [
+                    //                     SummernoteAtMention(
+                    //                         getSuggestionsMobile:
+                    //                             (String value) {
+                    //                           var mentions = <String>[
+                    //                             'test1',
+                    //                             'test2',
+                    //                             'test3'
+                    //                           ];
+                    //                           return mentions
+                    //                               .where((element) =>
+                    //                                   element.contains(value))
+                    //                               .toList();
+                    //                         },
+                    //                         mentionsWeb: [
+                    //                           'test1',
+                    //                           'test2',
+                    //                           'test3'
+                    //                         ],
+                    //                         onSelect: (String value) {
+                    //                           log(value);
+                    //                         }),
+                    //                   ],
+                    //                 ),
+                    //               ),
+                    //             );
+                    //           }
+                    //       }
+                    //     }),
+
                     spaceH(),
                   ]),
                 )

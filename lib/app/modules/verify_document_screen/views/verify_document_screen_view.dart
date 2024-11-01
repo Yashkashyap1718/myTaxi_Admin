@@ -363,78 +363,78 @@ class VerifyDocumentScreenView extends GetView<VerifyDocumentScreenController> {
                                                                           email: verifyDriverModel
                                                                               .driverEmail
                                                                               .toString()))),
-                                                              DataCell(
-                                                                FutureBuilder<
-                                                                    DriverUserModel?>(
-                                                                  future: FireStoreUtils.getDriverByDriverID(
-                                                                      verifyDriverModel
-                                                                          .driverId
-                                                                          .toString()),
-                                                                  builder: (BuildContext
-                                                                          context,
-                                                                      AsyncSnapshot<
-                                                                              DriverUserModel?>
-                                                                          snapshot) {
-                                                                    switch (snapshot
-                                                                        .connectionState) {
-                                                                      case ConnectionState
-                                                                            .waiting:
-                                                                        return const SizedBox();
-                                                                      default:
-                                                                        if (snapshot
-                                                                            .hasError) {
-                                                                          return TextCustom(
-                                                                            title:
-                                                                                'Error: ${snapshot.error}',
-                                                                          );
-                                                                        } else {
-                                                                          if (snapshot.data ==
-                                                                              null) {
-                                                                            // Handle null data case
-                                                                            return TextCustom(
-                                                                              title: 'Error: Data is null'.tr,
-                                                                            );
-                                                                          } else {
-                                                                            DriverUserModel
-                                                                                driverUserModel =
-                                                                                snapshot.data!;
-                                                                            return Container(
-                                                                              alignment: Alignment.centerLeft,
-                                                                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                                                                              child: InkWell(
-                                                                                  onTap: () async {
-                                                                                    controller.editingVerifyDocumentId.value = verifyDriverModel.driverId!;
-                                                                                    controller.getDriverDetails(verifyDriverModel.driverId);
-                                                                                    controller.verifyDriverModel.value = verifyDriverModel;
-                                                                                    controller.verifyDocumentList.value = verifyDriverModel.verifyDocument!;
-                                                                                    showDialog(context: context, builder: (context) => const VerifyDriverDialog());
-                                                                                  },
-                                                                                  child: driverUserModel.isVerified!
-                                                                                      ? SvgPicture.asset(
-                                                                                          "assets/icons/ic_check.svg",
-                                                                                          color: AppThemData.green500,
-                                                                                          height: 20,
-                                                                                          width: 20,
-                                                                                        )
-                                                                                      : const TextCustom(
-                                                                                          title: "Verify",
-                                                                                          fontSize: 16,
-                                                                                          color: AppThemData.red500,
-                                                                                        )
-                                                                                  // SvgPicture.asset(
-                                                                                  //         "assets/icons/ic_close.svg",
-                                                                                  //         color: AppThemData.red500,
-                                                                                  //         height: 20,
-                                                                                  //         width: 20,
-                                                                                  //       ),
-                                                                                  ),
-                                                                            );
-                                                                          }
-                                                                        }
-                                                                    }
-                                                                  },
-                                                                ),
-                                                              ),
+                                                              // DataCell(
+                                                              //   FutureBuilder<
+                                                              //       DriverUserModel?>(
+                                                              //     // future: FireStoreUtils.getDriverByDriverID(
+                                                              //     //     verifyDriverModel
+                                                              //     //         .driverId
+                                                              //     //         .toString()),
+                                                              //     builder: (BuildContext
+                                                              //             context,
+                                                              //         AsyncSnapshot<
+                                                              //                 DriverUserModel?>
+                                                              //             snapshot) {
+                                                              //       switch (snapshot
+                                                              //           .connectionState) {
+                                                              //         case ConnectionState
+                                                              //               .waiting:
+                                                              //           return const SizedBox();
+                                                              //         default:
+                                                              //           if (snapshot
+                                                              //               .hasError) {
+                                                              //             return TextCustom(
+                                                              //               title:
+                                                              //                   'Error: ${snapshot.error}',
+                                                              //             );
+                                                              //           } else {
+                                                              //             if (snapshot.data ==
+                                                              //                 null) {
+                                                              //               // Handle null data case
+                                                              //               return TextCustom(
+                                                              //                 title: 'Error: Data is null'.tr,
+                                                              //               );
+                                                              //             } else {
+                                                              //               DriverUserModel
+                                                              //                   driverUserModel =
+                                                              //                   snapshot.data!;
+                                                              //               return Container(
+                                                              //                 alignment: Alignment.centerLeft,
+                                                              //                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                                              //                 child: InkWell(
+                                                              //                     onTap: () async {
+                                                              //                       controller.editingVerifyDocumentId.value = verifyDriverModel.driverId!;
+                                                              //                       controller.getDriverDetails(verifyDriverModel.driverId);
+                                                              //                       controller.verifyDriverModel.value = verifyDriverModel;
+                                                              //                       controller.verifyDocumentList.value = verifyDriverModel.verifyDocument!;
+                                                              //                       showDialog(context: context, builder: (context) => const VerifyDriverDialog());
+                                                              //                     },
+                                                              //                     child: driverUserModel.isVerified!
+                                                              //                         ? SvgPicture.asset(
+                                                              //                             "assets/icons/ic_check.svg",
+                                                              //                             color: AppThemData.green500,
+                                                              //                             height: 20,
+                                                              //                             width: 20,
+                                                              //                           )
+                                                              //                         : const TextCustom(
+                                                              //                             title: "Verify",
+                                                              //                             fontSize: 16,
+                                                              //                             color: AppThemData.red500,
+                                                              //                           )
+                                                              //                     // SvgPicture.asset(
+                                                              //                     //         "assets/icons/ic_close.svg",
+                                                              //                     //         color: AppThemData.red500,
+                                                              //                     //         height: 20,
+                                                              //                     //         width: 20,
+                                                              //                     //       ),
+                                                              //                     ),
+                                                              //               );
+                                                              //             }
+                                                              //           }
+                                                              //       }
+                                                              //     },
+                                                              //   ),
+                                                              // ),
                                                               DataCell(
                                                                 Container(
                                                                   alignment:
@@ -688,59 +688,59 @@ class VerifyDriverDialog extends StatelessWidget {
                                 rows: controller.verifyDocumentList
                                     .map((verifyDocumentModel) =>
                                         DataRow(cells: [
-                                          DataCell(
-                                            FutureBuilder<DocumentsModel?>(
-                                                future: FireStoreUtils
-                                                    .getDocumentByDocumentId(
-                                                        verifyDocumentModel
-                                                            .documentId
-                                                            .toString()),
-                                                // async work
-                                                builder: (BuildContext context,
-                                                    AsyncSnapshot<
-                                                            DocumentsModel?>
-                                                        snapshot) {
-                                                  switch (snapshot
-                                                      .connectionState) {
-                                                    case ConnectionState
-                                                          .waiting:
-                                                      // return Center(child: Constant.loader());
-                                                      return const SizedBox();
-                                                    default:
-                                                      if (snapshot.hasError) {
-                                                        return TextCustom(
-                                                          title:
-                                                              'Error: ${snapshot.error}',
-                                                        );
-                                                      } else {
-                                                        DocumentsModel
-                                                            documentModel =
-                                                            snapshot.data!;
-                                                        return Container(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .symmetric(
-                                                                  horizontal: 8,
-                                                                  vertical: 8),
-                                                          child: TextButton(
-                                                            onPressed: () {},
-                                                            child: TextCustom(
-                                                              title: documentModel
-                                                                      .title
-                                                                      .isEmpty
-                                                                  ? "N/A".tr
-                                                                  : documentModel
-                                                                      .title
-                                                                      .toString(),
-                                                            ),
-                                                          ),
-                                                        );
-                                                      }
-                                                  }
-                                                }),
-                                          ),
+                                          // DataCell(
+                                          //   FutureBuilder<DocumentsModel?>(
+                                          //       future: FireStoreUtils
+                                          //           .getDocumentByDocumentId(
+                                          //               verifyDocumentModel
+                                          //                   .documentId
+                                          //                   .toString()),
+                                          //       // async work
+                                          //       builder: (BuildContext context,
+                                          //           AsyncSnapshot<
+                                          //                   DocumentsModel?>
+                                          //               snapshot) {
+                                          //         switch (snapshot
+                                          //             .connectionState) {
+                                          //           case ConnectionState
+                                          //                 .waiting:
+                                          //             // return Center(child: Constant.loader());
+                                          //             return const SizedBox();
+                                          //           default:
+                                          //             if (snapshot.hasError) {
+                                          //               return TextCustom(
+                                          //                 title:
+                                          //                     'Error: ${snapshot.error}',
+                                          //               );
+                                          //             } else {
+                                          //               DocumentsModel
+                                          //                   documentModel =
+                                          //                   snapshot.data!;
+                                          //               return Container(
+                                          //                 alignment: Alignment
+                                          //                     .centerLeft,
+                                          //                 padding:
+                                          //                     const EdgeInsets
+                                          //                         .symmetric(
+                                          //                         horizontal: 8,
+                                          //                         vertical: 8),
+                                          //                 child: TextButton(
+                                          //                   onPressed: () {},
+                                          //                   child: TextCustom(
+                                          //                     title: documentModel
+                                          //                             .title
+                                          //                             .isEmpty
+                                          //                         ? "N/A".tr
+                                          //                         : documentModel
+                                          //                             .title
+                                          //                             .toString(),
+                                          //                   ),
+                                          //                 ),
+                                          //               );
+                                          //             }
+                                          //         }
+                                          //       }),
+                                          // ),
                                           DataCell(
                                             GestureDetector(
                                               onTap: () {

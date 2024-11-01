@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CurrencyModel {
-  Timestamp? createdAt;
+  // Timestamp? createdAt;
   String? symbol;
   String? code;
   bool? active;
@@ -10,27 +10,36 @@ class CurrencyModel {
   int? decimalDigits;
   String? id;
 
-  CurrencyModel({this.createdAt, this.symbol, this.code, this.active, this.symbolAtRight, this.name, this.decimalDigits, this.id});
+  CurrencyModel(
+      {this.symbol,
+      this.code,
+      this.active,
+      this.symbolAtRight,
+      this.name,
+      this.decimalDigits,
+      this.id});
 
   @override
   String toString() {
-    return 'CurrencyModel{createdAt: $createdAt, symbol: $symbol, code: $code, active: $active, symbolAtRight: $symbolAtRight, name: $name, decimalDigits: $decimalDigits, id: $id}';
+    return 'CurrencyModel{symbol: $symbol, code: $code, active: $active, symbolAtRight: $symbolAtRight, name: $name, decimalDigits: $decimalDigits, id: $id}';
   }
 
   CurrencyModel.fromJson(Map<String, dynamic> json) {
-    createdAt = json['createdAt'];
+    // createdAt = json['createdAt'];
     symbol = json['symbol'];
     code = json['code'];
     active = json['active'];
     symbolAtRight = json['symbolAtRight'];
     name = json['name'];
-    decimalDigits = json['decimalDigits'] != null ? int.parse(json['decimalDigits'].toString()) : 2;
+    decimalDigits = json['decimalDigits'] != null
+        ? int.parse(json['decimalDigits'].toString())
+        : 2;
     id = json['id'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['createdAt'] = createdAt;
+    // data['createdAt'] = createdAt;
     data['symbol'] = symbol;
     data['code'] = code;
     data['active'] = active;

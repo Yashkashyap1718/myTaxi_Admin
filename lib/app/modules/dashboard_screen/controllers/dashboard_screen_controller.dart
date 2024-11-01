@@ -10,7 +10,7 @@ import 'package:admin/app/models/language_model.dart';
 import 'package:admin/app/models/user_model.dart';
 import 'package:admin/app/models/vehicle_type_model.dart';
 import 'package:admin/app/utils/fire_store_utils.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http; // For making HTTP requests
@@ -74,15 +74,15 @@ class DashboardScreenController extends GetxController {
     Constant.getAdminData();
     getProfile();
     Constant.getCurrencyData();
-    Constant.getLanguageData();
-    bookingList.value = await FireStoreUtils.getRecentBooking("All");
+    // Constant.getLanguageData();
+    // bookingList.value = await FireStoreUtils.getRecentBooking("All");
     await getAllStatisticData();
     await getTodayStatisticData();
-    await getLanguage();
+    // await getLanguage();
     recentBookingList.value = bookingList.sublist(0, 5);
-    userList.value = await FireStoreUtils.getRecentUsers();
-    totalCab.value = await FireStoreUtils.countDrivers();
-    totalUser.value = await FireStoreUtils.countUsers();
+    // userList.value = await FireStoreUtils.getRecentUsers();
+    // totalCab.value = await FireStoreUtils.countDrivers();
+    // totalUser.value = await FireStoreUtils.countUsers();
     bookingChartData = List.filled(12, ChartData("", 0));
     usersChartData = List.filled(12, ChartData("", 0));
     usersCircleChartData =
@@ -185,12 +185,12 @@ class DashboardScreenController extends GetxController {
 
   getTodayStatisticData() async {
     for (var booking in bookingList) {
-      if (Constant.timestampToDate(booking.createAt!) ==
-          Constant.timestampToDate(Timestamp.now())) {
-        if (booking.bookingStatus == BookingStatus.bookingCompleted) {
-          todayTotalEarnings.value += Constant.calculateFinalAmount(booking);
-        }
-      }
+      // if (Constant.timestampToDate(booking.createAt!) ==
+      //     Constant.timestampToDate(Timestamp.now())) {
+      //   if (booking.bookingStatus == BookingStatus.bookingCompleted) {
+      //     todayTotalEarnings.value += Constant.calculateFinalAmount(booking);
+      //   }
+      // }
     }
   }
 
@@ -274,27 +274,27 @@ class DashboardScreenController extends GetxController {
     List<BookingModel> bookingHistory = [];
 
     try {
-      QuerySnapshot value = await FirebaseFirestore.instance
-          .collection(CollectionName.bookings)
-          .where("createAt",
-              isGreaterThanOrEqualTo: firstDayOfMonth,
-              isLessThanOrEqualTo: lastDayOfMonth)
-          .where("bookingStatus", isEqualTo: "booking_completed")
-          .get();
+      // QuerySnapshot value = await FirebaseFirestore.instance
+      //     .collection(CollectionName.bookings)
+      //     .where("createAt",
+      //         isGreaterThanOrEqualTo: firstDayOfMonth,
+      //         isLessThanOrEqualTo: lastDayOfMonth)
+      //     .where("bookingStatus", isEqualTo: "booking_completed")
+      //     .get();
 
-      for (var element in value.docs) {
-        Map<String, dynamic>? elementData =
-            element.data() as Map<String, dynamic>?;
-        // bookingChartData
-        if (elementData != null) {
-          BookingModel orderHistoryModel = BookingModel.fromJson(elementData);
-          bookingHistory.add(orderHistoryModel);
-        }
-      }
-      monthlyEarning.value = 0.0;
-      for (var monthSubtotal in bookingHistory) {
-        monthlyEarning.value += double.parse(monthSubtotal.subTotal.toString());
-      }
+      // for (var element in value.docs) {
+      //   Map<String, dynamic>? elementData =
+      //       element.data() as Map<String, dynamic>?;
+      //   // bookingChartData
+      //   if (elementData != null) {
+      //     BookingModel orderHistoryModel = BookingModel.fromJson(elementData);
+      //     bookingHistory.add(orderHistoryModel);
+      //   }
+      // }
+      // monthlyEarning.value = 0.0;
+      // for (var monthSubtotal in bookingHistory) {
+      //   monthlyEarning.value += double.parse(monthSubtotal.subTotal.toString());
+      // }
 
       bookingChartData![index] = ChartData(monthName, monthlyEarning.value);
     } catch (e) {
@@ -302,25 +302,25 @@ class DashboardScreenController extends GetxController {
     }
   }
 
-  getLanguage() async {
-    isLoading = true.obs;
-    admin.value = Constant.adminModel!;
-    await FireStoreUtils.getLanguage().then((value) {
-      languageList.value = value;
-      for (var element in languageList) {
-        if (element.code == "en") {
-          selectedLanguage.value = element;
-          continue;
-        } else {
-          selectedLanguage.value = languageList.first;
-        }
-      }
-    }).catchError((error) {
-      log('error in getLanguage type ${error.toString()}');
-    });
+  // getLanguage() async {
+  //   isLoading = true.obs;
+  //   admin.value = Constant.adminModel!;
+  //   await FireStoreUtils.getLanguage().then((value) {
+  //     languageList.value = value;
+  //     for (var element in languageList) {
+  //       if (element.code == "en") {
+  //         selectedLanguage.value = element;
+  //         continue;
+  //       } else {
+  //         selectedLanguage.value = languageList.first;
+  //       }
+  //     }
+  //   }).catchError((error) {
+  //     log('error in getLanguage type ${error.toString()}');
+  //   });
 
-    isLoading = false.obs;
-  }
+  //   isLoading = false.obs;
+  // }
 }
 
 class ChartData {

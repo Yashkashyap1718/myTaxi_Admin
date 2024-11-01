@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:admin/app/constant/collection_name.dart';
@@ -31,8 +31,8 @@ class TaxController extends GetxController {
   getData() async {
     isLoading(true);
     taxesList.clear();
-    List<TaxModel>? data = await FireStoreUtils.getTax();
-    taxesList.addAll(data!);
+    // List<TaxModel>? data = await FireStoreUtils.getTax();
+    // taxesList.addAll(data!);
     isLoading(false);
   }
 
@@ -51,7 +51,7 @@ class TaxController extends GetxController {
     taxModel.value.isFix = selectedTaxType.value == "Fix" ? true : false;
     taxModel.value.name = taxTitle.value.text;
     taxModel.value.value = taxAmount.value.text;
-    await FireStoreUtils.updateTax(taxModel.value);
+    // await FireStoreUtils.updateTax(taxModel.value);
     await getData();
   }
 
@@ -63,7 +63,7 @@ class TaxController extends GetxController {
     taxModel.value.isFix = selectedTaxType.value == "Fix" ? true : false;
     taxModel.value.name = taxTitle.value.text;
     taxModel.value.value = taxAmount.value.text;
-    await FireStoreUtils.addTaxes(taxModel.value);
+    // await FireStoreUtils.addTaxes(taxModel.value);
     await getData();
 
     isLoading = false.obs;
@@ -71,15 +71,15 @@ class TaxController extends GetxController {
 
   removeTax(TaxModel taxModel) async {
     isLoading = true.obs;
-    await FirebaseFirestore.instance
-        .collection(CollectionName.countryTax)
-        .doc(taxModel.id)
-        .delete()
-        .then((value) {
-      ShowToastDialog.toast("Country Tax deleted...!".tr);
-    }).catchError((error) {
-      ShowToastDialog.toast("Something went wrong".tr);
-    });
+    // await FirebaseFirestore.instance
+    //     .collection(CollectionName.countryTax)
+    //     .doc(taxModel.id)
+    //     .delete()
+    //     .then((value) {
+    //   ShowToastDialog.toast("Country Tax deleted...!".tr);
+    // }).catchError((error) {
+    //   ShowToastDialog.toast("Something went wrong".tr);
+    // });
     isLoading = false.obs;
   }
 }

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:admin/app/models/location_lat_lng.dart';
 import 'package:admin/app/models/positions.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DriverUserModel {
   String? fullName;
@@ -20,7 +20,7 @@ class DriverUserModel {
   bool? isActive;
   bool? isVerified;
   bool? isOnline;
-  Timestamp? createdAt;
+  // Timestamp? createdAt;
   DriverVehicleDetails? driverVehicleDetails;
   LocationLatLng? location;
   Positions? position;
@@ -46,7 +46,7 @@ class DriverUserModel {
     this.countryCode,
     this.phoneNumber,
     this.walletAmount,
-    this.createdAt,
+    // this.createdAt,
     this.rotation,
     this.gender,
     this.reviewsCount,
@@ -64,15 +64,21 @@ class DriverUserModel {
     countryCode = json['countryCode'];
     phoneNumber = json['phoneNumber'] ?? "";
     walletAmount = json['walletAmount'] ?? "0";
-    createdAt = json['createdAt'];
+    // createdAt = json['createdAt'];
     gender = json['gender'];
     dateOfBirth = json['dateOfBirth'] ?? '';
     isActive = json['isActive'];
     isOnline = json['isOnline'];
-    driverVehicleDetails = json['driverVehicleDetails'] != null ? DriverVehicleDetails.fromJson(json["driverVehicleDetails"]) : null;
+    driverVehicleDetails = json['driverVehicleDetails'] != null
+        ? DriverVehicleDetails.fromJson(json["driverVehicleDetails"])
+        : null;
     isVerified = json['isVerified'];
-    location = json['location'] != null ? LocationLatLng.fromJson(json['location']) : LocationLatLng();
-    position = json['position'] != null ? Positions.fromJson(json['position']) : Positions();
+    location = json['location'] != null
+        ? LocationLatLng.fromJson(json['location'])
+        : LocationLatLng();
+    position = json['position'] != null
+        ? Positions.fromJson(json['position'])
+        : Positions();
     rotation = json['rotation'];
     reviewsCount = json['reviewsCount'];
     reviewsSum = json['reviewsSum'];
@@ -90,13 +96,15 @@ class DriverUserModel {
     data['countryCode'] = countryCode;
     data['phoneNumber'] = phoneNumber;
     data['walletAmount'] = walletAmount;
-    data['createdAt'] = createdAt;
+    // data['createdAt'] = createdAt;
     data['gender'] = gender;
     data['dateOfBirth'] = dateOfBirth;
     data['isActive'] = isActive;
     data['isOnline'] = isOnline;
     data['isVerified'] = isVerified;
-    data["driverVehicleDetails"] = driverVehicleDetails == null ? DriverVehicleDetails().toJson() : driverVehicleDetails!.toJson();
+    data["driverVehicleDetails"] = driverVehicleDetails == null
+        ? DriverVehicleDetails().toJson()
+        : driverVehicleDetails!.toJson();
     if (location != null) {
       data['location'] = location!.toJson();
     }
@@ -131,11 +139,13 @@ class DriverVehicleDetails {
     this.isVerified,
   });
 
-  factory DriverVehicleDetails.fromRawJson(String str) => DriverVehicleDetails.fromJson(json.decode(str));
+  factory DriverVehicleDetails.fromRawJson(String str) =>
+      DriverVehicleDetails.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory DriverVehicleDetails.fromJson(Map<String, dynamic> json) => DriverVehicleDetails(
+  factory DriverVehicleDetails.fromJson(Map<String, dynamic> json) =>
+      DriverVehicleDetails(
         vehicleTypeName: json["vehicleTypeName"],
         vehicleTypeId: json["vehicleTypeId"],
         brandName: json["brandName"],

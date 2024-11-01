@@ -5,7 +5,7 @@ import 'package:admin/app/constant/constants.dart';
 import 'package:admin/app/constant/show_toast.dart';
 import 'package:admin/app/models/driver_user_model.dart';
 import 'package:admin/app/utils/fire_store_utils.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,7 +15,6 @@ import 'package:nb_utils/nb_utils.dart';
 
 class DriverScreenController extends GetxController {
   RxString title = "Driver".tr.obs;
-
 
   RxBool isLoading = true.obs;
   RxBool isSearchEnable = true.obs;
@@ -53,7 +52,8 @@ class DriverScreenController extends GetxController {
   void onInit() {
     totalItemPerPage.value = Constant.numOfPageIemList.first;
     getUser();
-    dateFiledController.value.text = "${DateFormat('yyyy-MM-dd').format(selectedDate.value.start)} to ${DateFormat('yyyy-MM-dd').format(selectedDate.value.end)}";
+    dateFiledController.value.text =
+        "${DateFormat('yyyy-MM-dd').format(selectedDate.value.start)} to ${DateFormat('yyyy-MM-dd').format(selectedDate.value.end)}";
     super.onInit();
   }
 
@@ -71,22 +71,22 @@ class DriverScreenController extends GetxController {
 
   removeDriver(DriverUserModel driverUserModel) async {
     isLoading = true.obs;
-    await FirebaseFirestore.instance.collection(CollectionName.drivers).doc(driverUserModel.id).delete().then((value) {
-      ShowToastDialog.toast("Driver deleted...!".tr);
-    }).catchError((error) {
-      ShowToastDialog.toast("Something went wrong".tr);
-    });
-    await FirebaseFirestore.instance.collection(CollectionName.verifyDriver).doc(driverUserModel.id).delete().then((value) {
-      log("Verify Document Deleted...!");
-    }).catchError((error) {
-      log("Error : $error");
-    });
+    // await FirebaseFirestore.instance.collection(CollectionName.drivers).doc(driverUserModel.id).delete().then((value) {
+    //   ShowToastDialog.toast("Driver deleted...!".tr);
+    // }).catchError((error) {
+    //   ShowToastDialog.toast("Something went wrong".tr);
+    // });
+    // await FirebaseFirestore.instance.collection(CollectionName.verifyDriver).doc(driverUserModel.id).delete().then((value) {
+    //   log("Verify Document Deleted...!");
+    // }).catchError((error) {
+    //   log("Error : $error");
+    // });
     isLoading = false.obs;
   }
 
   getUser() async {
     isLoading.value = true;
-    await FireStoreUtils.countDrivers();
+    // await FireStoreUtils.countDrivers();
     // tempList.value = await FireStoreUtils.getDriver();
     // driverList.value = await FireStoreUtils.getDriver();
     setPagination(totalItemPerPage.value);
@@ -94,8 +94,10 @@ class DriverScreenController extends GetxController {
   }
 
   Rx<DateTimeRange> selectedDate = DateTimeRange(
-          start: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0),
-          end: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 59, 0))
+          start: DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day, 0, 0, 0),
+          end: DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day, 23, 59, 0))
       .obs;
 
   setPagination(String page) async {
@@ -104,14 +106,16 @@ class DriverScreenController extends GetxController {
     int itemPerPage = pageValue(page);
     totalPage.value = (Constant.driverLength! / itemPerPage).ceil();
     startIndex.value = (currentPage.value - 1) * itemPerPage;
-    endIndex.value = (currentPage.value * itemPerPage) > Constant.driverLength! ? Constant.driverLength! : (currentPage.value * itemPerPage);
+    endIndex.value = (currentPage.value * itemPerPage) > Constant.driverLength!
+        ? Constant.driverLength!
+        : (currentPage.value * itemPerPage);
     if (endIndex.value < startIndex.value) {
       currentPage.value = 1;
       setPagination(page);
     } else {
       try {
-        List<DriverUserModel> currentPageDriverData = await FireStoreUtils.getDriver(currentPage.value, itemPerPage, searchController.value.text, selectedSearchTypeForData.value);
-        currentPageDriver.value = currentPageDriverData;
+        // List<DriverUserModel> currentPageDriverData = await FireStoreUtils.getDriver(currentPage.value, itemPerPage, searchController.value.text, selectedSearchTypeForData.value);
+        // currentPageDriver.value = currentPageDriverData;
       } catch (error) {
         log(error.toString());
       }
@@ -147,7 +151,8 @@ class DriverScreenController extends GetxController {
   getArgument(DriverUserModel driverUserModel) {
     driverModel.value = driverUserModel;
     userNameController.value.text = driverModel.value.fullName!;
-    phoneNumberController.value.text = "${driverModel.value.countryCode!} ${driverModel.value.phoneNumber!}";
+    phoneNumberController.value.text =
+        "${driverModel.value.countryCode!} ${driverModel.value.phoneNumber!}";
     emailController.value.text = driverModel.value.email!;
     imageController.value.text = driverModel.value.profilePic!;
     editingId.value = driverModel.value.id!;
@@ -157,7 +162,8 @@ class DriverScreenController extends GetxController {
     try {
       uploading.value = true;
       ImagePicker picker = ImagePicker();
-      final img = await picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
+      final img =
+          await picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
 
       File imageFile = File(img!.path);
 

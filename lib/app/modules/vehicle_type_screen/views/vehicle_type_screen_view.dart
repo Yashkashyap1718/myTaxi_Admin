@@ -499,8 +499,8 @@ class VehicleTypeScreenView extends GetView<VehicleTypeScreenController> {
                                                                         } else {
                                                                           vehicleTypeModel.isActive =
                                                                               value;
-                                                                          await FireStoreUtils.updateVehicleType(
-                                                                              vehicleTypeModel);
+                                                                          // await FireStoreUtils.updateVehicleType(
+                                                                          //     vehicleTypeModel);
                                                                           controller
                                                                               .getData();
                                                                         }

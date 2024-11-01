@@ -4,14 +4,15 @@ import 'package:admin/app/constant/show_toast.dart';
 import 'package:admin/app/models/documents_model.dart';
 import 'package:admin/app/modules/document_screen/views/document_screen_view.dart';
 import 'package:admin/app/utils/fire_store_utils.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DocumentScreenController extends GetxController {
   RxString title = "Document".tr.obs;
 
-  Rx<TextEditingController> documentNameController = TextEditingController().obs;
+  Rx<TextEditingController> documentNameController =
+      TextEditingController().obs;
   Rx<SideAt> documentSide = SideAt.isOneSide.obs;
   RxBool isEditing = false.obs;
   RxBool isLoading = false.obs;
@@ -28,8 +29,8 @@ class DocumentScreenController extends GetxController {
   getData() async {
     isLoading(true);
     documentsList.clear();
-    List<DocumentsModel> data = await FireStoreUtils.getDocument();
-    documentsList.addAll(data);
+    // List<DocumentsModel> data = await FireStoreUtils.getDocument();
+    // documentsList.addAll(data);
     isLoading(false);
   }
 
@@ -43,16 +44,22 @@ class DocumentScreenController extends GetxController {
 
   updateDocument() async {
     isEditing = true.obs;
-    await FireStoreUtils.addDocument(
-        DocumentsModel(id: editingId.value, isEnable: isActive.value, isTwoSide: documentSide.value == SideAt.isTwoSide ? true : false, title: documentNameController.value.text));
+    // await FireStoreUtils.addDocument(DocumentsModel(
+    //     id: editingId.value,
+    //     isEnable: isActive.value,
+    //     isTwoSide: documentSide.value == SideAt.isTwoSide ? true : false,
+    //     title: documentNameController.value.text));
     await getData();
     isEditing = false.obs;
   }
 
   addDocument() async {
     isLoading = true.obs;
-    await FireStoreUtils.addDocument(DocumentsModel(
-        id: Constant.getRandomString(20), isEnable: isActive.value, isTwoSide: documentSide.value == SideAt.isTwoSide ? true : false, title: documentNameController.value.text));
+    // await FireStoreUtils.addDocument(DocumentsModel(
+    //     id: Constant.getRandomString(20),
+    //     isEnable: isActive.value,
+    //     isTwoSide: documentSide.value == SideAt.isTwoSide ? true : false,
+    //     title: documentNameController.value.text));
     await getData();
     isLoading = false.obs;
   }
@@ -60,11 +67,11 @@ class DocumentScreenController extends GetxController {
   removeDocument(DocumentsModel documentsModel) async {
     isLoading = true.obs;
 
-    await FirebaseFirestore.instance.collection(CollectionName.documents).doc(documentsModel.id).delete().then((value) {
-      ShowToastDialog.toast("Document deleted...!".tr);
-    }).catchError((error) {
-      ShowToastDialog.toast("Something went wrong".tr);
-    });
+    // await FirebaseFirestore.instance.collection(CollectionName.documents).doc(documentsModel.id).delete().then((value) {
+    //   ShowToastDialog.toast("Document deleted...!".tr);
+    // }).catchError((error) {
+    //   ShowToastDialog.toast("Something went wrong".tr);
+    // });
     await getData();
     isLoading = false.obs;
   }

@@ -593,40 +593,45 @@ class BookingHistoryScreenView extends GetView<BookingHistoryScreenController> {
                                                                                 : "#${bookingModel.id!.substring(0, 8)}",
                                                                           ),
                                                                         ),
-                                                                        DataCell(
-                                                                          FutureBuilder<UserModel?>(
-                                                                              future: FireStoreUtils.getUserByUserID(bookingModel.customerId.toString()), // async work
-                                                                              builder: (BuildContext context, AsyncSnapshot<UserModel?> snapshot) {
-                                                                                switch (snapshot.connectionState) {
-                                                                                  case ConnectionState.waiting:
-                                                                                    // return Center(child: Constant.loader());
-                                                                                    return const SizedBox();
-                                                                                  default:
-                                                                                    if (snapshot.hasError) {
-                                                                                      return TextCustom(
-                                                                                        title: 'Error: ${snapshot.error}',
-                                                                                      );
-                                                                                    } else {
-                                                                                      UserModel userModel = snapshot.data!;
-                                                                                      return Container(
-                                                                                        alignment: Alignment.centerLeft,
-                                                                                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                                                                                        child: TextCustom(
-                                                                                          title: userModel.fullName!.isEmpty
-                                                                                              ? "N/A".tr
-                                                                                              : userModel.fullName.toString() == "Unknown User"
-                                                                                                  ? "User Deleted".tr
-                                                                                                  : userModel.fullName.toString(),
-                                                                                        ),
-                                                                                      );
-                                                                                    }
-                                                                                }
-                                                                              }),
-                                                                        ),
+                                                                        // DataCell(
+                                                                        //   FutureBuilder<UserModel?>(
+                                                                        //       future: FireStoreUtils.getUserByUserID(bookingModel.customerId.toString()), // async work
+                                                                        //       builder: (BuildContext context, AsyncSnapshot<UserModel?> snapshot) {
+                                                                        //         switch (snapshot.connectionState) {
+                                                                        //           case ConnectionState.waiting:
+                                                                        //             // return Center(child: Constant.loader());
+                                                                        //             return const SizedBox();
+                                                                        //           default:
+                                                                        //             if (snapshot.hasError) {
+                                                                        //               return TextCustom(
+                                                                        //                 title: 'Error: ${snapshot.error}',
+                                                                        //               );
+                                                                        //             } else {
+                                                                        //               UserModel userModel = snapshot.data!;
+                                                                        //               return Container(
+                                                                        //                 alignment: Alignment.centerLeft,
+                                                                        //                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                                                        //                 child: TextCustom(
+                                                                        //                   title: userModel.fullName!.isEmpty
+                                                                        //                       ? "N/A".tr
+                                                                        //                       : userModel.fullName.toString() == "Unknown User"
+                                                                        //                           ? "User Deleted".tr
+                                                                        //                           : userModel.fullName.toString(),
+                                                                        //                 ),
+                                                                        //               );
+                                                                        //             }
+                                                                        //         }
+                                                                        //       }),
+                                                                        // ),
+
                                                                         DataCell(TextCustom(
-                                                                            title: bookingModel.createAt == null
-                                                                                ? ''
-                                                                                : Constant.timestampToDateTime(bookingModel.createAt!))),
+                                                                            title:
+
+                                                                                //  bookingModel.createAt == null
+                                                                                //     ? ''
+                                                                                //     :
+
+                                                                                "Constant.timestampToDateTime(bookingModel.createAt!)")),
                                                                         DataCell(TextCustom(
                                                                             title: bool.parse(bookingModel.paymentStatus!.toString())
                                                                                 ? "Paid".tr
@@ -826,10 +831,10 @@ class BookingHistoryScreenView extends GetView<BookingHistoryScreenController> {
                           59,
                           0,
                           0));
-                  await FireStoreUtils.countStatusWiseBooking(
-                    controller.selectedBookingStatusForData.value,
-                    controller.selectedDateRange.value,
-                  );
+                  // await FireStoreUtils.countStatusWiseBooking(
+                  //   controller.selectedBookingStatusForData.value,
+                  //   controller.selectedDateRange.value,
+                  // );
                   await controller
                       .setPagination(controller.totalItemPerPage.value);
                 }

@@ -3,7 +3,7 @@ import 'package:admin/app/constant/constants.dart';
 import 'package:admin/app/constant/show_toast.dart';
 import 'package:admin/app/models/support_reason_model.dart';
 import 'package:admin/app/utils/fire_store_utils.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,8 +29,8 @@ class SupportReasonController extends GetxController {
   getData() async {
     isLoading(true);
     supportReasonList.clear();
-    List<SupportReasonModel>? data = await FireStoreUtils.getSupportReason();
-    supportReasonList.addAll(data!);
+    // List<SupportReasonModel>? data = await FireStoreUtils.getSupportReason();
+    // supportReasonList.addAll(data!);
     isLoading(false);
   }
 
@@ -46,7 +46,7 @@ class SupportReasonController extends GetxController {
     supportReasonModel.value.id = Constant.getRandomString(20);
     supportReasonModel.value.reason = supportReasonController.value.text;
     supportReasonModel.value.type = selectedType.value;
-    await FireStoreUtils.addSupportReason(supportReasonModel.value);
+    // await FireStoreUtils.addSupportReason(supportReasonModel.value);
     await getData();
     isLoading = false.obs;
   }
@@ -54,21 +54,21 @@ class SupportReasonController extends GetxController {
   updateSupportReason() async {
     supportReasonModel.value.reason = supportReasonController.value.text;
     supportReasonModel.value.type = selectedType.value;
-    await FireStoreUtils.updateSupportReason(supportReasonModel.value);
+    // await FireStoreUtils.updateSupportReason(supportReasonModel.value);
     await getData();
   }
 
   removeSupportReason(SupportReasonModel supportReasonModel) async {
     isLoading.value = true;
-    await FirebaseFirestore.instance
-        .collection(CollectionName.supportReason)
-        .doc(supportReasonModel.id)
-        .delete()
-        .then((value) {
-      ShowToastDialog.toast("Support Reason Deleted..".tr);
-    }).catchError((error) {
-      ShowToastDialog.toast("Something went wrong".tr);
-    });
+    // await FirebaseFirestore.instance
+    //     .collection(CollectionName.supportReason)
+    //     .doc(supportReasonModel.id)
+    //     .delete()
+    //     .then((value) {
+    //   ShowToastDialog.toast("Support Reason Deleted..".tr);
+    // }).catchError((error) {
+    //   ShowToastDialog.toast("Something went wrong".tr);
+    // });
     isLoading.value = false;
   }
 }

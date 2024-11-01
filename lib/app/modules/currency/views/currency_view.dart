@@ -33,158 +33,301 @@ class CurrencyView extends GetView<CurrencyController> {
         return Obx(
           () => SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
-            child: Column(mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
-              ContainerCustom(
-                child: Column(children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      ResponsiveWidget.isDesktop(context)
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                TextCustom(title: controller.title.value, fontSize: 20, fontFamily: AppThemeData.bold),
-                                spaceH(height: 2),
-                                Row(children: [
-                                  GestureDetector(
-                                      onTap: () => Get.offAllNamed(Routes.DASHBOARD_SCREEN),
-                                      child: TextCustom(title: 'Dashboard'.tr, fontSize: 14, fontFamily: AppThemeData.medium, color: AppThemData.greyShade500)),
-                                  const TextCustom(title: ' / ', fontSize: 14, fontFamily: AppThemeData.medium, color: AppThemData.greyShade500),
-                                  TextCustom(title: 'Settings'.tr, fontSize: 14, fontFamily: AppThemeData.medium, color: AppThemData.greyShade500),
-                                  const TextCustom(title: ' / ', fontSize: 14, fontFamily: AppThemeData.medium, color: AppThemData.greyShade500),
-                                  TextCustom(title: ' ${controller.title.value} ', fontSize: 14, fontFamily: AppThemeData.medium, color: AppThemData.primary500)
-                                ])
-                              ],
-                            )
-                          : TextCustom(title: ' ${controller.title.value} ', fontSize: 14, fontFamily: AppThemeData.medium, color: AppThemData.primaryBlack),
-                      CustomButtonWidget(
-                        padding: const EdgeInsets.symmetric(horizontal: 22),
-                        buttonTitle: " + Add Currency".tr,
-                        onPress: () {
-                          showDialog(context: context, builder: (context) => const CurrencyDialog());
-                        },
+            child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ContainerCustom(
+                    child: Column(children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          ResponsiveWidget.isDesktop(context)
+                              ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    TextCustom(
+                                        title: controller.title.value,
+                                        fontSize: 20,
+                                        fontFamily: AppThemeData.bold),
+                                    spaceH(height: 2),
+                                    Row(children: [
+                                      GestureDetector(
+                                          onTap: () => Get.offAllNamed(
+                                              Routes.DASHBOARD_SCREEN),
+                                          child: TextCustom(
+                                              title: 'Dashboard'.tr,
+                                              fontSize: 14,
+                                              fontFamily: AppThemeData.medium,
+                                              color: AppThemData.greyShade500)),
+                                      const TextCustom(
+                                          title: ' / ',
+                                          fontSize: 14,
+                                          fontFamily: AppThemeData.medium,
+                                          color: AppThemData.greyShade500),
+                                      TextCustom(
+                                          title: 'Settings'.tr,
+                                          fontSize: 14,
+                                          fontFamily: AppThemeData.medium,
+                                          color: AppThemData.greyShade500),
+                                      const TextCustom(
+                                          title: ' / ',
+                                          fontSize: 14,
+                                          fontFamily: AppThemeData.medium,
+                                          color: AppThemData.greyShade500),
+                                      TextCustom(
+                                          title: ' ${controller.title.value} ',
+                                          fontSize: 14,
+                                          fontFamily: AppThemeData.medium,
+                                          color: AppThemData.primary500)
+                                    ])
+                                  ],
+                                )
+                              : TextCustom(
+                                  title: ' ${controller.title.value} ',
+                                  fontSize: 14,
+                                  fontFamily: AppThemeData.medium,
+                                  color: AppThemData.primaryBlack),
+                          CustomButtonWidget(
+                            padding: const EdgeInsets.symmetric(horizontal: 22),
+                            buttonTitle: " + Add Currency".tr,
+                            onPress: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => const CurrencyDialog());
+                            },
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  spaceH(height: 20),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: controller.currencyList.isEmpty
-                          ? Padding(
-                              padding: paddingEdgeInsets(),
-                              child: Constant.loader(),
-                            )
-                          : DataTable(
-                              horizontalMargin: 20,
-                              columnSpacing: 30,
-                              dataRowMaxHeight: 65,
-                              headingRowHeight: 65,
-                              border: TableBorder.all(
-                                color: themeChange.isDarkTheme() ? AppThemData.greyShade900 : AppThemData.greyShade100,
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              headingRowColor:
-                                  WidgetStateColor.resolveWith((states) => themeChange.isDarkTheme() ? AppThemData.greyShade900 : AppThemData.greyShade100),
-                              columns: [
-                                CommonUI.dataColumnWidget(context,
-                                    columnTitle: "Id".tr, width: ResponsiveWidget.isMobile(context) ? 15 : MediaQuery.of(context).size.width * 0.05),
-                                CommonUI.dataColumnWidget(context,
-                                    columnTitle: "Name".tr, width: ResponsiveWidget.isMobile(context) ? 120 : MediaQuery.of(context).size.width * 0.12),
-                                CommonUI.dataColumnWidget(context,
-                                    columnTitle: "Symbol".tr, width: ResponsiveWidget.isMobile(context) ? 100 : MediaQuery.of(context).size.width * 0.12),
-                                CommonUI.dataColumnWidget(context,
-                                    columnTitle: "Symbol Side".tr, width: ResponsiveWidget.isMobile(context) ? 80 : MediaQuery.of(context).size.width * 0.10),
-                                CommonUI.dataColumnWidget(context,
-                                    columnTitle: "Status".tr, width: ResponsiveWidget.isMobile(context) ? 50 : MediaQuery.of(context).size.width * 0.07),
-                                CommonUI.dataColumnWidget(context,
-                                    columnTitle: "Actions".tr, width: ResponsiveWidget.isMobile(context) ? 70 : MediaQuery.of(context).size.width * 0.10),
-                              ],
-                              rows: controller.currencyList
-                                  .map((currencyModel) => DataRow(cells: [
-                                        DataCell(TextCustom(title: "${controller.currencyList.indexWhere((element) => element == currencyModel) + 1}")),
-                                        DataCell(TextCustom(title: "${currencyModel.name}")),
-                                        DataCell(TextCustom(title: "${currencyModel.symbol}")),
-                                        DataCell(TextCustom(title: currencyModel.symbolAtRight == true ? 'Right' : 'Left')),
-                                        DataCell(Transform.scale(
-                                          scale: 0.8,
-                                          child: CupertinoSwitch(
-                                            activeColor: AppThemData.primary500,
-                                            value: currencyModel.active!,
-                                            onChanged: (value) async {
-                                              if (Constant.isDemo) {
-                                                DialogBox.demoDialogBox();
-                                              } else {
-                                                currencyModel.active = value;
-                                                await FireStoreUtils.updateCurrency(currencyModel);
-                                                controller.getData();
-                                              }
-                                            },
-                                          ),
-                                        )),
-                                        DataCell(
-                                          Container(
-                                            alignment: Alignment.center,
-                                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              children: [
-                                                InkWell(
-                                                  onTap: () {
-                                                    controller.isEditing.value = true;
-                                                    controller.currencyModel.value.id = currencyModel.id;
-                                                    controller.currencyModel.value.createdAt = currencyModel.createdAt;
-                                                    controller.isActive.value = currencyModel.active!;
-                                                    controller.nameController.value.text = currencyModel.name!;
-                                                    controller.codeController.value.text = currencyModel.code!;
-                                                    controller.symbolController.value.text = currencyModel.symbol!;
-                                                    controller.decimalDigitsController.value.text = currencyModel.decimalDigits!.toString();
-                                                    controller.symbolAt.value = currencyModel.symbolAtRight == true ? SymbolAt.symbolAtRight : SymbolAt.symbolAtLeft;
-                                                    showDialog(context: context, builder: (context) => const CurrencyDialog());
-                                                  },
-                                                  child: SvgPicture.asset(
-                                                    "assets/icons/ic_edit.svg",
-                                                    color: AppThemData.greyShade400,
-                                                    height: 16,
-                                                    width: 16,
-                                                  ),
+                      spaceH(height: 20),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: controller.currencyList.isEmpty
+                              ? Padding(
+                                  padding: paddingEdgeInsets(),
+                                  child: Constant.loader(),
+                                )
+                              : DataTable(
+                                  horizontalMargin: 20,
+                                  columnSpacing: 30,
+                                  dataRowMaxHeight: 65,
+                                  headingRowHeight: 65,
+                                  border: TableBorder.all(
+                                    color: themeChange.isDarkTheme()
+                                        ? AppThemData.greyShade900
+                                        : AppThemData.greyShade100,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  headingRowColor: WidgetStateColor.resolveWith(
+                                      (states) => themeChange.isDarkTheme()
+                                          ? AppThemData.greyShade900
+                                          : AppThemData.greyShade100),
+                                  columns: [
+                                    CommonUI.dataColumnWidget(context,
+                                        columnTitle: "Id".tr,
+                                        width:
+                                            ResponsiveWidget.isMobile(context)
+                                                ? 15
+                                                : MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.05),
+                                    CommonUI.dataColumnWidget(context,
+                                        columnTitle: "Name".tr,
+                                        width:
+                                            ResponsiveWidget.isMobile(context)
+                                                ? 120
+                                                : MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.12),
+                                    CommonUI.dataColumnWidget(context,
+                                        columnTitle: "Symbol".tr,
+                                        width:
+                                            ResponsiveWidget.isMobile(context)
+                                                ? 100
+                                                : MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.12),
+                                    CommonUI.dataColumnWidget(context,
+                                        columnTitle: "Symbol Side".tr,
+                                        width:
+                                            ResponsiveWidget.isMobile(context)
+                                                ? 80
+                                                : MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.10),
+                                    CommonUI.dataColumnWidget(context,
+                                        columnTitle: "Status".tr,
+                                        width:
+                                            ResponsiveWidget.isMobile(context)
+                                                ? 50
+                                                : MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.07),
+                                    CommonUI.dataColumnWidget(context,
+                                        columnTitle: "Actions".tr,
+                                        width:
+                                            ResponsiveWidget.isMobile(context)
+                                                ? 70
+                                                : MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.10),
+                                  ],
+                                  rows: controller.currencyList
+                                      .map((currencyModel) => DataRow(cells: [
+                                            DataCell(TextCustom(
+                                                title:
+                                                    "${controller.currencyList.indexWhere((element) => element == currencyModel) + 1}")),
+                                            DataCell(TextCustom(
+                                                title:
+                                                    "${currencyModel.name}")),
+                                            DataCell(TextCustom(
+                                                title:
+                                                    "${currencyModel.symbol}")),
+                                            DataCell(TextCustom(
+                                                title: currencyModel
+                                                            .symbolAtRight ==
+                                                        true
+                                                    ? 'Right'
+                                                    : 'Left')),
+                                            DataCell(Transform.scale(
+                                              scale: 0.8,
+                                              child: CupertinoSwitch(
+                                                activeColor:
+                                                    AppThemData.primary500,
+                                                value: currencyModel.active!,
+                                                onChanged: (value) async {
+                                                  if (Constant.isDemo) {
+                                                    DialogBox.demoDialogBox();
+                                                  } else {
+                                                    currencyModel.active =
+                                                        value;
+                                                    // await FireStoreUtils
+                                                    //     .updateCurrency(
+                                                    //         currencyModel);
+                                                    controller.getData();
+                                                  }
+                                                },
+                                              ),
+                                            )),
+                                            DataCell(
+                                              Container(
+                                                alignment: Alignment.center,
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 8,
+                                                        vertical: 8),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    InkWell(
+                                                      onTap: () {
+                                                        controller.isEditing
+                                                            .value = true;
+                                                        controller.currencyModel
+                                                                .value.id =
+                                                            currencyModel.id;
+                                                        // controller.currencyModel.value.createdAt = currencyModel.createdAt;
+                                                        controller.isActive
+                                                                .value =
+                                                            currencyModel
+                                                                .active!;
+                                                        controller
+                                                                .nameController
+                                                                .value
+                                                                .text =
+                                                            currencyModel.name!;
+                                                        controller
+                                                                .codeController
+                                                                .value
+                                                                .text =
+                                                            currencyModel.code!;
+                                                        controller
+                                                                .symbolController
+                                                                .value
+                                                                .text =
+                                                            currencyModel
+                                                                .symbol!;
+                                                        controller
+                                                                .decimalDigitsController
+                                                                .value
+                                                                .text =
+                                                            currencyModel
+                                                                .decimalDigits!
+                                                                .toString();
+                                                        controller.symbolAt
+                                                            .value = currencyModel
+                                                                    .symbolAtRight ==
+                                                                true
+                                                            ? SymbolAt
+                                                                .symbolAtRight
+                                                            : SymbolAt
+                                                                .symbolAtLeft;
+                                                        showDialog(
+                                                            context: context,
+                                                            builder: (context) =>
+                                                                const CurrencyDialog());
+                                                      },
+                                                      child: SvgPicture.asset(
+                                                        "assets/icons/ic_edit.svg",
+                                                        color: AppThemData
+                                                            .greyShade400,
+                                                        height: 16,
+                                                        width: 16,
+                                                      ),
+                                                    ),
+                                                    spaceW(width: 20),
+                                                    InkWell(
+                                                      onTap: () async {
+                                                        if (Constant.isDemo) {
+                                                          DialogBox
+                                                              .demoDialogBox();
+                                                        } else {
+                                                          // controller.removeCurrency(currencyModel);
+                                                          // controller.getData();
+                                                          bool confirmDelete =
+                                                              await DialogBox
+                                                                  .showConfirmationDeleteDialog(
+                                                                      context);
+                                                          if (confirmDelete) {
+                                                            await controller
+                                                                .removeCurrency(
+                                                                    currencyModel);
+                                                            controller
+                                                                .getData();
+                                                          }
+                                                        }
+                                                      },
+                                                      child: SvgPicture.asset(
+                                                        "assets/icons/ic_delete.svg",
+                                                        color: AppThemData
+                                                            .greyShade400,
+                                                        height: 16,
+                                                        width: 16,
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                                spaceW(width: 20),
-                                                InkWell(
-                                                  onTap: () async {
-                                                    if (Constant.isDemo) {
-                                                      DialogBox.demoDialogBox();
-                                                    } else {
-                                                      // controller.removeCurrency(currencyModel);
-                                                      // controller.getData();
-                                                      bool confirmDelete = await DialogBox.showConfirmationDeleteDialog(context);
-                                                      if (confirmDelete) {
-                                                        await controller.removeCurrency(currencyModel);
-                                                        controller.getData();
-                                                      }
-                                                    }
-                                                  },
-                                                  child: SvgPicture.asset(
-                                                    "assets/icons/ic_delete.svg",
-                                                    color: AppThemData.greyShade400,
-                                                    height: 16,
-                                                    width: 16,
-                                                  ),
-                                                ),
-                                              ],
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                      ]))
-                                  .toList()),
-                    ),
-                  ),
-                  spaceH(),
+                                          ]))
+                                      .toList()),
+                        ),
+                      ),
+                      spaceH(),
+                    ]),
+                  )
                 ]),
-              )
-            ]),
           ),
         );
       },
@@ -207,18 +350,33 @@ class CurrencyDialog extends StatelessWidget {
           widgetList: [
             Row(
               children: [
-                Expanded(child: CustomTextFormField(hintText: 'Enter Currency Name'.tr, controller: controller.nameController.value, title: 'Currency Name *'.tr)),
+                Expanded(
+                    child: CustomTextFormField(
+                        hintText: 'Enter Currency Name'.tr,
+                        controller: controller.nameController.value,
+                        title: 'Currency Name *'.tr)),
                 spaceW(width: 24),
                 Expanded(
-                    child: CustomTextFormField(hintText: 'Enter decimal point'.tr, controller: controller.decimalDigitsController.value, title: 'Decimal Point *'.tr)),
+                    child: CustomTextFormField(
+                        hintText: 'Enter decimal point'.tr,
+                        controller: controller.decimalDigitsController.value,
+                        title: 'Decimal Point *'.tr)),
               ],
             ),
             spaceH(),
             Row(
               children: [
-                Expanded(child: CustomTextFormField(hintText: 'Enter Currency symbol'.tr, controller: controller.symbolController.value, title: 'Currency Symbol *'.tr)),
+                Expanded(
+                    child: CustomTextFormField(
+                        hintText: 'Enter Currency symbol'.tr,
+                        controller: controller.symbolController.value,
+                        title: 'Currency Symbol *'.tr)),
                 spaceW(width: 24),
-                Expanded(child: CustomTextFormField(hintText: 'Enter Code'.tr, controller: controller.codeController.value, title: 'Code *'.tr)),
+                Expanded(
+                    child: CustomTextFormField(
+                        hintText: 'Enter Code'.tr,
+                        controller: controller.codeController.value,
+                        title: 'Code *'.tr)),
               ],
             ),
             spaceH(),
@@ -269,7 +427,8 @@ class CurrencyDialog extends StatelessWidget {
                                   value: SymbolAt.symbolAtLeft.obs,
                                   groupValue: controller.symbolAt.value,
                                   onChanged: (value) {
-                                    controller.symbolAt.value = SymbolAt.symbolAtLeft;
+                                    controller.symbolAt.value =
+                                        SymbolAt.symbolAtLeft;
                                   },
                                   activeColor: AppThemData.primary500,
                                 ),
@@ -287,7 +446,8 @@ class CurrencyDialog extends StatelessWidget {
                                   value: SymbolAt.symbolAtRight.obs,
                                   groupValue: controller.symbolAt.value,
                                   onChanged: (value) {
-                                    controller.symbolAt.value = SymbolAt.symbolAtRight;
+                                    controller.symbolAt.value =
+                                        SymbolAt.symbolAtRight;
                                   },
                                   activeColor: AppThemData.primary500,
                                 ),
@@ -314,7 +474,9 @@ class CurrencyDialog extends StatelessWidget {
               children: [
                 CustomButtonWidget(
                   buttonTitle: "Close".tr,
-                  buttonColor: themeChange.isDarkTheme() ? AppThemData.greyShade900 : AppThemData.greyShade100,
+                  buttonColor: themeChange.isDarkTheme()
+                      ? AppThemData.greyShade900
+                      : AppThemData.greyShade100,
                   onPress: () {
                     controller.setDefaultData();
 
@@ -323,7 +485,8 @@ class CurrencyDialog extends StatelessWidget {
                 ),
                 spaceW(),
                 CustomButtonWidget(
-                  buttonTitle: controller.isEditing.value ? "Edit".tr : "Save".tr,
+                  buttonTitle:
+                      controller.isEditing.value ? "Edit".tr : "Save".tr,
                   onPress: () {
                     if (Constant.isDemo) {
                       DialogBox.demoDialogBox();
@@ -332,7 +495,9 @@ class CurrencyDialog extends StatelessWidget {
                           controller.decimalDigitsController.value.text != "" &&
                           controller.symbolController.value.text != "" &&
                           controller.codeController.value.text != "") {
-                        controller.isEditing.value ? controller.updateCurrency() : controller.addCurrency();
+                        controller.isEditing.value
+                            ? controller.updateCurrency()
+                            : controller.addCurrency();
                         controller.setDefaultData();
                         Navigator.pop(context);
                       } else {

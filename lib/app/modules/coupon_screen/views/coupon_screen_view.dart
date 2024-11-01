@@ -440,9 +440,8 @@ class CouponScreenView extends GetView<CouponScreenController> {
                                                                         .code
                                                                         .toString())),
                                                                 DataCell(TextCustom(
-                                                                    title: Constant.timestampToDate(
-                                                                        couponModel
-                                                                            .expireAt!))),
+                                                                    title:
+                                                                        "Constant.timestampToDate(couponModel.expireAt!)")),
                                                                 DataCell(
                                                                   Transform
                                                                       .scale(
@@ -463,8 +462,8 @@ class CouponScreenView extends GetView<CouponScreenController> {
                                                                         } else {
                                                                           couponModel.active =
                                                                               value;
-                                                                          await FireStoreUtils.updateCoupon(
-                                                                              couponModel);
+                                                                          // await FireStoreUtils.updateCoupon(
+                                                                          //     couponModel);
                                                                           controller
                                                                               .getData();
                                                                         }
@@ -534,7 +533,7 @@ class CouponScreenView extends GetView<CouponScreenController> {
                                                                                 ? 'Private'
                                                                                 : 'Public';
                                                                             controller.expireDateController.value.text =
-                                                                                Constant.timestampToDate(couponModel.expireAt!);
+                                                                                "Constant.timestampToDate(couponModel.expireAt!)";
 
                                                                             showDialog(
                                                                                 context: context,

@@ -276,7 +276,7 @@ class BookingDetailView extends GetView<BookingDetailController> {
                                                         spaceH(height: 2),
                                                         TextCustom(
                                                             title:
-                                                                "${Constant.timestampToDate(controller.bookingModel.value.createAt!)} at ${Constant.timestampToTime(controller.bookingModel.value.createAt!)}",
+                                                                "{Constant.timestampToDate(controller.bookingModel.value.createAt!)} at {Constant.timestampToTime(controller.bookingModel.value.createAt!)}",
                                                             fontSize: 14,
                                                             fontFamily:
                                                                 AppThemeData
@@ -527,19 +527,18 @@ class BookingDetailView extends GetView<BookingDetailController> {
                                                                 width: 6),
                                                             Expanded(
                                                                 child: rowDataWidget(
-                                                                    name:
-                                                                        "Date",
-                                                                    value: controller.bookingModel.value.bookingTime ==
-                                                                            null
-                                                                        ? ""
-                                                                        : controller
-                                                                            .bookingModel
-                                                                            .value
-                                                                            .bookingTime!
-                                                                            .toDate()
-                                                                            .dateMonthYear(),
-                                                                    themeChange:
-                                                                        themeChange)),
+                                                                    name: "Date",
+                                                                    value: "controller.bookingModel.value.bookingTime",
+                                                                    // ==
+                                                                    //         null
+                                                                    //     ? ""
+                                                                    //     : controller
+                                                                    //         .bookingModel
+                                                                    //         .value
+                                                                    //         .bookingTime!
+                                                                    //         .toDate()
+                                                                    //         .dateMonthYear(),
+                                                                    themeChange: themeChange)),
                                                           ],
                                                         ),
                                                         Row(children: [
@@ -559,20 +558,19 @@ class BookingDetailView extends GetView<BookingDetailController> {
                                                           Expanded(
                                                               child: rowDataWidget(
                                                                   name: "Time",
-                                                                  value: controller
-                                                                              .bookingModel
-                                                                              .value
-                                                                              .bookingTime ==
-                                                                          null
-                                                                      ? ""
-                                                                      : controller
-                                                                          .bookingModel
-                                                                          .value
-                                                                          .bookingTime!
-                                                                          .toDate()
-                                                                          .time(),
-                                                                  themeChange:
-                                                                      themeChange)),
+                                                                  value: "controller",
+                                                                  //         .bookingModel
+                                                                  //         .value
+                                                                  //         .bookingTime ==
+                                                                  //     null
+                                                                  // ? ""
+                                                                  // : controller
+                                                                  //     .bookingModel
+                                                                  //     .value
+                                                                  //     .bookingTime!
+                                                                  //     .toDate()
+                                                                  //     .time(),
+                                                                  themeChange: themeChange)),
                                                         ]),
                                                         Row(children: [
                                                           SvgPicture.asset(
@@ -927,7 +925,7 @@ class BookingDetailView extends GetView<BookingDetailController> {
                                                                     height: 2),
                                                                 TextCustom(
                                                                     title:
-                                                                        "${Constant.timestampToDate(controller.bookingModel.value.createAt!)} at ${Constant.timestampToTime(controller.bookingModel.value.createAt!)}",
+                                                                        "{Constant.timestampToDate(controller.bookingModel.value.createAt!)} at {Constant.timestampToTime(controller.bookingModel.value.createAt!)}",
                                                                     fontSize:
                                                                         14,
                                                                     fontFamily:
@@ -1225,28 +1223,28 @@ class BookingDetailView extends GetView<BookingDetailController> {
                                                                         Expanded(
                                                                             child: rowDataWidget(
                                                                                 name: "Date",
-                                                                                value: controller.bookingModel.value.bookingTime == null ? "" : controller.bookingModel.value.bookingTime!.toDate().dateMonthYear(),
+                                                                                value: "controller.bookingModel.value.bookingTime == null ? " " : controller.bookingModel.value.bookingTime!.toDate().dateMonthYear()",
                                                                                 themeChange: themeChange)),
                                                                       ],
                                                                     ),
-                                                                    Row(
-                                                                        children: [
-                                                                          SvgPicture
-                                                                              .asset(
-                                                                            "assets/icons/ic_time.svg",
-                                                                            height:
-                                                                                18,
-                                                                            width:
-                                                                                18,
-                                                                            color: themeChange.isDarkTheme()
-                                                                                ? AppThemData.primaryWhite
-                                                                                : AppThemData.primaryBlack,
-                                                                          ),
-                                                                          const SizedBox(
-                                                                              width: 6),
-                                                                          Expanded(
-                                                                              child: rowDataWidget(name: "Time", value: controller.bookingModel.value.bookingTime == null ? "" : controller.bookingModel.value.bookingTime!.toDate().time(), themeChange: themeChange)),
-                                                                        ]),
+                                                                    Row(children: [
+                                                                      SvgPicture
+                                                                          .asset(
+                                                                        "assets/icons/ic_time.svg",
+                                                                        height:
+                                                                            18,
+                                                                        width:
+                                                                            18,
+                                                                        color: themeChange.isDarkTheme()
+                                                                            ? AppThemData.primaryWhite
+                                                                            : AppThemData.primaryBlack,
+                                                                      ),
+                                                                      const SizedBox(
+                                                                          width:
+                                                                              6),
+                                                                      // Expanded(
+                                                                      // child: rowDataWidget(name: "Time", value: "controller.bookingModel.value.bookingTime == null ? "" : controller.bookingModel.value.bookingTime!.toDate().time(), themeChange: themeChange)")),
+                                                                    ]),
                                                                     Row(
                                                                         children: [
                                                                           SvgPicture
@@ -1592,7 +1590,7 @@ class BookingDetailView extends GetView<BookingDetailController> {
                                                                     height: 2),
                                                                 TextCustom(
                                                                     title:
-                                                                        "${Constant.timestampToDate(controller.bookingModel.value.createAt!)} at ${Constant.timestampToTime(controller.bookingModel.value.createAt!)}",
+                                                                        "{Constant.timestampToDate(controller.bookingModel.value.createAt!)} at {Constant.timestampToTime(controller.bookingModel.value.createAt!)}",
                                                                     fontSize:
                                                                         14,
                                                                     fontFamily:
@@ -1873,28 +1871,28 @@ class BookingDetailView extends GetView<BookingDetailController> {
                                                                         Expanded(
                                                                             child: rowDataWidget(
                                                                                 name: "Date",
-                                                                                value: controller.bookingModel.value.bookingTime == null ? "" : controller.bookingModel.value.bookingTime!.toDate().dateMonthYear(),
+                                                                                value: "controller.bookingModel.value.bookingTime == null ? " " : controller.bookingModel.value.bookingTime!.toDate().dateMonthYear()",
                                                                                 themeChange: themeChange)),
                                                                       ],
                                                                     ),
-                                                                    Row(
-                                                                        children: [
-                                                                          SvgPicture
-                                                                              .asset(
-                                                                            "assets/icons/ic_time.svg",
-                                                                            height:
-                                                                                18,
-                                                                            width:
-                                                                                18,
-                                                                            color: themeChange.isDarkTheme()
-                                                                                ? AppThemData.primaryWhite
-                                                                                : AppThemData.primaryBlack,
-                                                                          ),
-                                                                          const SizedBox(
-                                                                              width: 6),
-                                                                          Expanded(
-                                                                              child: rowDataWidget(name: "Time", value: controller.bookingModel.value.bookingTime == null ? "" : controller.bookingModel.value.bookingTime!.toDate().time(), themeChange: themeChange)),
-                                                                        ]),
+                                                                    Row(children: [
+                                                                      SvgPicture
+                                                                          .asset(
+                                                                        "assets/icons/ic_time.svg",
+                                                                        height:
+                                                                            18,
+                                                                        width:
+                                                                            18,
+                                                                        color: themeChange.isDarkTheme()
+                                                                            ? AppThemData.primaryWhite
+                                                                            : AppThemData.primaryBlack,
+                                                                      ),
+                                                                      const SizedBox(
+                                                                          width:
+                                                                              6),
+                                                                      // Expanded(
+                                                                      //     child: rowDataWidget(name: "Time", value: "controller.bookingModel.value.bookingTime == null ? "" : controller.bookingModel.value.bookingTime!.toDate().time(), themeChange: themeChange)"),
+                                                                    ]),
                                                                     Row(
                                                                         children: [
                                                                           SvgPicture

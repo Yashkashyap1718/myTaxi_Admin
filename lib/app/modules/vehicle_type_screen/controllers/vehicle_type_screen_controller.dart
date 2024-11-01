@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:admin/app/models/vehicle_type_model.dart';
 import 'package:admin/app/utils/fire_store_utils.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -12,7 +12,6 @@ import '../../../constant/constants.dart';
 import '../../../constant/show_toast.dart';
 
 class VehicleTypeScreenController extends GetxController {
-
   Rx<TextEditingController> vehicleTitle = TextEditingController().obs;
   Rx<TextEditingController> minimumCharge = TextEditingController().obs;
   Rx<TextEditingController> minimumChargeWithKm = TextEditingController().obs;
@@ -42,8 +41,8 @@ class VehicleTypeScreenController extends GetxController {
   getData() async {
     isLoading(true);
     vehicleTypeList.clear();
-    List<VehicleTypeModel> data = await FireStoreUtils.getVehicleType();
-    vehicleTypeList.addAll(data);
+    // List<VehicleTypeModel> data = await FireStoreUtils.getVehicleType();
+    // vehicleTypeList.addAll(data);
 
     isLoading(false);
   }
@@ -68,14 +67,14 @@ class VehicleTypeScreenController extends GetxController {
   updateVehicleType() async {
     isLoading = true.obs;
     String docId = editingId.value;
-    String url = await FireStoreUtils.uploadPic(PickedFile(imageFile.value.path), "vehicleTyepImage", docId, mimeType.value);
-    await FireStoreUtils.updateVehicleType(VehicleTypeModel(
-        id: docId,
-        image: url,
-        isActive: isEnable.value,
-        title: vehicleTitle.value.text,
-        charges: Charges(fareMinimumChargesWithinKm: minimumChargeWithKm.value.text, farMinimumCharges: minimumCharge.value.text, farePerKm: perKm.value.text),
-        persons: person.value.text));
+    // String url = await FireStoreUtils.uploadPic(PickedFile(imageFile.value.path), "vehicleTyepImage", docId, mimeType.value);
+    // await FireStoreUtils.updateVehicleType(VehicleTypeModel(
+    //     id: docId,
+    //     image: url,
+    //     isActive: isEnable.value,
+    //     title: vehicleTitle.value.text,
+    //     charges: Charges(fareMinimumChargesWithinKm: minimumChargeWithKm.value.text, farMinimumCharges: minimumCharge.value.text, farePerKm: perKm.value.text),
+    //     persons: person.value.text));
     await getData();
     isLoading = false.obs;
   }
@@ -83,26 +82,26 @@ class VehicleTypeScreenController extends GetxController {
   addVehicleTyep() async {
     isLoading = true.obs;
     String docId = Constant.getRandomString(20);
-    String url = await FireStoreUtils.uploadPic(PickedFile(imageFile.value.path), "vehicleTyepImage", docId, mimeType.value);
+    // String url = await FireStoreUtils.uploadPic(PickedFile(imageFile.value.path), "vehicleTyepImage", docId, mimeType.value);
 
-    FireStoreUtils.addVehicleType(VehicleTypeModel(
-        id: docId,
-        image: url,
-        isActive: isEnable.value,
-        title: vehicleTitle.value.text,
-        charges: Charges(fareMinimumChargesWithinKm: minimumChargeWithKm.value.text, farMinimumCharges: minimumCharge.value.text, farePerKm: perKm.value.text),
-        persons: person.value.text));
+    // FireStoreUtils.addVehicleType(VehicleTypeModel(
+    //     id: docId,
+    //     image: url,
+    //     isActive: isEnable.value,
+    //     title: vehicleTitle.value.text,
+    //     charges: Charges(fareMinimumChargesWithinKm: minimumChargeWithKm.value.text, farMinimumCharges: minimumCharge.value.text, farePerKm: perKm.value.text),
+    //     persons: person.value.text));
     await getData();
     isLoading = false.obs;
   }
 
   removeVehicleTypeModel(VehicleTypeModel vehicleTypeModel) async {
     isLoading = true.obs;
-    await FirebaseFirestore.instance.collection(CollectionName.vehicleType).doc(vehicleTypeModel.id).delete().then((value) {
-      ShowToastDialog.toast("VehicleType deleted...!".tr);
-    }).catchError((error) {
-      ShowToastDialog.toast("Something went wrong".tr);
-    });
+    // await FirebaseFirestore.instance.collection(CollectionName.vehicleType).doc(vehicleTypeModel.id).delete().then((value) {
+    //   ShowToastDialog.toast("VehicleType deleted...!".tr);
+    // }).catchError((error) {
+    //   ShowToastDialog.toast("Something went wrong".tr);
+    // });
     await getData();
     isLoading = false.obs;
   }

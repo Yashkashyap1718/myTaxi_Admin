@@ -6,7 +6,7 @@ import 'package:admin/app/constant/constants.dart';
 import 'package:admin/app/constant/show_toast.dart';
 import 'package:admin/app/models/banner_model.dart';
 import 'package:admin/app/utils/fire_store_utils.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -40,8 +40,8 @@ class BannerScreenController extends GetxController {
   getData() async {
     isLoading(true);
     bannerList.clear();
-    List<BannerModel> data = await FireStoreUtils.getBanner();
-    bannerList.addAll(data);
+    // List<BannerModel> data = await FireStoreUtils.getBanner();
+    // bannerList.addAll(data);
     isLoading(false);
   }
 
@@ -68,15 +68,19 @@ class BannerScreenController extends GetxController {
     isEditing = true.obs;
     String docId = bannerModel.value.id!;
     if (imageFile.value.path.isNotEmpty) {
-      String url = await FireStoreUtils.uploadPic(PickedFile(imageFile.value.path), "bannerImage", docId, mimeType.value);
-      log('image url in update  $url');
-      bannerModel.value.image = url;
+      // String url = await FireStoreUtils.uploadPic(
+      //     PickedFile(imageFile.value.path),
+      //     "bannerImage",
+      //     docId,
+      //     mimeType.value);
+      // log('image url in update  $url');
+      // bannerModel.value.image = url;
     }
     bannerModel.value.bannerName = bannerName.value.text;
     bannerModel.value.bannerDescription = bannerDescription.value.text;
     bannerModel.value.isOfferBanner = isOfferBanner.value;
     bannerModel.value.offerText = offerText.value.text;
-    await FireStoreUtils.updateBanner(bannerModel.value);
+    // await FireStoreUtils.updateBanner(bannerModel.value);
     setDefaultData();
     await getData();
     isEditing = false.obs;
@@ -87,17 +91,21 @@ class BannerScreenController extends GetxController {
       Navigator.pop(context);
       isLoading = true.obs;
       String docId = Constant.getRandomString(20);
-      String url = await FireStoreUtils.uploadPic(PickedFile(imageFile.value.path), "bannerImage", docId, mimeType.value);
-      log('image url in addBanner  $url');
-      bannerModel.value.id = docId;
-      bannerModel.value.image = url;
+      // String url = await FireStoreUtils.uploadPic(
+      //     PickedFile(imageFile.value.path),
+      //     "bannerImage",
+      //     docId,
+      //     mimeType.value);
+      // log('image url in addBanner  $url');
+      // bannerModel.value.id = docId;
+      // bannerModel.value.image = url;
       bannerModel.value.bannerName = bannerName.value.text;
       bannerModel.value.bannerDescription = bannerDescription.value.text;
       bannerModel.value.isOfferBanner = isOfferBanner.value;
 
       bannerModel.value.offerText = offerText.value.text;
 
-      await FireStoreUtils.addBanner(bannerModel.value);
+      // await FireStoreUtils.addBanner(bannerModel.value);
       setDefaultData();
       await getData();
       isLoading = false.obs;
@@ -108,11 +116,11 @@ class BannerScreenController extends GetxController {
 
   removeBanner(BannerModel bannerModel) async {
     isLoading = true.obs;
-    await FirebaseFirestore.instance.collection(CollectionName.banner).doc(bannerModel.id).delete().then((value) {
-      ShowToastDialog.toast("Banner deleted...!".tr);
-    }).catchError((error) {
-      ShowToastDialog.toast("Something went wrong".tr);
-    });
+    // await FirebaseFirestore.instance.collection(CollectionName.banner).doc(bannerModel.id).delete().then((value) {
+    //   ShowToastDialog.toast("Banner deleted...!".tr);
+    // }).catchError((error) {
+    //   ShowToastDialog.toast("Something went wrong".tr);
+    // });
     isLoading = false.obs;
     getData();
   }

@@ -15,11 +15,11 @@ class PrivacyPolicyController extends GetxController {
   Rx<ConstantModel> constantModel = ConstantModel().obs;
 
   getSettingData() async {
-    await FireStoreUtils.getGeneralSetting().then((value) {
-      if (value != null) {
-        constantModel.value = value;
-      }
-    });
+    // await FireStoreUtils.getGeneralSetting().then((value) {
+    //   if (value != null) {
+    //     constantModel.value = value;
+    //   }
+    // });
   }
 
   @override

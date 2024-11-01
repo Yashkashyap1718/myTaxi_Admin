@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:admin/app/constant/collection_name.dart';
@@ -17,7 +17,8 @@ class LanguageController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isActive = false.obs;
   RxList<LanguageModel> languageList = <LanguageModel>[].obs;
-  DashboardScreenController dashboardScreenController = Get.put(DashboardScreenController());
+  DashboardScreenController dashboardScreenController =
+      Get.put(DashboardScreenController());
 
   @override
   Future<void> onInit() async {
@@ -28,8 +29,8 @@ class LanguageController extends GetxController {
   getData() async {
     isLoading(true);
     languageList.clear();
-    List<LanguageModel> data = await FireStoreUtils.getLanguage();
-    languageList.addAll(data);
+    // List<LanguageModel> data = await FireStoreUtils.getLanguage();
+    // languageList.addAll(data);
 
     isLoading(false);
   }
@@ -46,8 +47,8 @@ class LanguageController extends GetxController {
     languageModel.value.name = languageController.value.text;
     languageModel.value.code = codeController.value.text;
     languageModel.value.active = isActive.value;
-    await FireStoreUtils.updateLanguage(languageModel.value);
-    await dashboardScreenController.getLanguage();
+    // await FireStoreUtils.updateLanguage(languageModel.value);
+    // await dashboardScreenController.getLanguage();
     await getData();
   }
 
@@ -57,8 +58,8 @@ class LanguageController extends GetxController {
     languageModel.value.name = languageController.value.text;
     languageModel.value.code = codeController.value.text;
     languageModel.value.active = isActive.value;
-    await FireStoreUtils.addLanguage(languageModel.value);
-    await dashboardScreenController.getLanguage();
+    // await FireStoreUtils.addLanguage(languageModel.value);
+    // await dashboardScreenController.getLanguage();
     await getData();
     isLoading = false.obs;
   }
@@ -66,12 +67,16 @@ class LanguageController extends GetxController {
   removeLanguage(LanguageModel languageModel) async {
     isLoading = true.obs;
 
-    await FirebaseFirestore.instance.collection(CollectionName.languages).doc(languageModel.id).delete().then((value) {
-      ShowToastDialog.toast("Language deleted...!".tr);
-    }).catchError((error) {
-      ShowToastDialog.toast("Something went wrong".tr);
-    });
-    await dashboardScreenController.getLanguage();
+    // await FirebaseFirestore.instance
+    //     .collection(CollectionName.languages)
+    //     .doc(languageModel.id)
+    //     .delete()
+    //     .then((value) {
+    //   ShowToastDialog.toast("Language deleted...!".tr);
+    // }).catchError((error) {
+    //   ShowToastDialog.toast("Something went wrong".tr);
+    // });
+    // await dashboardScreenController.getLanguage();
     isLoading = false.obs;
   }
 }

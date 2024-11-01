@@ -3,9 +3,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class ShowToastDialog {
-  static showLoader(String message) {
-    EasyLoading.show(status: message);
-  }
+  // static showLoader(String message) {
+  //   // EasyLoading.show(status: message);
+  // }
 
   static closeLoader() {
     EasyLoading.dismiss();

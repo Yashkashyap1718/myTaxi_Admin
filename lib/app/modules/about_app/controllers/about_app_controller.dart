@@ -12,15 +12,15 @@ class AboutAppController extends GetxController {
   Rx<ConstantModel> constantModel = ConstantModel().obs;
 
   getSettingData() async {
-    await FireStoreUtils.getGeneralSetting().then((value) async {
-      if (value != null) {
-        final document = parse(value.aboutApp!.toString());
+    // await FireStoreUtils.getGeneralSetting().then((value) async {
+    //   if (value != null) {
+    //     final document = parse(value.aboutApp!.toString());
 
-        result.value = parse(document.body!.text).documentElement!.text;
-        constantModel.value = value;
-        log(result.value);
-      }
-    });
+    //     result.value = parse(document.body!.text).documentElement!.text;
+    //     constantModel.value = value;
+    //     log(result.value);
+    //   }
+    // });
   }
 
   @override

@@ -392,8 +392,8 @@ class DocumentScreenView extends GetView<DocumentScreenController> {
                                                                       } else {
                                                                         documentsModel.isEnable =
                                                                             value;
-                                                                        await FireStoreUtils.updateDocument(
-                                                                            documentsModel);
+                                                                        // await FireStoreUtils.updateDocument(
+                                                                        //     documentsModel);
                                                                         controller
                                                                             .getData();
                                                                       }

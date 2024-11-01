@@ -4,14 +4,13 @@ import 'package:admin/app/constant/show_toast.dart';
 import 'package:admin/app/models/brand_model.dart';
 import 'package:admin/app/models/model_vehicle_model.dart';
 import 'package:admin/app/utils/fire_store_utils.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class VehicleModelScreenController extends GetxController {
   RxString title = "Vehicle Model".tr.obs;
-
 
   RxBool isLoading = true.obs;
   RxList<ModelVehicleModel> vehicleModelList = <ModelVehicleModel>[].obs;
@@ -33,14 +32,14 @@ class VehicleModelScreenController extends GetxController {
   @override
   Future<void> onInit() async {
     totalItemPerPage.value = Constant.numOfPageIemList.first;
-    vehicleBrandList.value = await FireStoreUtils.getVehicleBrandAllData();
+    // vehicleBrandList.value = await FireStoreUtils.getVehicleBrandAllData();
     getVehicleModel();
     super.onInit();
   }
 
   getVehicleModel() async {
     isLoading.value = true;
-    await FireStoreUtils.countVehicleModel();
+    // await FireStoreUtils.countVehicleModel();
     await setPagination(totalItemPerPage.value);
     isLoading.value = false;
   }
@@ -67,15 +66,18 @@ class VehicleModelScreenController extends GetxController {
     int itemPerPage = pageValue(page);
     totalPage.value = (Constant.vehicleModelLength! / itemPerPage).ceil();
     startIndex.value = (currentPage.value - 1) * itemPerPage;
-    endIndex.value = (currentPage.value * itemPerPage) > Constant.vehicleModelLength! ? Constant.vehicleModelLength! : (currentPage.value * itemPerPage);
+    endIndex.value =
+        (currentPage.value * itemPerPage) > Constant.vehicleModelLength!
+            ? Constant.vehicleModelLength!
+            : (currentPage.value * itemPerPage);
     if (endIndex.value < startIndex.value) {
       currentPage.value = 1;
       setPagination(page);
     } else {
       try {
-        List<ModelVehicleModel> currentPageVehicleModelData =
-            await FireStoreUtils.getVehicleModel(currentPage.value, itemPerPage, selectedVehicleBrand.value.id != null ? selectedVehicleBrand.value.id.toString() : "");
-        currentPageVehicleModel.value = currentPageVehicleModelData;
+        // List<ModelVehicleModel> currentPageVehicleModelData =
+        //     await FireStoreUtils.getVehicleModel(currentPage.value, itemPerPage, selectedVehicleBrand.value.id != null ? selectedVehicleBrand.value.id.toString() : "");
+        // currentPageVehicleModel.value = currentPageVehicleModelData;
       } catch (error) {
         log(error.toString());
       }
@@ -103,10 +105,10 @@ class VehicleModelScreenController extends GetxController {
 
   updateVehicleModel() async {
     modelVehicleModel.value.id = modelVehicleModel.value.id;
-    modelVehicleModel.value.brandId = vehicleBrandId.value ;
+    modelVehicleModel.value.brandId = vehicleBrandId.value;
     modelVehicleModel.value.isEnable = isEnable.value;
     modelVehicleModel.value.title = titleController.value.text;
-    await FireStoreUtils.updateVehicleModel(modelVehicleModel.value);
+    // await FireStoreUtils.updateVehicleModel(modelVehicleModel.value);
     await getVehicleModel();
   }
 
@@ -115,15 +117,15 @@ class VehicleModelScreenController extends GetxController {
     modelVehicleModel.value.brandId = vehicleBrandId.value;
     modelVehicleModel.value.isEnable = isEnable.value;
     modelVehicleModel.value.title = titleController.value.text;
-    await FireStoreUtils.addVehicleModel(modelVehicleModel.value);
+    // await FireStoreUtils.addVehicleModel(modelVehicleModel.value);
     await getVehicleModel();
   }
 
   removeVehicleModel(ModelVehicleModel modelVehicleModel) async {
-    await FirebaseFirestore.instance.collection(CollectionName.vehicleModel).doc(modelVehicleModel.id).delete().then((value) {
-      ShowToastDialog.toast("Model deleted...!".tr);
-    }).catchError((error) {
-      ShowToastDialog.toast("Something went wrong".tr);
-    });
+    // await FirebaseFirestore.instance.collection(CollectionName.vehicleModel).doc(modelVehicleModel.id).delete().then((value) {
+    //   ShowToastDialog.toast("Model deleted...!".tr);
+    // }).catchError((error) {
+    //   ShowToastDialog.toast("Something went wrong".tr);
+    // });
   }
 }
