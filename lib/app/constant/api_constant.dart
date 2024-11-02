@@ -1,4 +1,5 @@
 String baseURL = "http://172.93.54.177:3002/";
+String imageURL = "http://172.93.54.177:3002/uploads/";
 String loginEndpoint = "admin/signin"; //POST
 String previewProfileEndpoint = "admin/profile/preview"; //GET
 String updateProfileEndpoint = "admin/profile/update"; //PUT

@@ -1,6 +1,7 @@
 import 'dart:html' as html;
 
 import 'package:admin/app/components/menu_widget.dart';
+import 'package:admin/app/constant/api_constant.dart';
 import 'package:admin/widget/container_custom.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -445,8 +446,7 @@ class VehicleTypeScreenView extends GetView<VehicleTypeScreenController> {
                                                                     child:
                                                                         NetworkImageWidget(
                                                                       imageUrl:
-                                                                          vehicleTypeModel
-                                                                              .image,
+                                                                          "$imageURL${vehicleTypeModel.image}",
                                                                       borderRadius:
                                                                           10,
                                                                       fit: BoxFit
@@ -488,6 +488,9 @@ class VehicleTypeScreenView extends GetView<VehicleTypeScreenController> {
                                                                           (value) async {
                                                                         print(
                                                                             'vehicle tyep status $value');
+
+                                                                        print(vehicleTypeModel
+                                                                            .image);
                                                                         // print(
                                                                         //     'vehicle tyep  get ${vehicleTypeModel.isActive!}');
                                                                         // if (Constant
