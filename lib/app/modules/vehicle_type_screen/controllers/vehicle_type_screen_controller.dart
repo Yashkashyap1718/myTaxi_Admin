@@ -75,7 +75,7 @@ class VehicleTypeScreenController extends GetxController {
           final List<dynamic> data = responseData["data"];
           vehicleTypeList.addAll(
               data.map((json) => VehicleTypeModel.fromJson(json)).toList());
-          // log("Vehicle types fetched: ${vehicleTypeList.length}");
+          log("Vehicle types fetched: ${vehicleTypeList.length}");
         } else {
           // Show the message from the API if fetching vehicle types failed
           ShowToastDialog.toast(

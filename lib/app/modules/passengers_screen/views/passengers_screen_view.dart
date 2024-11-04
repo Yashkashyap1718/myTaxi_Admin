@@ -16,7 +16,6 @@ import 'package:admin/widget/global_widgets.dart';
 import 'package:admin/widget/text_widget.dart';
 import 'package:admin/widget/web_pagination.dart';
 import 'package:aligned_dialog/aligned_dialog.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -530,220 +529,260 @@ class PassengersScreenView extends GetView<PassengersScreenController> {
                                   scrollDirection: Axis.horizontal,
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(12),
-                                    child: DataTable(
-                                        horizontalMargin: 20,
-                                        columnSpacing: 30,
-                                        dataRowMaxHeight: 65,
-                                        headingRowHeight: 65,
-                                        border: TableBorder.all(
-                                          color: themeChange.isDarkTheme()
-                                              ? AppThemData.greyShade800
-                                              : AppThemData.greyShade100,
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                        headingRowColor:
-                                            MaterialStateColor.resolveWith(
-                                                (states) => themeChange
-                                                        .isDarkTheme()
-                                                    ? AppThemData.greyShade800
-                                                    : AppThemData.greyShade100),
-                                        columns: [
-                                          CommonUI.dataColumnWidget(context,
-                                              columnTitle: "Profile Image".tr,
-                                              width: 150),
-                                          CommonUI.dataColumnWidget(context,
-                                              columnTitle: "Full Name".tr,
-                                              width: ResponsiveWidget.isMobile(
-                                                      context)
-                                                  ? 150
-                                                  : MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.12),
-                                          CommonUI.dataColumnWidget(context,
-                                              columnTitle: "Gender".tr,
-                                              width: ResponsiveWidget.isMobile(
-                                                      context)
-                                                  ? 120
-                                                  : MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.10),
-                                          CommonUI.dataColumnWidget(context,
-                                              columnTitle: "Created At".tr,
-                                              width: 220),
-                                          CommonUI.dataColumnWidget(context,
-                                              columnTitle: "Wallet Amount".tr,
-                                              width: 140),
-                                          CommonUI.dataColumnWidget(context,
-                                              columnTitle: "Status".tr,
-                                              width: ResponsiveWidget.isMobile(
-                                                      context)
-                                                  ? 100
-                                                  : MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.10),
-                                          CommonUI.dataColumnWidget(context,
-                                              columnTitle: "Action".tr,
-                                              width: ResponsiveWidget.isMobile(
-                                                      context)
-                                                  ? 100
-                                                  : MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.08)
-                                        ],
-                                        rows: controller.currentPageUser
-                                            .map((userModel) => DataRow(cells: [
-                                                  DataCell(
-                                                    Container(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                          horizontal: 8,
-                                                          vertical: 8),
-                                                      child: NetworkImageWidget(
-                                                        imageUrl:
-                                                            '${userModel.profilePic}',
-                                                        height: 37,
-                                                        width: 37,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  DataCell(TextCustom(
-                                                      title:
-                                                          "{userModel.fullName}\n{Constant.maskMobileNumber(mobileNumber: userModel.phoneNumber, countryCode: userModel.countryCode)}")),
-                                                  DataCell(TextCustom(
-                                                      title:
-                                                          "{userModel.gender}")),
-                                                  DataCell(TextCustom(
-                                                      title:
-                                                          "userModel.createdAt == null ? '' : Constant.timestampToDateTime(userModel.createdAt!)")),
-                                                  DataCell(TextCustom(
-                                                      title: Constant.amountShow(
-                                                          amount: userModel
-                                                              .walletAmount))),
-                                                  DataCell(
-                                                    Transform.scale(
-                                                      scale: 0.8,
-                                                      child: CupertinoSwitch(
-                                                        activeColor: AppThemData
-                                                            .primary500,
-                                                        value: userModel
-                                                                .isActive ??
-                                                            false,
-                                                        onChanged:
-                                                            (value) async {
-                                                          userModel.isActive =
-                                                              value;
-                                                          // await FireStoreUtils.updateUsers(
-                                                          //     userModel);
-                                                          controller.getUser();
-                                                        },
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  DataCell(Container(
-                                                    alignment: Alignment.center,
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 8,
-                                                        vertical: 8),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        InkWell(
-                                                          onTap: () async {
-                                                            Get.toNamed(
-                                                                Routes
-                                                                    .PASSENGERS_DETAIL_SCREEN,
-                                                                arguments: {
-                                                                  'userModel':
-                                                                      userModel
-                                                                });
-                                                          },
-                                                          child:
-                                                              SvgPicture.asset(
-                                                            "assets/icons/ic_eye.svg",
-                                                            color: AppThemData
-                                                                .greyShade400,
-                                                            height: 16,
-                                                            width: 16,
-                                                          ),
-                                                        ),
-                                                        spaceW(width: 20),
-                                                        InkWell(
-                                                          onTap: () {
-                                                            controller
-                                                                .getArgument(
-                                                                    userModel);
-                                                            showGlobalDrawer(
-                                                                duration:
-                                                                    const Duration(
-                                                                        milliseconds:
-                                                                            200),
-                                                                barrierDismissible:
-                                                                    true,
-                                                                context:
-                                                                    context,
-                                                                builder:
-                                                                    horizontalDrawerBuilder(),
-                                                                direction:
-                                                                    AxisDirection
-                                                                        .right);
-                                                          },
-                                                          child:
-                                                              SvgPicture.asset(
-                                                            "assets/icons/ic_edit.svg",
-                                                            color: AppThemData
-                                                                .greyShade400,
-                                                            height: 16,
-                                                            width: 16,
-                                                          ),
-                                                        ),
-                                                        spaceW(width: 20),
-                                                        InkWell(
-                                                          onTap: () async {
-                                                            if (Constant
-                                                                .isDemo) {
-                                                              DialogBox
-                                                                  .demoDialogBox();
-                                                            } else {
-                                                              // await controller.removePassengers(userModel);
-                                                              // controller.getUser();
-                                                              bool
-                                                                  confirmDelete =
-                                                                  await DialogBox
-                                                                      .showConfirmationDeleteDialog(
-                                                                          context);
-                                                              if (confirmDelete) {
-                                                                await controller
-                                                                    .removePassengers(
-                                                                        userModel);
-                                                                controller
-                                                                    .getUser();
-                                                              }
-                                                            }
-                                                          },
-                                                          child:
-                                                              SvgPicture.asset(
-                                                            "assets/icons/ic_delete.svg",
-                                                            color: AppThemData
-                                                                .greyShade400,
-                                                            height: 16,
-                                                            width: 16,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  )),
-                                                ]))
-                                            .toList()),
+                                    child: controller.isLoading.value
+                                        ? Padding(
+                                            padding: paddingEdgeInsets(),
+                                            child: Constant.loader(),
+                                          )
+                                        : controller.currentPageUser.isEmpty
+                                            ? TextCustom(
+                                                title: "No Data available".tr)
+                                            : DataTable(
+                                                horizontalMargin: 20,
+                                                columnSpacing: 30,
+                                                dataRowMaxHeight: 65,
+                                                headingRowHeight: 65,
+                                                border: TableBorder.all(
+                                                  color: themeChange
+                                                          .isDarkTheme()
+                                                      ? AppThemData.greyShade800
+                                                      : AppThemData
+                                                          .greyShade100,
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                ),
+                                                headingRowColor:
+                                                    MaterialStateColor.resolveWith(
+                                                        (states) => themeChange
+                                                                .isDarkTheme()
+                                                            ? AppThemData
+                                                                .greyShade800
+                                                            : AppThemData
+                                                                .greyShade100),
+                                                columns: [
+                                                  // CommonUI.dataColumnWidget(
+                                                  //     context,
+                                                  //     columnTitle:
+                                                  //         "Profile Image".tr,
+                                                  //     width: 150),
+                                                  CommonUI.dataColumnWidget(
+                                                      context,
+                                                      columnTitle:
+                                                          "Full Name".tr,
+                                                      width: ResponsiveWidget
+                                                              .isMobile(context)
+                                                          ? 150
+                                                          : MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.12),
+                                                  CommonUI.dataColumnWidget(
+                                                      context,
+                                                      columnTitle: "Gender".tr,
+                                                      width: ResponsiveWidget
+                                                              .isMobile(context)
+                                                          ? 120
+                                                          : MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.10),
+                                                  CommonUI.dataColumnWidget(
+                                                      context,
+                                                      columnTitle:
+                                                          "Created At".tr,
+                                                      width: 220),
+                                                  CommonUI.dataColumnWidget(
+                                                      context,
+                                                      columnTitle:
+                                                          "Wallet Amount".tr,
+                                                      width: 140),
+                                                  CommonUI.dataColumnWidget(
+                                                      context,
+                                                      columnTitle: "Status".tr,
+                                                      width: ResponsiveWidget
+                                                              .isMobile(context)
+                                                          ? 100
+                                                          : MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.10),
+                                                  CommonUI.dataColumnWidget(
+                                                      context,
+                                                      columnTitle: "Action".tr,
+                                                      width: ResponsiveWidget
+                                                              .isMobile(context)
+                                                          ? 100
+                                                          : MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.08)
+                                                ],
+                                                rows: controller.currentPageUser
+                                                    .map((PassengerModel) =>
+                                                        DataRow(cells: [
+                                                          // DataCell(
+                                                          //   Container(
+                                                          //     alignment:
+                                                          //         Alignment
+                                                          //             .center,
+                                                          //     padding: const EdgeInsets
+                                                          //         .symmetric(
+                                                          //         horizontal:
+                                                          //             8,
+                                                          //         vertical:
+                                                          //             8),
+                                                          //     child:
+                                                          //         NetworkImageWidget(
+                                                          //       imageUrl:
+                                                          //           '${PassengerModel.profilePic??""}',
+                                                          //       height: 37,
+                                                          //       width: 37,
+                                                          //     ),
+                                                          //   ),
+                                                          // ),
+                                                          DataCell(TextCustom(
+                                                              title:
+                                                                  "{userModel.fullName}\n{Constant.maskMobileNumber(mobileNumber: userModel.phoneNumber, countryCode: userModel.countryCode)}")),
+                                                          DataCell(TextCustom(
+                                                              title:
+                                                                  "{userModel.gender}")),
+                                                          DataCell(TextCustom(
+                                                              title:
+                                                                  "userModel.createdAt == null ? '' : Constant.timestampToDateTime(userModel.createdAt!)")),
+                                                          DataCell(TextCustom(
+                                                              title: Constant
+                                                                  .amountShow(
+                                                                      amount: PassengerModel
+                                                                          .phone))),
+                                                          // DataCell(
+                                                          //   Transform.scale(
+                                                          //     scale: 0.8,
+                                                          //     child: CupertinoSwitch(
+                                                          //       activeColor: AppThemData
+                                                          //           .primary500,
+                                                          //       value: PassengerModel
+                                                          //               .status ??
+                                                          //           false,
+                                                          //       onChanged:
+                                                          //           (value) async {
+                                                          //         PassengerModel
+                                                          //             .isActive = value;
+                                                          //         // await FireStoreUtils.updateUsers(
+                                                          //         //     userModel);
+                                                          //         controller.getUser();
+                                                          //       },
+                                                          //     ),
+                                                          //   ),
+                                                          // ),
+                                                          DataCell(Container(
+                                                            alignment: Alignment
+                                                                .center,
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .symmetric(
+                                                                    horizontal:
+                                                                        8,
+                                                                    vertical:
+                                                                        8),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                InkWell(
+                                                                  onTap:
+                                                                      () async {
+                                                                    // Get.toNamed(
+                                                                    //     Routes
+                                                                    //         .PASSENGERS_DETAIL_SCREEN,
+                                                                    //     arguments: {
+                                                                    //       'userModel':
+                                                                    //       PassengerModel
+                                                                    //     });
+                                                                  },
+                                                                  child:
+                                                                      SvgPicture
+                                                                          .asset(
+                                                                    "assets/icons/ic_eye.svg",
+                                                                    color: AppThemData
+                                                                        .greyShade400,
+                                                                    height: 16,
+                                                                    width: 16,
+                                                                  ),
+                                                                ),
+                                                                spaceW(
+                                                                    width: 20),
+                                                                InkWell(
+                                                                  onTap: () {
+                                                                    // controller.getArgument(
+                                                                    //     PassengerModel);
+                                                                    showGlobalDrawer(
+                                                                        duration: const Duration(
+                                                                            milliseconds:
+                                                                                200),
+                                                                        barrierDismissible:
+                                                                            true,
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            horizontalDrawerBuilder(),
+                                                                        direction:
+                                                                            AxisDirection.right);
+                                                                  },
+                                                                  child:
+                                                                      SvgPicture
+                                                                          .asset(
+                                                                    "assets/icons/ic_edit.svg",
+                                                                    color: AppThemData
+                                                                        .greyShade400,
+                                                                    height: 16,
+                                                                    width: 16,
+                                                                  ),
+                                                                ),
+                                                                spaceW(
+                                                                    width: 20),
+                                                                InkWell(
+                                                                  onTap:
+                                                                      () async {
+                                                                    if (Constant
+                                                                        .isDemo) {
+                                                                      DialogBox
+                                                                          .demoDialogBox();
+                                                                    } else {
+                                                                      // await controller.removePassengers(userModel);
+                                                                      // controller.getUser();
+                                                                      bool
+                                                                          confirmDelete =
+                                                                          await DialogBox.showConfirmationDeleteDialog(
+                                                                              context);
+                                                                      if (confirmDelete) {
+                                                                        // await controller
+                                                                        // .removePassengers(
+                                                                        //     PassengerModel);
+                                                                        controller
+                                                                            .getUser();
+                                                                      }
+                                                                    }
+                                                                  },
+                                                                  child:
+                                                                      SvgPicture
+                                                                          .asset(
+                                                                    "assets/icons/ic_delete.svg",
+                                                                    color: AppThemData
+                                                                        .greyShade400,
+                                                                    height: 16,
+                                                                    width: 16,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          )),
+                                                        ]))
+                                                    .toList()),
                                   ),
                                 ),
                                 spaceH(),

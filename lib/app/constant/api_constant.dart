@@ -12,3 +12,5 @@ String vehicleTypeListEndpoint = "admin/vehicle/type/list"; //POST
 String vehicleModelListEndpoint = "admin/vehicle/model/list"; //GET
 String addDocumentEndpoint = "admin/document/create"; //POST
 String documentListEndpoint = "admin/document/list"; //GET
+String driverListEndpoint = "admin/driver/list"; //GET
+String customerListEndpoint = "admin/customer/list"; //GET

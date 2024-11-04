@@ -9,8 +9,6 @@ import 'package:admin/app/constant/constants.dart';
 import 'package:admin/app/utils/app_colors.dart';
 import 'package:admin/app/utils/app_them_data.dart';
 import 'package:admin/app/utils/dark_theme_provider.dart';
-import 'package:admin/app/utils/fire_store_utils.dart';
-import 'package:admin/app/utils/toast.dart';
 import 'package:admin/widget/common_ui.dart';
 import 'package:admin/widget/container_custom.dart';
 import 'package:admin/widget/global_widgets.dart';
@@ -21,8 +19,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
 import '../../../routes/app_pages.dart';
@@ -584,7 +580,8 @@ class DriverScreenView extends GetView<DriverScreenController> {
                                                               0.15),
                                                   CommonUI.dataColumnWidget(
                                                       context,
-                                                      columnTitle: "Gender".tr,
+                                                      columnTitle:
+                                                          "Experience".tr,
                                                       width: 150),
                                                   CommonUI.dataColumnWidget(
                                                       context,
@@ -636,7 +633,7 @@ class DriverScreenView extends GetView<DriverScreenController> {
                                                                       child:
                                                                           NetworkImageWidget(
                                                                         imageUrl:
-                                                                            '${driverUserModel.profilePic}',
+                                                                            '${driverUserModel.profilePic ?? ""}',
                                                                         height:
                                                                             37,
                                                                         width:
@@ -647,15 +644,19 @@ class DriverScreenView extends GetView<DriverScreenController> {
                                                                   DataCell(
                                                                       TextCustom(
                                                                           title:
-                                                                              "${driverUserModel.fullName!.isEmpty || driverUserModel.fullName == null ? "N/A".tr : driverUserModel.fullName.toString() == "Unknown User" ? "User Deleted".tr : driverUserModel.fullName.toString()}\n${Constant.maskMobileNumber(mobileNumber: driverUserModel.phoneNumber, countryCode: driverUserModel.countryCode)}")),
+                                                                              "${driverUserModel.fullName ?? 'test'}")),
+                                                                  // DataCell(
+                                                                  //     TextCustom(
+                                                                  //         title:
+                                                                  //             "${driverUserModel.fullName!.isEmpty || driverUserModel.fullName == null ? "N/A".tr : driverUserModel.fullName.toString() == "Unknown User" ? "User Deleted".tr : driverUserModel.fullName.toString()}\n${Constant.maskMobileNumber(mobileNumber: driverUserModel.phoneNumber, countryCode: driverUserModel.countryCode)}")),
                                                                   DataCell(
                                                                       TextCustom(
                                                                           title:
-                                                                              "${driverUserModel.gender}")),
-                                                                  DataCell(
-                                                                      TextCustom(
-                                                                          title:
-                                                                              "Constant.timestampToDateTime(driverUserModel.createdAt!)")),
+                                                                              "${driverUserModel.exp ?? 2}")),
+                                                                  DataCell(TextCustom(
+                                                                      title: int.parse(
+                                                                              "${driverUserModel.createdAt}")
+                                                                          .toString())),
                                                                   DataCell(
                                                                     TextCustom(
                                                                         title: driverUserModel.isVerified! ==

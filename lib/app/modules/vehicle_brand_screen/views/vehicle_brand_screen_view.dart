@@ -740,7 +740,8 @@ class CustomDialog extends StatelessWidget {
                                   // controller.isEditing.value
                                   //     ? controller.updateBrand()
                                   //     :
-                                  controller.addVehicleBrandAPI();
+                                  controller.addVehicleBrandAPI(
+                                      controller.title.value);
                                   // controller.setDefaultData();
 
                                   Navigator.pop(context);

@@ -1,19 +1,21 @@
+import 'dart:convert';
 import 'dart:io';
 
-import 'package:admin/app/constant/collection_name.dart';
 import 'package:admin/app/constant/constants.dart';
 import 'package:admin/app/constant/show_toast.dart';
 import 'package:admin/app/models/user_model.dart';
 import 'package:admin/app/models/wallet_transaction_model.dart';
-import 'package:admin/app/utils/fire_store_utils.dart';
-import 'package:admin/app/utils/toast.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
+
+import '../../../constant/api_constant.dart';
+import '../../../models/passenger_model.dart';
 
 class PassengersScreenController extends GetxController {
   RxString title = "Users".tr.obs;
@@ -21,15 +23,16 @@ class PassengersScreenController extends GetxController {
   RxBool isLoading = true.obs;
   RxInt selectedGender = 1.obs;
   RxBool isSearchEnable = true.obs;
+  RxString totalItemPerPage = '0'.obs;
 
   var currentPage = 1.obs;
   var startIndex = 1.obs;
   var endIndex = 1.obs;
   var totalPage = 1.obs;
-  RxList<UserModel> currentPageUser = <UserModel>[].obs;
+  RxList<PassengerModel> currentPageUser = <PassengerModel>[].obs;
   Rx<TextEditingController> dateFiledController = TextEditingController().obs;
   Rx<TextEditingController> searchController = TextEditingController().obs;
-
+  RxList<PassengerModel> passengersList = <PassengerModel>[].obs;
   RxString selectedSearchType = "Name".obs;
   RxString selectedSearchTypeForData = "slug".obs;
   List<String> searchType = [
@@ -38,13 +41,66 @@ class PassengersScreenController extends GetxController {
     "Email",
   ];
 
+  int pageValue(String data) {
+    if (data == 'All') {
+      return Constant.usersLength!;
+    } else {
+      return int.parse(data);
+    }
+  }
+
   @override
   void onInit() {
     totalItemPerPage.value = Constant.numOfPageIemList.first;
-    getUser();
+    // getUser();
+    fetchPassengers();
     dateFiledController.value.text =
         "${DateFormat('yyyy-MM-dd').format(selectedDate.value.start)} to ${DateFormat('yyyy-MM-dd').format(selectedDate.value.end)}";
     super.onInit();
+  }
+
+  Future<void> fetchPassengers() async {
+    isLoading.value = true;
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("token");
+
+    if (token == null) {
+      ShowToastDialog.toast("Authentication token missing.");
+      isLoading.value = false;
+      return;
+    }
+
+    try {
+      final response = await http.get(
+        Uri.parse(baseURL + customerListEndpoint),
+        headers: {
+          "Content-Type": "application/json",
+          "token": token,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        if (responseData["status"] == true) {
+          List<dynamic> data = responseData["data"];
+          passengersList.clear(); // Clear existing list
+          passengersList.addAll(
+              data.map((json) => PassengerModel.fromJson(json)).toList());
+          log("Passengers data fetched: ${passengersList.length}");
+        } else {
+          ShowToastDialog.toast(
+              "Failed to fetch passengers: ${responseData["msg"]}");
+        }
+      } else {
+        ShowToastDialog.toast("Error: Status code ${response.statusCode}");
+      }
+    } catch (e) {
+      log("Error fetching passengers: $e");
+      ShowToastDialog.toast("An error occurred while fetching passengers.");
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   getSearchType() async {
@@ -126,16 +182,6 @@ class PassengersScreenController extends GetxController {
   //   isLoading.value = false;
   //   update();
   // }
-
-  RxString totalItemPerPage = '0'.obs;
-
-  int pageValue(String data) {
-    if (data == 'All') {
-      return Constant.usersLength!;
-    } else {
-      return int.parse(data);
-    }
-  }
 
   Rx<TextEditingController> userNameController = TextEditingController().obs;
   Rx<TextEditingController> walletAmountController =

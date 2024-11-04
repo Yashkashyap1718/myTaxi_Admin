@@ -5,6 +5,7 @@ import 'package:admin/app/constant/api_constant.dart';
 import 'package:admin/app/constant/constants.dart';
 import 'package:admin/app/constant/show_toast.dart';
 import 'package:admin/app/models/brand_model.dart';
+import 'package:flutter/foundation.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -64,7 +65,7 @@ class VehicleBrandScreenController extends GetxController {
         Uri.parse(baseURL + vehicleBrandListEndpoint), // Construct the full URL
         headers: {
           "Content-Type": "application/json",
-          "token": token ?? "", // Include token in the headers
+          "token": token.toString(),
         },
       );
 
@@ -192,7 +193,27 @@ class VehicleBrandScreenController extends GetxController {
   }
 
   // Function to add a brand
-  Future<void> addVehicleBrandAPI() async {
+  Future<void> addVehicleBrandAPI(String textValue) async {
+    isLoading(true);
+    String? base64Image;
+
+    // Handle image selection for web
+    if (kIsWeb && imageURL.value.isNotEmpty) {
+      base64Image = imageURL.value
+          .split(',')
+          .last; // Extract base64 part if using data URL
+    } else if (imageFile.value.path.isNotEmpty && !kIsWeb) {
+      try {
+        List<int> imageBytes = await imageFile.value.readAsBytes();
+        base64Image = base64Encode(imageBytes);
+        // log("Encoded image: $base64Image");
+      } catch (e) {
+        log("Error reading image file: $e");
+        ShowToastDialog.toast("Failed to read image file.");
+      }
+    } else {
+      log("No image selected or unsupported on the web.");
+    }
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString("token");
@@ -206,13 +227,20 @@ class VehicleBrandScreenController extends GetxController {
               .toString(), // Assuming you use Bearer token for authorization
         },
         body: jsonEncode({
-          "name": titleController.value.text,
+          "name": textValue,
+          "logo":
+              base64Image != null ? "data:image/png;base64,$base64Image" : null,
+          "status": "isEnable",
         }),
       );
 
-      log("${jsonEncode({
-            "name": titleController.value.text,
-          })}");
+      log('----body----${jsonEncode({
+            "name": textValue,
+            "logo": base64Image != null
+                ? "data:image/png;base64,$base64Image"
+                : null,
+            "status": "isEnable",
+          })}');
       if (response.statusCode == 200) {
         log('----addVehicleBrandAPI----${response.body}');
         // Brand added successfully
@@ -225,6 +253,8 @@ class VehicleBrandScreenController extends GetxController {
     } catch (error) {
       log("Error adding brand: $error");
       ShowToastDialog.toast("An error occurred: $error".tr);
+    } finally {
+      isLoading(false);
     }
   }
 }

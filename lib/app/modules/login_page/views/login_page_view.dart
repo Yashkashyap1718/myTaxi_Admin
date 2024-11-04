@@ -576,90 +576,91 @@ class LoginPageView extends GetView<LoginPageController> {
                                     textAlign: TextAlign.center)),
                           ),
                         ),
-                        30.height,
-                        Visibility(
-                          visible: Constant.isDemo,
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.20,
-                            child: Card(
-                              elevation: 10,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    TextCustom(
-                                      title: "Credentials : ".tr,
-                                      fontSize: 14,
-                                      fontFamily: AppThemeData.medium,
-                                      color: Colors.black,
-                                    ),
-                                    const SizedBox(height: 2),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Obx(
-                                          () => Text(
-                                            "Email : ${controller.email.value}",
-                                            style: const TextStyle(
-                                                fontFamily: AppThemeData.medium,
-                                                fontSize: 14,
-                                                color: Colors.black),
-                                          ),
-                                        ),
-                                        InkWell(
-                                            onTap: () async {
-                                              controller.emailController.text =
-                                                  controller.email.value;
-                                              controller
-                                                      .passwordController.text =
-                                                  controller.password.value;
-                                            },
-                                            child: const Icon(
-                                              Icons.copy,
-                                              size: 14,
-                                            ))
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Obx(
-                                          () => Text(
-                                            "Password : ${controller.password.value}",
-                                            style: const TextStyle(
-                                                fontFamily: AppThemeData.medium,
-                                                fontSize: 14,
-                                                color: Colors.black),
-                                          ),
-                                        ),
-                                        InkWell(
-                                            onTap: () async {
-                                              controller.emailController.text =
-                                                  controller.email.value;
-                                              controller
-                                                      .passwordController.text =
-                                                  controller.password.value;
-                                            },
-                                            child: const Icon(
-                                              Icons.copy,
-                                              size: 14,
-                                            ))
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        // 30.height
+                        // Visibility(
+                        //   visible: Constant.isDemo,
+                        //   child: SizedBox(
+                        //     width: MediaQuery.of(context).size.width * 0.20,
+                        //     child: Card(
+                        //       elevation: 10,
+                        //       child: Padding(
+                        //         padding: const EdgeInsets.all(8.0),
+                        //         child: Column(
+                        //           mainAxisAlignment: MainAxisAlignment.start,
+                        //           crossAxisAlignment: CrossAxisAlignment.start,
+                        //           children: [
+                        //             TextCustom(
+                        //               title: "Credentials : ".tr,
+                        //               fontSize: 14,
+                        //               fontFamily: AppThemeData.medium,
+                        //               color: Colors.black,
+                        //             ),
+                        //             const SizedBox(height: 2),
+                        //             Row(
+                        //               mainAxisAlignment:
+                        //                   MainAxisAlignment.spaceBetween,
+                        //               crossAxisAlignment:
+                        //                   CrossAxisAlignment.center,
+                        //               children: [
+                        //                 Obx(
+                        //                   () => Text(
+                        //                     "Email : ${controller.email.value}",
+                        //                     style: const TextStyle(
+                        //                         fontFamily: AppThemeData.medium,
+                        //                         fontSize: 14,
+                        //                         color: Colors.black),
+                        //                   ),
+                        //                 ),
+                        //                 InkWell(
+                        //                     onTap: () async {
+                        //                       controller.emailController.text =
+                        //                           controller.email.value;
+                        //                       controller
+                        //                               .passwordController.text =
+                        //                           controller.password.value;
+                        //                     },
+                        //                     child: const Icon(
+                        //                       Icons.copy,
+                        //                       size: 14,
+                        //                     ))
+                        //               ],
+                        //             ),
+                        //             Row(
+                        //               mainAxisAlignment:
+                        //                   MainAxisAlignment.spaceBetween,
+                        //               crossAxisAlignment:
+                        //                   CrossAxisAlignment.center,
+                        //               children: [
+                        //                 Obx(
+                        //                   () => Text(
+                        //                     "Password : ${controller.password.value}",
+                        //                     style: const TextStyle(
+                        //                         fontFamily: AppThemeData.medium,
+                        //                         fontSize: 14,
+                        //                         color: Colors.black),
+                        //                   ),
+                        //                 ),
+                        //                 InkWell(
+                        //                     onTap: () async {
+                        //                       controller.emailController.text =
+                        //                           controller.email.value;
+                        //                       controller
+                        //                               .passwordController.text =
+                        //                           controller.password.value;
+                        //                     },
+                        //                     child: const Icon(
+                        //                       Icons.copy,
+                        //                       size: 14,
+                        //                     ))
+                        //               ],
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                        //
                       ],
                     ),
                   ),

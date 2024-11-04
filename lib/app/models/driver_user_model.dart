@@ -27,36 +27,39 @@ class DriverUserModel {
   double? rotation;
   String? reviewsCount;
   String? reviewsSum;
+  var createdAt;
+  String? exp;
 
-  DriverUserModel({
-    this.fullName,
-    this.slug,
-    this.driverVehicleDetails,
-    this.location,
-    this.position,
-    this.id,
-    this.isActive,
-    this.isVerified,
-    this.isOnline,
-    this.dateOfBirth,
-    this.email,
-    this.loginType,
-    this.profilePic,
-    this.fcmToken,
-    this.countryCode,
-    this.phoneNumber,
-    this.walletAmount,
-    // this.createdAt,
-    this.rotation,
-    this.gender,
-    this.reviewsCount,
-    this.reviewsSum,
-  });
+  DriverUserModel(
+      {this.fullName,
+      this.slug,
+      this.driverVehicleDetails,
+      this.location,
+      this.position,
+      this.id,
+      this.isActive,
+      this.isVerified,
+      this.isOnline,
+      this.dateOfBirth,
+      this.email,
+      this.loginType,
+      this.profilePic,
+      this.fcmToken,
+      this.countryCode,
+      this.phoneNumber,
+      this.walletAmount,
+      // this.createdAt,
+      this.rotation,
+      this.gender,
+      this.reviewsCount,
+      this.reviewsSum,
+      this.createdAt,
+      this.exp});
 
   DriverUserModel.fromJson(Map<String, dynamic> json) {
-    fullName = json['fullName'];
+    fullName = json['name'];
     slug = json['slug'];
-    id = json['id'];
+    id = json['_id'];
     email = json['email'];
     loginType = json['loginType'];
     profilePic = json['profilePic'];
@@ -64,7 +67,7 @@ class DriverUserModel {
     countryCode = json['countryCode'];
     phoneNumber = json['phoneNumber'] ?? "";
     walletAmount = json['walletAmount'] ?? "0";
-    // createdAt = json['createdAt'];
+    createdAt = json['createdAt'];
     gender = json['gender'];
     dateOfBirth = json['dateOfBirth'] ?? '';
     isActive = json['isActive'];
@@ -72,7 +75,7 @@ class DriverUserModel {
     driverVehicleDetails = json['driverVehicleDetails'] != null
         ? DriverVehicleDetails.fromJson(json["driverVehicleDetails"])
         : null;
-    isVerified = json['isVerified'];
+    isVerified = json['verified'];
     location = json['location'] != null
         ? LocationLatLng.fromJson(json['location'])
         : LocationLatLng();
@@ -82,13 +85,15 @@ class DriverUserModel {
     rotation = json['rotation'];
     reviewsCount = json['reviewsCount'];
     reviewsSum = json['reviewsSum'];
+
+    exp = json['year_of_experience'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['fullName'] = fullName;
+    data['name'] = fullName;
     data['slug'] = slug;
-    data['id'] = id;
+    data['_id'] = id;
     data['email'] = email;
     data['loginType'] = loginType;
     data['profilePic'] = profilePic;
@@ -96,12 +101,12 @@ class DriverUserModel {
     data['countryCode'] = countryCode;
     data['phoneNumber'] = phoneNumber;
     data['walletAmount'] = walletAmount;
-    // data['createdAt'] = createdAt;
+    data['createdAt'] = createdAt;
     data['gender'] = gender;
     data['dateOfBirth'] = dateOfBirth;
     data['isActive'] = isActive;
     data['isOnline'] = isOnline;
-    data['isVerified'] = isVerified;
+    data['verified'] = isVerified;
     data["driverVehicleDetails"] = driverVehicleDetails == null
         ? DriverVehicleDetails().toJson()
         : driverVehicleDetails!.toJson();
@@ -114,6 +119,8 @@ class DriverUserModel {
     data['rotation'] = rotation;
     data['reviewsCount'] = reviewsCount;
     data['reviewsSum'] = reviewsSum;
+
+    data['year_of_experience'] = exp;
     return data;
   }
 }
