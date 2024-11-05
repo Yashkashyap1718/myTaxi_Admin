@@ -25,6 +25,8 @@ import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
+import '../../../components/network_image_widget.dart';
+import '../../../constant/api_constant.dart';
 import '../../../routes/app_pages.dart';
 import '../controllers/vehicle_brand_screen_controller.dart';
 
@@ -298,158 +300,242 @@ class VehicleBrandScreenView extends GetView<VehicleBrandScreenController> {
                                 SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(12),
-                                      child: controller.isLoading.value
-                                          ? Padding(
-                                              padding: paddingEdgeInsets(),
-                                              child: Constant.loader(),
-                                            )
-                                          : DataTable(
-                                              horizontalMargin: 20,
-                                              columnSpacing: 30,
-                                              dataRowMaxHeight: 65,
-                                              headingRowHeight: 65,
-                                              border: TableBorder.all(
-                                                color: themeChange.isDarkTheme()
-                                                    ? AppThemData.greyShade900
-                                                    : AppThemData.greyShade100,
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
-                                              ),
-                                              headingRowColor:
-                                                  MaterialStateColor.resolveWith(
-                                                      (states) => themeChange
-                                                              .isDarkTheme()
-                                                          ? AppThemData
-                                                              .greyShade900
-                                                          : AppThemData
-                                                              .greyShade100),
-                                              columns: [
-                                                CommonUI.dataColumnWidget(
-                                                    context,
-                                                    columnTitle: "Title".tr,
-                                                    width: ResponsiveWidget
-                                                            .isMobile(context)
-                                                        ? 150
-                                                        : MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.28),
-                                                CommonUI.dataColumnWidget(
-                                                    context,
-                                                    columnTitle: "Status".tr,
-                                                    width: ResponsiveWidget
-                                                            .isMobile(context)
-                                                        ? 110
-                                                        : MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.28),
-                                                CommonUI.dataColumnWidget(
-                                                    context,
-                                                    columnTitle: "Actions".tr,
-                                                    width: ResponsiveWidget
-                                                            .isMobile(context)
-                                                        ? 80
-                                                        : MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.16),
-                                              ],
-                                              rows: controller
-                                                  .currentPageVehicleBrand
-                                                  .map((vehicleBrandModel) {
-                                                log("Vehicle Brand Model: $vehicleBrandModel"); // Log the model data
-                                                return DataRow(cells: [
-                                                  DataCell(Text(
-                                                      "${vehicleBrandModel.id}")),
-                                                  DataCell(Text(
-                                                      "${vehicleBrandModel.title}")),
-                                                  DataCell(
-                                                    Container(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                          horizontal: 8,
-                                                          vertical: 8),
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          // Edit Button
-                                                          InkWell(
-                                                            onTap: () {
-                                                              controller
-                                                                  .isEditing
-                                                                  .value = true;
-                                                              controller
-                                                                      .vehicleBrandModel
-                                                                      .value
-                                                                      .id =
-                                                                  vehicleBrandModel
-                                                                      .id;
-                                                              controller
-                                                                      .titleController
-                                                                      .value
-                                                                      .text =
-                                                                  vehicleBrandModel
-                                                                      .title!;
-                                                              controller
-                                                                      .isEnable
-                                                                      .value =
-                                                                  vehicleBrandModel
-                                                                      .isEnable!;
-                                                              showDialog(
-                                                                  context:
-                                                                      context,
-                                                                  builder:
-                                                                      (context) =>
-                                                                          const CustomDialog());
-                                                            },
-                                                            child: SvgPicture
-                                                                .asset(
-                                                              "assets/icons/ic_edit.svg",
-                                                              color: AppThemData
-                                                                  .greyShade400,
-                                                              height: 16,
-                                                              width: 16,
-                                                            ),
-                                                          ),
-                                                          spaceW(width: 20),
-                                                          // Delete Button
-                                                          InkWell(
-                                                            onTap: () async {
-                                                              bool
-                                                                  confirmDelete =
-                                                                  await DialogBox
-                                                                      .showConfirmationDeleteDialog(
-                                                                          context);
-                                                              if (confirmDelete) {
-                                                                await controller
-                                                                    .removeBrand(
-                                                                        vehicleBrandModel);
-                                                                controller
-                                                                    .getBrand();
-                                                              }
-                                                            },
-                                                            child: SvgPicture
-                                                                .asset(
-                                                              "assets/icons/ic_delete.svg",
-                                                              color: AppThemData
-                                                                  .greyShade400,
-                                                              height: 16,
-                                                              width: 16,
-                                                            ),
-                                                          ),
-                                                        ],
+                                    borderRadius: BorderRadius.circular(12),
+                                    child: controller.isLoading.value
+                                        ? Padding(
+                                            padding: paddingEdgeInsets(),
+                                            child: Constant.loader(),
+                                          )
+                                        : controller.brandList.isEmpty
+                                            ? TextCustom(
+                                                title: "No Data available".tr)
+                                            : DataTable(
+                                                horizontalMargin: 20,
+                                                columnSpacing: 30,
+                                                dataRowMaxHeight: 65,
+                                                headingRowHeight: 65,
+                                                border: TableBorder.all(
+                                                  color: themeChange
+                                                          .isDarkTheme()
+                                                      ? AppThemData.greyShade900
+                                                      : AppThemData
+                                                          .greyShade100,
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                ),
+                                                headingRowColor:
+                                                    MaterialStateColor.resolveWith(
+                                                        (states) => themeChange
+                                                                .isDarkTheme()
+                                                            ? AppThemData
+                                                                .greyShade900
+                                                            : AppThemData
+                                                                .greyShade100),
+                                                columns: [
+                                                  CommonUI.dataColumnWidget(
+                                                      context,
+                                                      columnTitle:
+                                                          "Profile Image".tr,
+                                                      width: ResponsiveWidget
+                                                              .isMobile(context)
+                                                          ? 150
+                                                          : MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.28),
+                                                  CommonUI.dataColumnWidget(
+                                                      context,
+                                                      columnTitle: "Id".tr,
+                                                      width: ResponsiveWidget
+                                                              .isMobile(context)
+                                                          ? 150
+                                                          : MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.28),
+                                                  CommonUI.dataColumnWidget(
+                                                      context,
+                                                      columnTitle: "Title".tr,
+                                                      width: ResponsiveWidget
+                                                              .isMobile(context)
+                                                          ? 150
+                                                          : MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.28),
+                                                  CommonUI.dataColumnWidget(
+                                                      context,
+                                                      columnTitle: "Status".tr,
+                                                      width: ResponsiveWidget
+                                                              .isMobile(context)
+                                                          ? 110
+                                                          : MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.28),
+                                                  CommonUI.dataColumnWidget(
+                                                      context,
+                                                      columnTitle: "Actions".tr,
+                                                      width: ResponsiveWidget
+                                                              .isMobile(context)
+                                                          ? 80
+                                                          : MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.16),
+                                                ],
+                                                rows: controller.brandList
+                                                    .map((vehicleBrandModel) {
+                                                  log("Vehicle Brand Model: $vehicleBrandModel"); // Log the model data
+                                                  return DataRow(cells: [
+                                                    DataCell(
+                                                      Container(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 8,
+                                                                vertical: 8),
+                                                        child:
+                                                            NetworkImageWidget(
+                                                          imageUrl:
+                                                              "$imageURL${vehicleBrandModel.image}",
+                                                          borderRadius: 10,
+                                                          fit: BoxFit.contain,
+                                                          height: 40,
+                                                          width: 100,
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                ]);
-                                              }).toList(),
-                                            )),
+                                                    DataCell(Text(
+                                                      "${vehicleBrandModel.id}",
+                                                      style: TextStyle(
+                                                        color: MaterialStateColor.resolveWith(
+                                                            (states) => themeChange
+                                                                    .isDarkTheme()
+                                                                ? AppThemData
+                                                                    .greyShade100
+                                                                : AppThemData
+                                                                    .black09),
+                                                      ),
+                                                    )),
+                                                    DataCell(Text(
+                                                      "${vehicleBrandModel.title}",
+                                                      style: TextStyle(
+                                                        color: MaterialStateColor.resolveWith(
+                                                            (states) => themeChange
+                                                                    .isDarkTheme()
+                                                                ? AppThemData
+                                                                    .greyShade100
+                                                                : AppThemData
+                                                                    .black09),
+                                                      ),
+                                                    )),
+                                                    DataCell(Text(
+                                                      "${vehicleBrandModel.isEnable}",
+                                                      style: TextStyle(
+                                                        color: MaterialStateColor.resolveWith(
+                                                            (states) => themeChange
+                                                                    .isDarkTheme()
+                                                                ? AppThemData
+                                                                    .greyShade100
+                                                                : AppThemData
+                                                                    .black09),
+                                                      ),
+                                                    )),
+                                                    DataCell(
+                                                      Container(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 8,
+                                                                vertical: 8),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            // Edit Button
+                                                            InkWell(
+                                                              onTap: () {
+                                                                controller
+                                                                    .isEditing
+                                                                    .value = true;
+                                                                controller
+                                                                        .vehicleBrandModel
+                                                                        .value
+                                                                        .id =
+                                                                    vehicleBrandModel
+                                                                        .id;
+                                                                controller
+                                                                        .titleController
+                                                                        .value
+                                                                        .text =
+                                                                    vehicleBrandModel
+                                                                        .title!;
+                                                                controller
+                                                                        .isEnable
+                                                                        .value =
+                                                                    vehicleBrandModel
+                                                                        .isEnable!;
+                                                                showDialog(
+                                                                    context:
+                                                                        context,
+                                                                    builder:
+                                                                        (context) =>
+                                                                            const CustomDialog());
+                                                              },
+                                                              child: SvgPicture
+                                                                  .asset(
+                                                                "assets/icons/ic_edit.svg",
+                                                                color: AppThemData
+                                                                    .greyShade400,
+                                                                height: 16,
+                                                                width: 16,
+                                                              ),
+                                                            ),
+                                                            spaceW(width: 20),
+                                                            // Delete Button
+                                                            InkWell(
+                                                              onTap: () async {
+                                                                bool
+                                                                    confirmDelete =
+                                                                    await DialogBox
+                                                                        .showConfirmationDeleteDialog(
+                                                                            context);
+                                                                if (confirmDelete) {
+                                                                  await controller
+                                                                      .removeBrand(
+                                                                          vehicleBrandModel);
+                                                                  controller
+                                                                      .getBrand();
+                                                                }
+                                                              },
+                                                              child: SvgPicture
+                                                                  .asset(
+                                                                "assets/icons/ic_delete.svg",
+                                                                color: AppThemData
+                                                                    .greyShade400,
+                                                                height: 16,
+                                                                width: 16,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ]);
+                                                }).toList(),
+                                              ),
+                                  ),
                                 ),
                                 spaceH(),
                                 ResponsiveWidget.isMobile(context)
@@ -737,12 +823,11 @@ class CustomDialog extends StatelessWidget {
                                 // } else {
                                 if (controller.titleController.value.text !=
                                     "") {
-                                  // controller.isEditing.value
-                                  //     ? controller.updateBrand()
-                                  //     :
-                                  controller.addVehicleBrandAPI(
-                                      controller.title.value);
-                                  // controller.setDefaultData();
+                                  controller.isEditing.value
+                                      ? controller.updateBrand()
+                                      : controller.addVehicleBrandAPI(
+                                          controller.title.value);
+                                  controller.setDefaultData();
 
                                   Navigator.pop(context);
                                 } else {

@@ -52,7 +52,7 @@ class VehicleTypeScreenController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString("token");
 
-    log('----token--from--getData---$token');
+    // log('----token--from--getData---$token');
     try {
       final response = await http.get(
         Uri.parse(

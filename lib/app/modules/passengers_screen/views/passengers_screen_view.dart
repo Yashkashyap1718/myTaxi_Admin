@@ -579,7 +579,7 @@ class PassengersScreenView extends GetView<PassengersScreenController> {
                                                               0.12),
                                                   CommonUI.dataColumnWidget(
                                                       context,
-                                                      columnTitle: "Gender".tr,
+                                                      columnTitle: "Role".tr,
                                                       width: ResponsiveWidget
                                                               .isMobile(context)
                                                           ? 120
@@ -600,7 +600,8 @@ class PassengersScreenView extends GetView<PassengersScreenController> {
                                                       width: 140),
                                                   CommonUI.dataColumnWidget(
                                                       context,
-                                                      columnTitle: "Status".tr,
+                                                      columnTitle:
+                                                          "Phone Number".tr,
                                                       width: ResponsiveWidget
                                                               .isMobile(context)
                                                           ? 100
@@ -622,166 +623,181 @@ class PassengersScreenView extends GetView<PassengersScreenController> {
                                                               0.08)
                                                 ],
                                                 rows: controller.currentPageUser
-                                                    .map((PassengerModel) =>
-                                                        DataRow(cells: [
-                                                          // DataCell(
-                                                          //   Container(
-                                                          //     alignment:
-                                                          //         Alignment
-                                                          //             .center,
-                                                          //     padding: const EdgeInsets
-                                                          //         .symmetric(
-                                                          //         horizontal:
-                                                          //             8,
-                                                          //         vertical:
-                                                          //             8),
-                                                          //     child:
-                                                          //         NetworkImageWidget(
-                                                          //       imageUrl:
-                                                          //           '${PassengerModel.profilePic??""}',
-                                                          //       height: 37,
-                                                          //       width: 37,
-                                                          //     ),
-                                                          //   ),
-                                                          // ),
-                                                          DataCell(TextCustom(
-                                                              title:
-                                                                  "{userModel.fullName}\n{Constant.maskMobileNumber(mobileNumber: userModel.phoneNumber, countryCode: userModel.countryCode)}")),
-                                                          DataCell(TextCustom(
-                                                              title:
-                                                                  "{userModel.gender}")),
-                                                          DataCell(TextCustom(
-                                                              title:
-                                                                  "userModel.createdAt == null ? '' : Constant.timestampToDateTime(userModel.createdAt!)")),
-                                                          DataCell(TextCustom(
-                                                              title: Constant
-                                                                  .amountShow(
-                                                                      amount: PassengerModel
-                                                                          .phone))),
-                                                          // DataCell(
-                                                          //   Transform.scale(
-                                                          //     scale: 0.8,
-                                                          //     child: CupertinoSwitch(
-                                                          //       activeColor: AppThemData
-                                                          //           .primary500,
-                                                          //       value: PassengerModel
-                                                          //               .status ??
-                                                          //           false,
-                                                          //       onChanged:
-                                                          //           (value) async {
-                                                          //         PassengerModel
-                                                          //             .isActive = value;
-                                                          //         // await FireStoreUtils.updateUsers(
-                                                          //         //     userModel);
-                                                          //         controller.getUser();
-                                                          //       },
-                                                          //     ),
-                                                          //   ),
-                                                          // ),
-                                                          DataCell(Container(
-                                                            alignment: Alignment
-                                                                .center,
-                                                            padding:
-                                                                const EdgeInsets
+                                                    .map(
+                                                        (PassengerModel) =>
+                                                            DataRow(cells: [
+                                                              // DataCell(
+                                                              //   Container(
+                                                              //     alignment:
+                                                              //         Alignment
+                                                              //             .center,
+                                                              //     padding: const EdgeInsets
+                                                              //         .symmetric(
+                                                              //         horizontal:
+                                                              //             8,
+                                                              //         vertical:
+                                                              //             8),
+                                                              //     child:
+                                                              //         NetworkImageWidget(
+                                                              //       imageUrl:
+                                                              //           '${PassengerModel.profilePic??""}',
+                                                              //       height: 37,
+                                                              //       width: 37,
+                                                              //     ),
+                                                              //   ),
+                                                              // ),
+                                                              DataCell(
+                                                                  TextCustom(
+                                                                title: (PassengerModel.name == null ||
+                                                                        PassengerModel.name ==
+                                                                            "null" ||
+                                                                        PassengerModel.name ==
+                                                                            "NA")
+                                                                    ? 'N/A'
+                                                                    : PassengerModel
+                                                                        .name
+                                                                        .toString(),
+                                                              )),
+                                                              DataCell(TextCustom(
+                                                                  title:
+                                                                      "${PassengerModel.role}")),
+                                                              DataCell(TextCustom(
+                                                                  title:
+                                                                      "${PassengerModel.createdAt}")),
+                                                              DataCell(TextCustom(
+                                                                  title: Constant
+                                                                      .amountShow(
+                                                                          amount:
+                                                                              PassengerModel.rideStatus))),
+
+                                                              DataCell(TextCustom(
+                                                                  title:
+                                                                      "${PassengerModel.phone}")),
+                                                              // DataCell(
+                                                              //   Transform.scale(
+                                                              //     scale: 0.8,
+                                                              //     child: CupertinoSwitch(
+                                                              //       activeColor: AppThemData
+                                                              //           .primary500,
+                                                              //       value: PassengerModel
+                                                              //               .status ??
+                                                              //           false,
+                                                              //       onChanged:
+                                                              //           (value) async {
+                                                              //         PassengerModel
+                                                              //             .isActive = value;
+                                                              //         // await FireStoreUtils.updateUsers(
+                                                              //         //     userModel);
+                                                              //         controller.getUser();
+                                                              //       },
+                                                              //     ),
+                                                              //   ),
+                                                              // ),
+                                                              DataCell(
+                                                                  Container(
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                padding: const EdgeInsets
                                                                     .symmetric(
                                                                     horizontal:
                                                                         8,
                                                                     vertical:
                                                                         8),
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                InkWell(
-                                                                  onTap:
-                                                                      () async {
-                                                                    // Get.toNamed(
-                                                                    //     Routes
-                                                                    //         .PASSENGERS_DETAIL_SCREEN,
-                                                                    //     arguments: {
-                                                                    //       'userModel':
-                                                                    //       PassengerModel
-                                                                    //     });
-                                                                  },
-                                                                  child:
-                                                                      SvgPicture
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    InkWell(
+                                                                      onTap:
+                                                                          () async {
+                                                                        // Get.toNamed(
+                                                                        //     Routes
+                                                                        //         .PASSENGERS_DETAIL_SCREEN,
+                                                                        //     arguments: {
+                                                                        //       'userModel':
+                                                                        //       PassengerModel
+                                                                        //     });
+                                                                      },
+                                                                      child: SvgPicture
                                                                           .asset(
-                                                                    "assets/icons/ic_eye.svg",
-                                                                    color: AppThemData
-                                                                        .greyShade400,
-                                                                    height: 16,
-                                                                    width: 16,
-                                                                  ),
-                                                                ),
-                                                                spaceW(
-                                                                    width: 20),
-                                                                InkWell(
-                                                                  onTap: () {
-                                                                    // controller.getArgument(
-                                                                    //     PassengerModel);
-                                                                    showGlobalDrawer(
-                                                                        duration: const Duration(
-                                                                            milliseconds:
-                                                                                200),
-                                                                        barrierDismissible:
-                                                                            true,
-                                                                        context:
-                                                                            context,
-                                                                        builder:
-                                                                            horizontalDrawerBuilder(),
-                                                                        direction:
-                                                                            AxisDirection.right);
-                                                                  },
-                                                                  child:
-                                                                      SvgPicture
-                                                                          .asset(
-                                                                    "assets/icons/ic_edit.svg",
-                                                                    color: AppThemData
-                                                                        .greyShade400,
-                                                                    height: 16,
-                                                                    width: 16,
-                                                                  ),
-                                                                ),
-                                                                spaceW(
-                                                                    width: 20),
-                                                                InkWell(
-                                                                  onTap:
-                                                                      () async {
-                                                                    if (Constant
-                                                                        .isDemo) {
-                                                                      DialogBox
-                                                                          .demoDialogBox();
-                                                                    } else {
-                                                                      // await controller.removePassengers(userModel);
-                                                                      // controller.getUser();
-                                                                      bool
-                                                                          confirmDelete =
-                                                                          await DialogBox.showConfirmationDeleteDialog(
-                                                                              context);
-                                                                      if (confirmDelete) {
-                                                                        // await controller
-                                                                        // .removePassengers(
+                                                                        "assets/icons/ic_eye.svg",
+                                                                        color: AppThemData
+                                                                            .greyShade400,
+                                                                        height:
+                                                                            16,
+                                                                        width:
+                                                                            16,
+                                                                      ),
+                                                                    ),
+                                                                    spaceW(
+                                                                        width:
+                                                                            20),
+                                                                    InkWell(
+                                                                      onTap:
+                                                                          () {
+                                                                        // controller.getArgument(
                                                                         //     PassengerModel);
-                                                                        controller
-                                                                            .getUser();
-                                                                      }
-                                                                    }
-                                                                  },
-                                                                  child:
-                                                                      SvgPicture
+                                                                        showGlobalDrawer(
+                                                                            duration:
+                                                                                const Duration(milliseconds: 200),
+                                                                            barrierDismissible: true,
+                                                                            context: context,
+                                                                            builder: horizontalDrawerBuilder(),
+                                                                            direction: AxisDirection.right);
+                                                                      },
+                                                                      child: SvgPicture
                                                                           .asset(
-                                                                    "assets/icons/ic_delete.svg",
-                                                                    color: AppThemData
-                                                                        .greyShade400,
-                                                                    height: 16,
-                                                                    width: 16,
-                                                                  ),
+                                                                        "assets/icons/ic_edit.svg",
+                                                                        color: AppThemData
+                                                                            .greyShade400,
+                                                                        height:
+                                                                            16,
+                                                                        width:
+                                                                            16,
+                                                                      ),
+                                                                    ),
+                                                                    spaceW(
+                                                                        width:
+                                                                            20),
+                                                                    InkWell(
+                                                                      onTap:
+                                                                          () async {
+                                                                        // if (Constant
+                                                                        //     .isDemo) {
+                                                                        //   DialogBox
+                                                                        //       .demoDialogBox();
+                                                                        // } else {
+                                                                        // await controller.removePassengers(userModel);
+                                                                        // controller.getUser();
+                                                                        bool
+                                                                            confirmDelete =
+                                                                            await DialogBox.showConfirmationDeleteDialog(context);
+                                                                        if (confirmDelete) {
+                                                                          // await controller
+                                                                          // .removePassengers(
+                                                                          //     PassengerModel);
+                                                                          controller
+                                                                              .getUser();
+                                                                        }
+                                                                        // }
+                                                                      },
+                                                                      child: SvgPicture
+                                                                          .asset(
+                                                                        "assets/icons/ic_delete.svg",
+                                                                        color: AppThemData
+                                                                            .greyShade400,
+                                                                        height:
+                                                                            16,
+                                                                        width:
+                                                                            16,
+                                                                      ),
+                                                                    ),
+                                                                  ],
                                                                 ),
-                                                              ],
-                                                            ),
-                                                          )),
-                                                        ]))
+                                                              )),
+                                                            ]))
                                                     .toList()),
                                   ),
                                 ),

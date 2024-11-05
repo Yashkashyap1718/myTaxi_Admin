@@ -207,15 +207,15 @@ class MenuWidget extends StatelessWidget {
                       fontSize: 12,
                       color: AppThemData.greyShade400,
                     )),
-                    ListItem(
-                      buttonTitle: 'Banner'.tr,
-                      icon: "assets/icons/ic_album.svg",
-                      onPress: () {
-                        Get.toNamed(Routes.BANNER_SCREEN);
-                      },
-                      isSelected: Get.currentRoute == Routes.BANNER_SCREEN,
-                      themeChange: themeChange,
-                    ),
+                    // ListItem(
+                    //   buttonTitle: 'Banner'.tr,
+                    //   icon: "assets/icons/ic_album.svg",
+                    //   onPress: () {
+                    //     Get.toNamed(Routes.BANNER_SCREEN);
+                    //   },
+                    //   isSelected: Get.currentRoute == Routes.BANNER_SCREEN,
+                    //   themeChange: themeChange,
+                    // ),
                     ListItem(
                       buttonTitle: 'Documents'.tr,
                       icon: "assets/icons/ic_document.svg",
@@ -225,55 +225,55 @@ class MenuWidget extends StatelessWidget {
                       isSelected: Get.currentRoute == Routes.DOCUMENT_SCREEN,
                       themeChange: themeChange,
                     ),
-                    ListItem(
-                      buttonTitle: 'Payout Request'.tr,
-                      icon: "assets/icons/ic_payout.svg",
-                      onPress: () {
-                        Get.toNamed(Routes.PAYOUT_REQUEST);
-                      },
-                      isSelected: Get.currentRoute == Routes.PAYOUT_REQUEST,
-                      themeChange: themeChange,
-                    ),
-                    ListItem(
-                      buttonTitle: 'Coupon Screen'.tr,
-                      icon: "assets/icons/ic_payout.svg",
-                      onPress: () {
-                        Get.toNamed(Routes.COUPON_SCREEN);
-                      },
-                      isSelected: Get.currentRoute == Routes.COUPON_SCREEN,
-                      themeChange: themeChange,
-                    ),
-                    ListTile(
-                        title: TextCustom(
-                      title: "SUPPORT".tr,
-                      fontSize: 12,
-                      color: AppThemData.greyShade400,
-                    )),
-                    ListItem(
-                      buttonTitle: 'Support Ticket'.tr,
-                      icon: "assets/icons/ic_support_ticket.svg",
-                      onPress: () {
-                        Get.toNamed(Routes.SUPPORT_TICKET_SCREEN);
-                      },
-                      isSelected:
-                          Get.currentRoute == Routes.SUPPORT_TICKET_SCREEN,
-                      themeChange: themeChange,
-                    ),
-                    ListTile(
-                        title: TextCustom(
-                      title: "SYSTEM MANAGEMENT".tr,
-                      fontSize: 12,
-                      color: AppThemData.greyShade400,
-                    )),
-                    ListItem(
-                      buttonTitle: 'Settings'.tr,
-                      icon: "assets/icons/ic_settings.svg",
-                      onPress: () {
-                        Get.toNamed(Routes.SETTING_SCREEN);
-                      },
-                      isSelected: Get.currentRoute == Routes.SETTING_SCREEN,
-                      themeChange: themeChange,
-                    ),
+                    // ListItem(
+                    //   buttonTitle: 'Payout Request'.tr,
+                    //   icon: "assets/icons/ic_payout.svg",
+                    //   onPress: () {
+                    //     Get.toNamed(Routes.PAYOUT_REQUEST);
+                    //   },
+                    //   isSelected: Get.currentRoute == Routes.PAYOUT_REQUEST,
+                    //   themeChange: themeChange,
+                    // ),
+                    // ListItem(
+                    //   buttonTitle: 'Coupon Screen'.tr,
+                    //   icon: "assets/icons/ic_payout.svg",
+                    //   onPress: () {
+                    //     Get.toNamed(Routes.COUPON_SCREEN);
+                    //   },
+                    //   isSelected: Get.currentRoute == Routes.COUPON_SCREEN,
+                    //   themeChange: themeChange,
+                    // ),
+                    // ListTile(
+                    //     title: TextCustom(
+                    //   title: "SUPPORT".tr,
+                    //   fontSize: 12,
+                    //   color: AppThemData.greyShade400,
+                    // )),
+                    // ListItem(
+                    //   buttonTitle: 'Support Ticket'.tr,
+                    //   icon: "assets/icons/ic_support_ticket.svg",
+                    //   onPress: () {
+                    //     Get.toNamed(Routes.SUPPORT_TICKET_SCREEN);
+                    //   },
+                    //   isSelected:
+                    //       Get.currentRoute == Routes.SUPPORT_TICKET_SCREEN,
+                    //   themeChange: themeChange,
+                    // ),
+                    // ListTile(
+                    //     title: TextCustom(
+                    //   title: "SYSTEM MANAGEMENT".tr,
+                    //   fontSize: 12,
+                    //   color: AppThemData.greyShade400,
+                    // )),
+                    // ListItem(
+                    //   buttonTitle: 'Settings'.tr,
+                    //   icon: "assets/icons/ic_settings.svg",
+                    //   onPress: () {
+                    //     Get.toNamed(Routes.SETTING_SCREEN);
+                    //   },
+                    //   isSelected: Get.currentRoute == Routes.SETTING_SCREEN,
+                    //   themeChange: themeChange,
+                    // ),
                   ],
                 ),
               ),

@@ -384,18 +384,19 @@ class DocumentScreenView extends GetView<DocumentScreenController> {
                                                                         .isEnable!,
                                                                     onChanged:
                                                                         (value) async {
-                                                                      if (Constant
-                                                                          .isDemo) {
-                                                                        DialogBox
-                                                                            .demoDialogBox();
-                                                                      } else {
-                                                                        documentsModel.isEnable =
-                                                                            value;
-                                                                        // await FireStoreUtils.updateDocument(
-                                                                        //     documentsModel);
-                                                                        controller
-                                                                            .getData();
-                                                                      }
+                                                                      // if (Constant
+                                                                      //     .isDemo) {
+                                                                      //   DialogBox
+                                                                      //       .demoDialogBox();
+                                                                      // } else {
+                                                                      documentsModel
+                                                                              .isEnable =
+                                                                          value;
+                                                                      // await FireStoreUtils.updateDocument(
+                                                                      //     documentsModel);
+                                                                      controller
+                                                                          .getData();
+                                                                      // }
                                                                     },
                                                                   ),
                                                                 ),
@@ -642,11 +643,10 @@ class DocumentDialog extends StatelessWidget {
                 // }
                 // else {
                 if (controller.documentNameController.value.text != "") {
-                  // controller.isEditing.value
-                  //     ? controller.updateDocument()
-                  //     :
-
-                  controller.addDocumentsAPI();
+                  controller.isEditing.value
+                      ? controller.updateDocument()
+                      : controller.addDocumentsAPI(
+                          controller.documentNameController.value.text);
                   controller.setDefaultData();
                   Navigator.pop(context);
                 } else {

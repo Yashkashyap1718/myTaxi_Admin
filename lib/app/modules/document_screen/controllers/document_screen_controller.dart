@@ -25,45 +25,91 @@ class DocumentScreenController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    await getData();
+    // await getData();
+    await getDocumentsAPI();
     super.onInit();
+  }
+
+  getDocumentsAPI() async {
+    isLoading(true);
+    documentsList.clear();
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString("token");
+
+      log('token------${token}');
+      final response = await http.get(
+        Uri.parse(baseURL + documentListEndpoint),
+        headers: {
+          'token': token.toString(),
+        },
+      );
+
+      if (response.statusCode == 200) {
+        // log('----document list fetched----${response.body}');
+
+        // Parse JSON response
+        final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+
+        // Check if 'data' exists and is a list
+        if (jsonResponse['data'] is List) {
+          List<dynamic> data = jsonResponse['data'];
+
+          // Map each item in 'data' to a DocumentsModel
+          documentsList.addAll(
+            data.map((json) => DocumentsModel.fromJson(json)).toList(),
+          );
+
+          ShowToastDialog.toast("Documents fetched successfully!".tr);
+        } else {
+          log("Data field is not a list or is missing.");
+          ShowToastDialog.toast("Invalid response format.".tr);
+        }
+      } else {
+        log("----------Failed to fetch documents---${response.body}");
+        ShowToastDialog.toast("Failed to fetch documents: ${response.body}".tr);
+      }
+    } catch (error) {
+      log("Error fetching documents: $error");
+      ShowToastDialog.toast("An error occurred: $error".tr);
+    } finally {
+      isLoading(false);
+    }
   }
 
   getData() async {
     isLoading(true);
     documentsList.clear();
+    getDocumentsAPI();
     // List<DocumentsModel> data = await FireStoreUtils.getDocument();
     // documentsList.addAll(data);
     isLoading(false);
   }
 
   // Function to add a Documnets
-  Future<void> addDocumentsAPI() async {
+  Future<void> addDocumentsAPI(String text) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString("token");
-      log('---token form brand----$token');
 
       log('token------${token}');
       final response = await http.post(
         Uri.parse(baseURL + addDocumentEndpoint),
         headers: {
-          'token': token
-              .toString(), // Assuming you use Bearer token for authorization
+          'token': token.toString(),
+          'Content-Type': 'application/json',
         },
         body: jsonEncode({
-          "name": documentNameController.value.text,
+          "name": text,
           "side": documentSide.value == SideAt.isTwoSide ? true : false,
         }),
       );
 
       if (response.statusCode == 200) {
-        log('----addVehicleBrandAPI----${response.body}');
-        // Brand added successfully
+        log('----add--docs----${response.body}');
         ShowToastDialog.toast("Documents added successfully!".tr);
-        // await getDocuments(); // Refresh the brand list
       } else {
-        // Handle errors here
+        log("----------Failed to add Documents---${response.body}");
         ShowToastDialog.toast("Failed to add Documents: ${response.body}".tr);
       }
     } catch (error) {

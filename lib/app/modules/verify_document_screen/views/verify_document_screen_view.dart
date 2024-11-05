@@ -4,12 +4,9 @@ import 'package:admin/app/components/dialog_box.dart';
 import 'package:admin/app/components/menu_widget.dart';
 import 'package:admin/app/components/network_image_widget.dart';
 import 'package:admin/app/constant/constants.dart';
-import 'package:admin/app/models/documents_model.dart';
-import 'package:admin/app/models/driver_user_model.dart';
 import 'package:admin/app/utils/app_colors.dart';
 import 'package:admin/app/utils/app_them_data.dart';
 import 'package:admin/app/utils/dark_theme_provider.dart';
-import 'package:admin/app/utils/fire_store_utils.dart';
 import 'package:admin/app/utils/responsive.dart';
 import 'package:admin/app/utils/screen_size.dart';
 import 'package:admin/widget/common_ui.dart';
@@ -22,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+
 import '../../../routes/app_pages.dart';
 import '../controllers/verify_document_screen_controller.dart';
 

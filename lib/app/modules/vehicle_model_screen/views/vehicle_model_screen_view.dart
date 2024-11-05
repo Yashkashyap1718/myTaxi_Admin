@@ -1,4 +1,7 @@
 // ignore_for_file: deprecated_member_use
+
+import 'dart:html' as html;
+
 import 'package:admin/app/components/custom_button.dart';
 import 'package:admin/app/components/custom_text_form_field.dart';
 import 'package:admin/app/components/dialog_box.dart';
@@ -9,7 +12,6 @@ import 'package:admin/app/models/brand_model.dart';
 import 'package:admin/app/utils/app_colors.dart';
 import 'package:admin/app/utils/app_them_data.dart';
 import 'package:admin/app/utils/dark_theme_provider.dart';
-import 'package:admin/app/utils/fire_store_utils.dart';
 import 'package:admin/app/utils/responsive.dart';
 import 'package:admin/widget/common_ui.dart';
 import 'package:admin/widget/container_custom.dart';
@@ -18,6 +20,7 @@ import 'package:admin/widget/text_widget.dart';
 import 'package:admin/widget/web_pagination.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -211,84 +214,84 @@ class VehicleModelScreenView extends GetView<VehicleModelScreenController> {
                                                       if (!ResponsiveWidget
                                                           .isMobile(context))
                                                         spaceW(),
-                                                      SizedBox(
-                                                        width: 150,
-                                                        height: 40,
-                                                        child:
-                                                            DropdownButtonFormField(
-                                                          isExpanded: true,
-                                                          style: TextStyle(
-                                                            fontFamily:
-                                                                AppThemeData
-                                                                    .medium,
-                                                            color: themeChange
-                                                                    .isDarkTheme()
-                                                                ? AppThemData
-                                                                    .textBlack
-                                                                : AppThemData
-                                                                    .textGrey,
-                                                          ),
-                                                          value: controller
-                                                                      .selectedVehicleBrand
-                                                                      .value
-                                                                      .id ==
-                                                                  null
-                                                              ? null
-                                                              : controller
-                                                                  .selectedVehicleBrand
-                                                                  .value,
-                                                          hint: TextCustom(
-                                                              title:
-                                                                  'Select Brand'
-                                                                      .tr),
-                                                          onChanged:
-                                                              (newValue) {
-                                                            controller
-                                                                .selectedVehicleBrand
-                                                                .value = newValue!;
-                                                            if (controller
-                                                                    .selectedVehicleBrand
-                                                                    .value
-                                                                    .id !=
-                                                                null) {
-                                                              Constant.vehicleModelLength =
-                                                                  controller
-                                                                      .currentPageVehicleModel
-                                                                      .length;
-                                                            }
-                                                            controller
-                                                                .setPagination(
-                                                                    controller
-                                                                        .totalItemPerPage
-                                                                        .value);
-                                                          },
-                                                          items: controller
-                                                              .vehicleBrandList
-                                                              .map((brand) {
-                                                            return DropdownMenuItem<
-                                                                BrandModel>(
-                                                              value: brand,
-                                                              child: TextCustom(
-                                                                title: brand
-                                                                    .title
-                                                                    .toString(),
-                                                                fontFamily:
-                                                                    AppThemeData
-                                                                        .medium,
-                                                                color: themeChange.isDarkTheme()
-                                                                    ? AppThemData
-                                                                        .greyShade500
-                                                                    : AppThemData
-                                                                        .greyShade800,
-                                                              ),
-                                                            );
-                                                          }).toList(),
-                                                          decoration: Constant
-                                                              .DefaultInputDecoration(
-                                                                  context),
-                                                        ),
-                                                      ),
-                                                      spaceW(),
+                                                      // SizedBox(
+                                                      //   width: 150,
+                                                      //   height: 40,
+                                                      //   child:
+                                                      //       DropdownButtonFormField(
+                                                      //     isExpanded: true,
+                                                      //     style: TextStyle(
+                                                      //       fontFamily:
+                                                      //           AppThemeData
+                                                      //               .medium,
+                                                      //       color: themeChange
+                                                      //               .isDarkTheme()
+                                                      //           ? AppThemData
+                                                      //               .textBlack
+                                                      //           : AppThemData
+                                                      //               .textGrey,
+                                                      //     ),
+                                                      //     value: controller
+                                                      //                 .selectedVehicleBrand
+                                                      //                 .value
+                                                      //                 .id ==
+                                                      //             null
+                                                      //         ? null
+                                                      //         : controller
+                                                      //             .selectedVehicleBrand
+                                                      //             .value,
+                                                      //     hint: TextCustom(
+                                                      //         title:
+                                                      //             'Select Brand'
+                                                      //                 .tr),
+                                                      //     onChanged:
+                                                      //         (newValue) {
+                                                      //       controller
+                                                      //           .selectedVehicleBrand
+                                                      //           .value = newValue!;
+                                                      //       if (controller
+                                                      //               .selectedVehicleBrand
+                                                      //               .value
+                                                      //               .id !=
+                                                      //           null) {
+                                                      //         Constant.vehicleModelLength =
+                                                      //             controller
+                                                      //                 .currentPageVehicleModel
+                                                      //                 .length;
+                                                      //       }
+                                                      //       controller
+                                                      //           .setPagination(
+                                                      //               controller
+                                                      //                   .totalItemPerPage
+                                                      //                   .value);
+                                                      //     },
+                                                      //     items: controller
+                                                      //         .vehicleBrandList
+                                                      //         .map((brand) {
+                                                      //       return DropdownMenuItem<
+                                                      //           BrandModel>(
+                                                      //         value: brand,
+                                                      //         child: TextCustom(
+                                                      //           title: brand
+                                                      //               .title
+                                                      //               .toString(),
+                                                      //           fontFamily:
+                                                      //               AppThemeData
+                                                      //                   .medium,
+                                                      //           color: themeChange.isDarkTheme()
+                                                      //               ? AppThemData
+                                                      //                   .greyShade500
+                                                      //               : AppThemData
+                                                      //                   .greyShade800,
+                                                      //         ),
+                                                      //       );
+                                                      //     }).toList(),
+                                                      //     decoration: Constant
+                                                      //         .DefaultInputDecoration(
+                                                      //             context),
+                                                      //   ),
+                                                      // ),
+                                                      // spaceW(),
                                                     ]),
                                               ),
                                               NumberOfRowsDropDown(
@@ -550,8 +553,7 @@ class VehicleModelScreenView extends GetView<VehicleModelScreenController> {
                                             padding: paddingEdgeInsets(),
                                             child: Constant.loader(),
                                           )
-                                        : controller
-                                                .currentPageVehicleModel.isEmpty
+                                        : controller.vehicleModelList.isEmpty
                                             ? TextCustom(
                                                 title: "No Data available".tr)
                                             : DataTable(
@@ -630,7 +632,7 @@ class VehicleModelScreenView extends GetView<VehicleModelScreenController> {
                                                               0.12),
                                                 ],
                                                 rows: controller
-                                                    .currentPageVehicleModel
+                                                    .vehicleModelList
                                                     .map(
                                                         (modelVehicleModel) =>
                                                             DataRow(cells: [
@@ -669,7 +671,10 @@ class VehicleModelScreenView extends GetView<VehicleModelScreenController> {
 
                                                               DataCell(TextCustom(
                                                                   title:
-                                                                      "${modelVehicleModel.title}")),
+                                                                      "${modelVehicleModel.name}")),
+                                                              DataCell(TextCustom(
+                                                                  title:
+                                                                      "${modelVehicleModel.type}")),
                                                               DataCell(TextCustom(
                                                                   title: modelVehicleModel
                                                                               .isEnable ==
@@ -718,7 +723,7 @@ class VehicleModelScreenView extends GetView<VehicleModelScreenController> {
                                                                           controller
                                                                               .titleController
                                                                               .value
-                                                                              .text = modelVehicleModel.title!;
+                                                                              .text = modelVehicleModel.name!;
                                                                           controller
                                                                               .isEnable
                                                                               .value = modelVehicleModel.isEnable!;
@@ -752,7 +757,7 @@ class VehicleModelScreenView extends GetView<VehicleModelScreenController> {
                                                                                 await DialogBox.showConfirmationDeleteDialog(context);
                                                                             if (confirmDelete) {
                                                                               await controller.removeVehicleModel(modelVehicleModel);
-                                                                              controller.getVehicleModel();
+                                                                              controller.getVehicleModelAPI();
                                                                             }
                                                                           }
                                                                         },
@@ -893,6 +898,119 @@ class CustomDialog extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        // Image Container
+                        Container(
+                          height: 0.18.sh,
+                          width: 0.30.sw,
+                          decoration: BoxDecoration(
+                            color: themeChange.isDarkTheme()
+                                ? AppThemData.greyShade900
+                                : AppThemData.greyShade100,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Stack(
+                            children: [
+                              if (controller.imageFile.value.path.isNotEmpty)
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: Image.network(
+                                    controller.imageFile.value.path,
+                                    fit: BoxFit.contain,
+                                    height: 0.18.sh,
+                                    width: 0.30.sw,
+                                  ),
+                                ),
+                              Center(
+                                child: InkWell(
+                                  onTap: () async {
+                                    // Image picker for web
+                                    html.FileUploadInputElement uploadInput =
+                                        html.FileUploadInputElement();
+                                    uploadInput.accept =
+                                        'image/*'; // Accept all image types
+                                    uploadInput.click();
+
+                                    uploadInput.onChange.listen((e) async {
+                                      final files = uploadInput.files;
+                                      if (files!.isEmpty) {
+                                        print(
+                                            'No image selected.'); // Log message
+                                        return;
+                                      }
+
+                                      final file = files[0];
+                                      print(
+                                          'Selected file: ${file.name}, type: ${file.type}'); // Log selected file
+
+                                      // Optional: Check for specific image types
+                                      if (![
+                                        'image/png',
+                                        'image/jpeg',
+                                        'image/gif'
+                                      ].contains(file.type)) {
+                                        print(
+                                            'Unsupported file type: ${file.type}'); // Log unsupported file type
+                                        return;
+                                      }
+
+                                      final reader = html.FileReader();
+                                      reader.readAsDataUrl(
+                                          file); // Read the file as Data URL
+
+                                      reader.onLoadEnd.listen((e) {
+                                        // Update the controller with image information
+                                        controller
+                                                .vehicleModelImage.value.text =
+                                            file.name; // Name of the image file
+                                        controller.imageURL.value =
+                                            reader.result
+                                                as String; // Save the data URL
+                                        controller.mimeType.value =
+                                            file.type; // Get mimeType
+                                        controller.isImageUpdated.value =
+                                            true; // Mark as updated
+
+                                        // Log image URL for debugging
+                                        print(
+                                            'Image URL: ${controller.imageURL.value}');
+                                      });
+                                    });
+                                  },
+                                  child: controller.imageURL.value
+                                          .isEmpty // Check for image URL instead of path
+                                      ? Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                'Upload Image'.tr,
+                                                style: const TextStyle(
+                                                  fontSize: 16,
+                                                  color:
+                                                      AppThemData.greyShade500,
+                                                  fontFamily:
+                                                      AppThemeData.medium,
+                                                ),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 12),
+                                            const Icon(
+                                              Icons.file_upload_outlined,
+                                              color: AppThemData.greyShade500,
+                                            ),
+                                          ],
+                                        )
+                                      : Image.network(controller.imageURL
+                                          .value), // Display the uploaded image
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        spaceH(height: 17),
+
                         Row(
                           children: [
                             Expanded(
@@ -934,6 +1052,9 @@ class CustomDialog extends StatelessWidget {
                                             newValue!;
                                         controller.vehicleBrandId.value =
                                             newValue.id!;
+
+                                        print(
+                                            '-- newValue.id-${controller.vehicleBrandId.value}');
                                       },
                                       items: controller.vehicleBrandList
                                           .map((brand) {
@@ -941,6 +1062,7 @@ class CustomDialog extends StatelessWidget {
                                           value: brand,
                                           child: TextCustom(
                                             title: brand.title.toString(),
+                                            color: AppThemData.black09,
                                             fontFamily: AppThemeData.medium,
                                           ),
                                         );
@@ -950,7 +1072,7 @@ class CustomDialog extends StatelessWidget {
                                           isDense: true,
                                           filled: true,
                                           fillColor: themeChange.isDarkTheme()
-                                              ? AppThemData.primaryBlack
+                                              ? AppThemData.greyShade100
                                               : AppThemData.greyShade100,
                                           contentPadding:
                                               const EdgeInsets.symmetric(
@@ -1068,22 +1190,24 @@ class CustomDialog extends StatelessWidget {
                                   ? "Edit".tr
                                   : "Save".tr,
                               onPress: () {
-                                if (Constant.isDemo) {
-                                  DialogBox.demoDialogBox();
+                                // if (Constant.isDemo) {
+                                //   DialogBox.demoDialogBox();
+                                // } else {
+                                if (controller.titleController.value.text !=
+                                        "" &&
+                                    controller.vehicleBrandId.value != "") {
+                                  controller.isEditing.value
+                                      ? controller.addVehicleBrandModel(
+                                          controller.vehicleBrandId.value)
+                                      : controller.addVehicleBrandModel(
+                                          controller.vehicleBrandId.value);
+                                  controller.setDefaultData();
+                                  Navigator.pop(context);
                                 } else {
-                                  if (controller.titleController.value.text !=
-                                          "" &&
-                                      controller.vehicleBrandId.value != "") {
-                                    controller.isEditing.value
-                                        ? controller.updateVehicleModel()
-                                        : controller.addVehicleModel();
-                                    controller.setDefaultData();
-                                    Navigator.pop(context);
-                                  } else {
-                                    ShowToastDialog.toast(
-                                        "All Fields are Required...".tr);
-                                  }
+                                  ShowToastDialog.toast(
+                                      "All Fields are Required...".tr);
                                 }
+                                // }
                               },
                             ),
                           ],

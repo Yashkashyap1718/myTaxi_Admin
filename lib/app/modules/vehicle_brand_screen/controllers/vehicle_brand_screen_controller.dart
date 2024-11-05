@@ -26,8 +26,9 @@ class VehicleBrandScreenController extends GetxController {
   RxString imageURL = "".obs;
   Rx<File> imageFile = File('').obs;
   RxBool isImageUpdated = false.obs;
-  Rx<TextEditingController> vehicleTypeImage = TextEditingController().obs;
   RxString mimeType = 'image/png'.obs;
+  Rx<TextEditingController> vehicleTypeImage = TextEditingController().obs;
+
   RxList<BrandModel> currentPageVehicleBrand = <BrandModel>[].obs;
 
   Rx<TextEditingController> titleController = TextEditingController().obs;
@@ -43,17 +44,7 @@ class VehicleBrandScreenController extends GetxController {
     super.onInit();
   }
 
-  // getBrand() async {
-  //   isLoading.value = true;
-  //   // await FireStoreUtils.countVehicleBrand();
-  //
-  //   // vehicleBrandList.value = await FireStoreUtils.getVehicleBrand();
-  //   setPagination(totalItemPerPage.value);
-  //   isLoading.value = false;
-  // }
-
-  // Method to fetch brand data from API
-  Future<void> getBrand() async {
+  getBrand() async {
     isLoading(true);
     brandList.clear(); // Clear existing data before fetching
 
@@ -69,22 +60,25 @@ class VehicleBrandScreenController extends GetxController {
         },
       );
 
-      log("Fetching vehicle brands: ${response.statusCode}");
-
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        log("Full API Response: $responseData"); // Log the entire response
 
         // Check if the API response indicates success
         if (responseData["status"] == true) {
           // Extract the 'data' field which contains the list of brands
           final List<dynamic> data = responseData["data"];
+
+          // Clear the list and map the data to BrandModel
           brandList.addAll(
             data.map((json) => BrandModel.fromJson(json)).toList(),
           );
-          log("Vehicle brands fetched: ${brandList.length}");
+          // ShowToastDialog.toast("Vehicle brands fetched successfully!".tr);
+          // log("Vehicle brands fetched: ${brandList.length}");
+
+          // Update the current page vehicle brand
+          // currentPageVehicleBrand.value =
+          //     brandList; // Directly assigning all brands for now
         } else {
-          // Show the message from the API if fetching brands failed
           ShowToastDialog.toast(
               "Failed to fetch brands: ${responseData["msg"]}");
         }
@@ -93,12 +87,23 @@ class VehicleBrandScreenController extends GetxController {
             "Failed to fetch brands. Status code: ${response.statusCode}");
       }
     } catch (e) {
-      log("Error fetching vehicle brands: $e");
+      // log("Error fetching vehicle brands: $e");
       ShowToastDialog.toast("An error occurred while fetching vehicle brands.");
     } finally {
       isLoading(false);
     }
   }
+
+  // getBrand() async {
+  //   isLoading.value = true;
+  //   // await FireStoreUtils.countVehicleBrand();
+  //
+  //   // vehicleBrandList.value = await FireStoreUtils.getVehicleBrand();
+  //   setPagination(totalItemPerPage.value);
+  //   isLoading.value = false;
+  // }
+
+  // Method to fetch brand data from API
 
   // setPagination(String page) {
   //   totalItemPerPage.value = page;
@@ -219,7 +224,7 @@ class VehicleBrandScreenController extends GetxController {
       String? token = prefs.getString("token");
       log('---token form brand----$token');
 
-      log('token------${token}');
+      // log('token------${token}');
       final response = await http.post(
         Uri.parse(baseURL + addVehicleBrandEndpoint),
         headers: {
@@ -234,15 +239,15 @@ class VehicleBrandScreenController extends GetxController {
         }),
       );
 
-      log('----body----${jsonEncode({
-            "name": textValue,
-            "logo": base64Image != null
-                ? "data:image/png;base64,$base64Image"
-                : null,
-            "status": "isEnable",
-          })}');
+      // log('----body----${jsonEncode({
+      //       "name": textValue,
+      //       "logo": base64Image != null
+      //           ? "data:image/png;base64,$base64Image"
+      //           : null,
+      //       "status": "isEnable",
+      //     })}');
       if (response.statusCode == 200) {
-        log('----addVehicleBrandAPI----${response.body}');
+        // log('----addVehicleBrandAPI----${response.body}');
         // Brand added successfully
         ShowToastDialog.toast("Brand added successfully!".tr);
         await getBrand(); // Refresh the brand list
@@ -251,7 +256,7 @@ class VehicleBrandScreenController extends GetxController {
         ShowToastDialog.toast("Failed to add brand: ${response.body}".tr);
       }
     } catch (error) {
-      log("Error adding brand: $error");
+      // log("Error adding brand: $error");
       ShowToastDialog.toast("An error occurred: $error".tr);
     } finally {
       isLoading(false);

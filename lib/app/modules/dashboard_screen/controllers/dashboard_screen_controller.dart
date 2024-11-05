@@ -2,14 +2,12 @@ import 'dart:convert';
 
 import 'package:admin/app/constant/api_constant.dart';
 import 'package:admin/app/constant/booking_status.dart';
-import 'package:admin/app/constant/collection_name.dart';
 import 'package:admin/app/constant/constants.dart';
 import 'package:admin/app/models/admin_model.dart';
 import 'package:admin/app/models/booking_model.dart';
 import 'package:admin/app/models/language_model.dart';
 import 'package:admin/app/models/user_model.dart';
 import 'package:admin/app/models/vehicle_type_model.dart';
-import 'package:admin/app/utils/fire_store_utils.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -126,10 +124,10 @@ class DashboardScreenController extends GetxController {
       );
 
       // Log the status code for debugging
-      log('Response status: ${response.statusCode}');
-
-      // Log the full response body for debugging
-      log('Response body: ${response.body}');
+      // log('Response status: ${response.statusCode}');
+      //
+      // // Log the full response body for debugging
+      // log('Response body: ${response.body}');
 
       // Check if the response status code is 200 (OK)
       if (response.statusCode == 200) {
@@ -143,12 +141,12 @@ class DashboardScreenController extends GetxController {
 // Store profile data locally
           await saveProfileData(profileData);
 
-          log('Profile data stored locally.');
-          // Log profile information for debugging
-          log('Profile name: ${profileData['name']}');
-          log('Profile email: ${profileData['email']}');
-          log('Profile phone: ${profileData['phone']}');
-          log('Profile role: ${profileData['role']}');
+          // log('Profile data stored locally.');
+          // // Log profile information for debugging
+          // log('Profile name: ${profileData['name']}');
+          // log('Profile email: ${profileData['email']}');
+          // log('Profile phone: ${profileData['phone']}');
+          // log('Profile role: ${profileData['role']}');
           // You can access other fields from profileData here
         } else {
           log('Failed to fetch profile: ${responseData['msg']}');

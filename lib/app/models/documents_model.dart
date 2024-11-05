@@ -1,33 +1,31 @@
-import 'dart:convert';
-
 class DocumentsModel {
   final String id;
-   bool ? isEnable;
+  late final bool? isEnable;
   final bool isTwoSide;
   final String title;
 
   DocumentsModel({
     required this.id,
-    required this.isEnable,
+    this.isEnable,
     required this.isTwoSide,
     required this.title,
   });
 
-  factory DocumentsModel.fromRawJson(String str) => DocumentsModel.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
+  // Factory constructor to create an instance from a JSON map
   factory DocumentsModel.fromJson(Map<String, dynamic> json) => DocumentsModel(
-    id: json["id"],
-    isEnable: json["isEnable"],
-    isTwoSide: json["isTwoSide"],
-    title: json["title"],
-  );
+        id: json["_id"] ?? "", // Map '_id' from the API response to 'id'
+        isEnable: json["status"] ==
+            "Active", // Assuming 'status' indicates enablement
+        isTwoSide: json["side"] == 2, // Assuming side 2 means it's two-sided
+        title:
+            json["name"] ?? "", // Map 'name' from the API response to 'title'
+      );
 
+  // Method to convert the object to a JSON map (if needed)
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "isEnable": isEnable,
-    "isTwoSide": isTwoSide,
-    "title": title,
-  };
+        "_id": id,
+        "status": isEnable == true ? "Active" : "Inactive",
+        "side": isTwoSide ? 2 : 1,
+        "name": title,
+      };
 }
