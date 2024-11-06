@@ -1,14 +1,18 @@
-import 'package:admin/app/constant/collection_name.dart';
+import 'dart:convert';
+
+import 'package:admin/app/constant/api_constant.dart';
 import 'package:admin/app/constant/constants.dart';
-import 'package:admin/app/constant/show_toast.dart';
 import 'package:admin/app/models/driver_user_model.dart';
 import 'package:admin/app/models/verify_driver_model.dart';
-import 'package:admin/app/utils/fire_store_utils.dart';
 import 'package:admin/app/utils/toast.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:nb_utils/nb_utils.dart';
+
+import '../../../constant/show_toast.dart';
 
 class VerifyDocumentScreenController extends GetxController {
   RxString title = "Verify Document".tr.obs;
@@ -22,6 +26,7 @@ class VerifyDocumentScreenController extends GetxController {
   RxList<VerifyDriverModel> tempList = <VerifyDriverModel>[].obs;
   // RxList<DriverUserModel> tempList = <DriverUserModel>[].obs;
   Rx<DriverUserModel> driverUserDetails = DriverUserModel().obs;
+  RxList<DriverUserModel> driverList = <DriverUserModel>[].obs;
 
   var currentPage = 1.obs;
   var startIndex = 1.obs;
@@ -38,6 +43,8 @@ class VerifyDocumentScreenController extends GetxController {
   void onInit() {
     totalItemPerPage.value = Constant.numOfPageIemList.first;
     getData();
+
+    getDriverData();
     dateFiledController.value.text =
         "${DateFormat('yyyy-MM-dd').format(selectedDate.value.start)} to ${DateFormat('yyyy-MM-dd').format(selectedDate.value.end)}";
     super.onInit();
@@ -49,6 +56,93 @@ class VerifyDocumentScreenController extends GetxController {
     // verifyDriverList.value = await FireStoreUtils.getVerifyDriverModel();
     setPagination(totalItemPerPage.value);
     isLoading.value = false;
+  }
+
+  getDriverData() async {
+    isLoading(true);
+    driverList.clear();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("token");
+
+    if (token == null) {
+      log("Token is null, unable to fetch data.");
+      ShowToastDialog.toast("Authentication token missing.");
+      isLoading(false);
+      return;
+    }
+
+    log('Fetching driver data with token: $token');
+    try {
+      final response = await http.get(
+        Uri.parse(baseURL + driverListEndpoint),
+        headers: {
+          "Content-Type": "application/json",
+          "token": token,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        if (responseData["status"] == true) {
+          final List<dynamic> data = responseData["data"];
+          driverList.addAll(
+              data.map((json) => DriverUserModel.fromJson(json)).toList());
+          log("Driver data fetched: ${driverList.length}");
+
+          // Populate currentPageDriver based on pagination after fetching data
+          await setPagination(totalItemPerPage.value);
+        } else {
+          ShowToastDialog.toast("Failed to fetch data: ${responseData["msg"]}");
+        }
+      } else {
+        ShowToastDialog.toast("Error: Status code ${response.statusCode}");
+      }
+    } catch (e) {
+      log("Error fetching driver data: $e");
+      ShowToastDialog.toast("An error occurred while fetching driver data.");
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  // Function to update document status
+  Future<void> verifyDocumentStatus(
+      String userId, String documentId, String status) async {
+    isLoading.value = true;
+
+    final body = jsonEncode(
+        {"user_id": userId, "document_id": documentId, "status": status});
+
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString("token");
+      final response =
+          await http.put(Uri.parse(baseURL + verifyDocumentsEndpoint),
+              headers: {
+                "Content-Type": "application/json",
+                "token": token ?? "",
+              },
+              body: body);
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        if (data['status'] == true) {
+          ShowToast.successToast(
+              data['msg'] ?? "Document status updated successfully.");
+          // Handle any additional logic, like updating local state or UI if needed
+          getData(); // Refresh data if required
+        } else {
+          ShowToast.errorToast(
+              data['msg'] ?? "Failed to update document status.");
+        }
+      } else {
+        ShowToast.errorToast(
+            "Failed to update document status. Please try again.");
+      }
+    } catch (e) {
+      ShowToast.errorToast("An error occurred: $e");
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   removeVerifyDocument(VerifyDriverModel verifyDriverModel) async {

@@ -14,3 +14,4 @@ String addDocumentEndpoint = "admin/document/create"; //POST
 String documentListEndpoint = "admin/document/list"; //GET
 String driverListEndpoint = "admin/driver/list"; //GET
 String customerListEndpoint = "admin/customer/list"; //GET
+String verifyDocumentsEndpoint = "admin/driver/document/approve"; //PUT

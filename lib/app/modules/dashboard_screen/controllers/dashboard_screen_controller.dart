@@ -14,6 +14,10 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http; // For making HTTP requests
 import 'package:nb_utils/nb_utils.dart';
 
+import '../../../constant/show_toast.dart';
+import '../../../models/driver_user_model.dart';
+import '../../../models/passenger_model.dart';
+
 class DashboardScreenController extends GetxController {
   GlobalKey<ScaffoldState> scaffoldKeyDrawer = GlobalKey<ScaffoldState>();
   RxBool isDrawerOpen = false.obs;
@@ -55,6 +59,8 @@ class DashboardScreenController extends GetxController {
   RxList<UserModel> userList = <UserModel>[].obs;
   RxList<BookingModel> bookingList = <BookingModel>[].obs;
   RxList<BookingModel> recentBookingList = <BookingModel>[].obs;
+  RxList<PassengerModel> passengersList = <PassengerModel>[].obs;
+  RxList<DriverUserModel> driverList = <DriverUserModel>[].obs;
   List<ChartDataCircle> chartDataCircle = [];
   List<SalesStatistic> salesStatistic = [];
   RxInt todayService = 0.obs;
@@ -74,8 +80,11 @@ class DashboardScreenController extends GetxController {
     Constant.getCurrencyData();
     // Constant.getLanguageData();
     // bookingList.value = await FireStoreUtils.getRecentBooking("All");
+    await fetchPassengers();
+    getDriverData();
     await getAllStatisticData();
     await getTodayStatisticData();
+
     // await getLanguage();
     recentBookingList.value = bookingList.sublist(0, 5);
     // userList.value = await FireStoreUtils.getRecentUsers();
@@ -89,6 +98,100 @@ class DashboardScreenController extends GetxController {
     getBookingData();
     isUserData = false.obs;
     chartData = <ChartDataCircle>[].obs;
+  }
+
+  Future<void> fetchPassengers() async {
+    isLoading.value = true;
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("token");
+
+    if (token == null) {
+      ShowToastDialog.toast("Authentication token missing.");
+      isLoading.value = false;
+      return;
+    }
+
+    try {
+      final response = await http.get(
+        Uri.parse(baseURL + customerListEndpoint),
+        headers: {
+          "Content-Type": "application/json",
+          "token": token,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        if (responseData["status"] == true) {
+          List<dynamic> data = responseData["data"];
+          passengersList.clear();
+          passengersList.addAll(
+              data.map((json) => PassengerModel.fromJson(json)).toList());
+
+          // Set totalUser equal to the length of passengersList
+          totalUser.value = passengersList.length;
+
+          log("Passengers data fetched: ${passengersList.length}");
+        } else {
+          ShowToastDialog.toast(
+              "Failed to fetch passengers: ${responseData["msg"]}");
+        }
+      } else {
+        ShowToastDialog.toast("Error: Status code ${response.statusCode}");
+      }
+    } catch (e) {
+      log("Error fetching passengers: $e");
+      ShowToastDialog.toast("An error occurred while fetching passengers.");
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  getDriverData() async {
+    isLoading(true);
+    driverList.clear();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("token");
+
+    if (token == null) {
+      log("Token is null, unable to fetch data.");
+      ShowToastDialog.toast("Authentication token missing.");
+      isLoading(false);
+      return;
+    }
+
+    log('Fetching driver data with token: $token');
+    try {
+      final response = await http.get(
+        Uri.parse(baseURL + driverListEndpoint),
+        headers: {
+          "Content-Type": "application/json",
+          "token": token,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        if (responseData["status"] == true) {
+          final List<dynamic> data = responseData["data"];
+          driverList.addAll(
+              data.map((json) => DriverUserModel.fromJson(json)).toList());
+
+          totalCab.value = passengersList.length;
+          log("Driver data fetched: ${driverList.length}");
+        } else {
+          ShowToastDialog.toast("Failed to fetch data: ${responseData["msg"]}");
+        }
+      } else {
+        ShowToastDialog.toast("Error: Status code ${response.statusCode}");
+      }
+    } catch (e) {
+      log("Error fetching driver data: $e");
+      ShowToastDialog.toast("An error occurred while fetching driver data.");
+    } finally {
+      isLoading(false);
+    }
   }
 
   Future<String?> getTokenFromLocalStorage() async {

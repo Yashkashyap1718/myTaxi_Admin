@@ -73,7 +73,8 @@ class VehicleBrandScreenController extends GetxController {
             data.map((json) => BrandModel.fromJson(json)).toList(),
           );
           // ShowToastDialog.toast("Vehicle brands fetched successfully!".tr);
-          // log("Vehicle brands fetched: ${brandList.length}");
+          log("Vehicle brands fetched: ${brandList.length}");
+          log("Vehicle brands fetched: ${data}");
 
           // Update the current page vehicle brand
           // currentPageVehicleBrand.value =

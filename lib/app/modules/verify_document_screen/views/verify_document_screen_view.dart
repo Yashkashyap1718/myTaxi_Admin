@@ -264,8 +264,7 @@ class VerifyDocumentScreenView extends GetView<VerifyDocumentScreenController> {
                                             padding: paddingEdgeInsets(),
                                             child: Constant.loader(),
                                           )
-                                        : controller
-                                                .currentPageVerifyDriver.isEmpty
+                                        : controller.driverList.isEmpty
                                             ? TextCustom(
                                                 title: "No Data available".tr)
                                             : DataTable(
@@ -339,28 +338,29 @@ class VerifyDocumentScreenView extends GetView<VerifyDocumentScreenController> {
                                                                   .width *
                                                               0.12),
                                                 ],
-                                                rows: controller
-                                                    .currentPageVerifyDriver
+                                                rows: controller.driverList
                                                     .map(
                                                         (verifyDriverModel) =>
                                                             DataRow(cells: [
                                                               DataCell(TextCustom(
-                                                                  title: verifyDriverModel
-                                                                          .driverName!
-                                                                          .isEmpty
-                                                                      ? "N/A"
-                                                                      : verifyDriverModel
-                                                                          .driverName
-                                                                          .toString())),
+                                                                  title:
+                                                                      "${verifyDriverModel.fullName ?? 'test'}")),
                                                               DataCell(TextCustom(
-                                                                  title: verifyDriverModel
-                                                                          .driverEmail!
-                                                                          .isEmpty
-                                                                      ? "N/A"
-                                                                      : Constant.maskEmail(
-                                                                          email: verifyDriverModel
-                                                                              .driverEmail
-                                                                              .toString()))),
+                                                                  title:
+                                                                      "${verifyDriverModel.fullName ?? 'test'}")),
+                                                              DataCell(
+                                                                TextCustom(
+                                                                    title: verifyDriverModel.isVerified! ==
+                                                                            true
+                                                                        ? "Verify"
+                                                                        : "Is not Verify",
+                                                                    color: verifyDriverModel.isVerified! ==
+                                                                            true
+                                                                        ? const Color(
+                                                                            0xff10A944)
+                                                                        : const Color(
+                                                                            0xffEB4848)),
+                                                              ),
                                                               // DataCell(
                                                               //   FutureBuilder<
                                                               //       DriverUserModel?>(
@@ -453,17 +453,17 @@ class VerifyDocumentScreenView extends GetView<VerifyDocumentScreenController> {
                                                                         onTap:
                                                                             () async {
                                                                           // controller.getDriverVehicleDetails(e.driverId);
-                                                                          controller
-                                                                              .editingVerifyDocumentId
-                                                                              .value = verifyDriverModel.driverId!;
-                                                                          controller
-                                                                              .getDriverDetails(verifyDriverModel.driverId);
-                                                                          controller
-                                                                              .verifyDriverModel
-                                                                              .value = verifyDriverModel;
-                                                                          controller
-                                                                              .verifyDocumentList
-                                                                              .value = verifyDriverModel.verifyDocument!;
+                                                                          // controller
+                                                                          //     .editingVerifyDocumentId
+                                                                          //     .value = verifyDriverModel.id!;
+                                                                          // controller
+                                                                          //     .getDriverDetails(verifyDriverModel.id);
+                                                                          // controller
+                                                                          //     .verifyDriverModel
+                                                                          //     .value = verifyDriverModel.id;
+                                                                          // controller
+                                                                          //     .verifyDocumentList
+                                                                          //     .value = verifyDriverModel.loginType!;
                                                                           showDialog(
                                                                               context: context,
                                                                               builder: (context) => const VerifyDriverDialog());
@@ -487,20 +487,20 @@ class VerifyDocumentScreenView extends GetView<VerifyDocumentScreenController> {
                                                                             () async {
                                                                           // controller.removeVerifyDocument(verifyDriverModel);
                                                                           // controller.getData();
-                                                                          if (Constant
-                                                                              .isDemo) {
-                                                                            DialogBox.demoDialogBox();
-                                                                          } else {
-                                                                            // controller.removeVehicleTypeModel(vehicleTypeModel);
-                                                                            // controller.getData();
-                                                                            bool
-                                                                                confirmDelete =
-                                                                                await DialogBox.showConfirmationDeleteDialog(context);
-                                                                            if (confirmDelete) {
-                                                                              await controller.removeVerifyDocument(verifyDriverModel);
-                                                                              controller.getData();
-                                                                            }
+                                                                          // if (Constant
+                                                                          //     .isDemo) {
+                                                                          //   DialogBox.demoDialogBox();
+                                                                          // } else {
+                                                                          // controller.removeVehicleTypeModel(vehicleTypeModel);
+                                                                          // controller.getData();
+                                                                          bool
+                                                                              confirmDelete =
+                                                                              await DialogBox.showConfirmationDeleteDialog(context);
+                                                                          if (confirmDelete) {
+                                                                            // await controller.removeVerifyDocument(verifyDriverModel);
+                                                                            controller.getData();
                                                                           }
+                                                                          // }
                                                                         },
                                                                         child: SvgPicture
                                                                             .asset(

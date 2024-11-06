@@ -5,7 +5,6 @@ import 'package:admin/app/modules/home/controllers/home_controller.dart';
 import 'package:admin/app/routes/app_pages.dart';
 import 'package:admin/app/utils/app_them_data.dart';
 import 'package:admin/app/utils/dark_theme_provider.dart';
-import 'package:admin/app/utils/fire_store_utils.dart';
 import 'package:admin/app/utils/responsive.dart';
 import 'package:admin/app/utils/screen_size.dart';
 import 'package:admin/widget/common_ui.dart';
@@ -1597,87 +1596,83 @@ usersChartStatistic(BuildContext context) {
           SizedBox(
             height: 200,
             // width: ResponsiveWidget.isDesktop(context) ? (ScreenSize.width(100, context) - 270) * 0.25 :  ResponsiveWidget.isTablet(context) ?(ScreenSize.width(100, context) - 270) * 0.25   : (ScreenSize.width(74, context)),
-            child: (controller.isUserData.value)
-                ? Constant.loader()
-                : Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: SfCircularChart(
-                          borderWidth: 0,
-                          tooltipBehavior: TooltipBehavior(enable: true),
-                          // plotAreaBorderColor: Colors.transparent,
-                          borderColor: Colors.transparent,
-                          series: <RadialBarSeries<ChartDataCircle, String>>[
-                            RadialBarSeries<ChartDataCircle, String>(
-                              dataSource: [
-                                ChartDataCircle(
-                                    'Driver'.tr,
-                                    controller.totalCab.value,
-                                    AppThemData.secondary500),
-                                ChartDataCircle(
-                                    'User'.tr,
-                                    controller.totalUser.value,
-                                    AppThemData.blue500),
-                              ],
-                              xValueMapper: (ChartDataCircle data, _) => data.x,
-                              yValueMapper: (ChartDataCircle data, _) => data.y,
-                              pointColorMapper: (ChartDataCircle data, _) =>
-                                  data.color,
-                              useSeriesColor: true,
-                              trackOpacity: 0.2,
-                              gap: '10%',
-                              strokeWidth: 30,
-                              cornerStyle: CornerStyle.bothCurve,
-                              dataLabelSettings: const DataLabelSettings(
-                                  // Renders the data label
-                                  isVisible: false),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                height: 16.0,
-                                width: 16.0,
-                                decoration: const BoxDecoration(
-                                  color: AppThemData.secondary500,
-                                  shape: BoxShape.circle,
-                                ),
-                              ),
-                              spaceW(width: 10),
-                              TextCustom(
-                                title: 'Driver'.tr,
-                              ),
-                            ],
-                          ),
-                          spaceH(height: 10),
-                          Row(
-                            children: [
-                              Container(
-                                height: 16.0,
-                                width: 16.0,
-                                decoration: const BoxDecoration(
-                                  color: AppThemData.blue500,
-                                  shape: BoxShape.circle,
-                                ),
-                              ),
-                              spaceW(width: 10),
-                              TextCustom(
-                                title: 'User'.tr,
-                              ),
-                            ],
-                          ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: SfCircularChart(
+                    borderWidth: 0,
+                    tooltipBehavior: TooltipBehavior(enable: true),
+                    // plotAreaBorderColor: Colors.transparent,
+                    borderColor: Colors.transparent,
+                    series: <RadialBarSeries<ChartDataCircle, String>>[
+                      RadialBarSeries<ChartDataCircle, String>(
+                        dataSource: [
+                          ChartDataCircle(
+                              'Driver'.tr,
+                              controller.totalCab.value,
+                              AppThemData.secondary500),
+                          ChartDataCircle('User'.tr, controller.totalUser.value,
+                              AppThemData.blue500),
                         ],
-                      )
+                        xValueMapper: (ChartDataCircle data, _) => data.x,
+                        yValueMapper: (ChartDataCircle data, _) => data.y,
+                        pointColorMapper: (ChartDataCircle data, _) =>
+                            data.color,
+                        useSeriesColor: true,
+                        trackOpacity: 0.2,
+                        gap: '10%',
+                        strokeWidth: 30,
+                        cornerStyle: CornerStyle.bothCurve,
+                        dataLabelSettings: const DataLabelSettings(
+                            // Renders the data label
+                            isVisible: false),
+                      ),
                     ],
                   ),
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          height: 16.0,
+                          width: 16.0,
+                          decoration: const BoxDecoration(
+                            color: AppThemData.secondary500,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        spaceW(width: 10),
+                        TextCustom(
+                          title: 'Driver'.tr,
+                        ),
+                      ],
+                    ),
+                    spaceH(height: 10),
+                    Row(
+                      children: [
+                        Container(
+                          height: 16.0,
+                          width: 16.0,
+                          decoration: const BoxDecoration(
+                            color: AppThemData.blue500,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        spaceW(width: 10),
+                        TextCustom(
+                          title: 'User'.tr,
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ],
       ),
